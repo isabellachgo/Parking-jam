@@ -1,41 +1,45 @@
 package es.upm.pproject.parkingjam.parking_jam.model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import javafx.util.Pair;
 
 public class BoardReader {
-	FileReader file;
-	BufferedReader reader;
-	String title;
-	Integer dimX;
-	Integer dimY;
-	Map<Character, Vehicle> cars;
+	private FileReader file;
+	private BufferedReader reader;
+	private String title;
+	private Integer dimX;
+	private Integer dimY;
+	private Pair<Integer,Integer> exit_p;
+	private Map<Character, Vehicle> cars;
+	private Character[][] board;
 	
 	public BoardReader(String filepath){
 		try {
-			file = new FileReader(filepath);
-			
+			file = new FileReader(new File(filepath));
 			reader = new BufferedReader(file);
 			
-			if((title = reader.readLine()) == null) {
-				//tratar error con fichero
+			title = reader.readLine();
+			String dimensions;
+			dimensions = reader.readLine();
+			if(dimensions != null && dimensions.length() >= 3) {
+				dimX = Character.getNumericValue(dimensions.charAt(0));
+				dimY = Character.getNumericValue(dimensions.charAt(2));
 			}
 			
-			String dimensions;
-			if((dimensions = reader.readLine()) == null) {
-				//tratar error
-			}
-			dimX = dimensions.charAt(0)-0;
-			dimY = dimensions.charAt(2)-0;
-		} catch (IOException e) {
+			board = createBoard();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -56,18 +60,25 @@ public class BoardReader {
 		return cars;
 	}
 	
+	public Pair<Integer,Integer> getExit(){
+		return exit_p;
+	}
 	
-	// 0 -> wall
-	// 1 -> exit
-	// 2 -> red car
-	public Integer[][] createBoard(){
+	public Character[][] getBoard() {
+		return board;
+	}
+	
+	
+	
+	// Reads the file and returns a character array whit the file board if it represents a valid level, otherwise it returns null.
+	// A map is also filled in with the cars on the board, the red car will always have id 0
+	private Character[][] createBoard(){
 		int n_exit=0;
-		int n_redcar=0;
 		String line;
 		Character c;
-		int car_id=3;
+		int car_id=1;
 		cars = new HashMap<>();
-		Integer[][] board = new Integer[dimX][dimY];
+		Character[][] board = new Character[dimX][dimY];
 		
 		for(int i=0; i<dimX; i++) {
 			try {
@@ -75,13 +86,13 @@ public class BoardReader {
 			
 				for(int j=0; j<dimY; j++) {
 					c = line.charAt(j);
+					board[i][j] = c;
 					switch(c) {
 						case '+':
-							board[i][j] = 0;
 							break;
 							
 						case '@':
-							board[i][j] = 1;
+							exit_p = new Pair<Integer,Integer> (i,j);
 							n_exit++;
 							break;
 						
@@ -91,11 +102,11 @@ public class BoardReader {
 							
 						default:
 							if(!cars.containsKey(c)) {
-								Set<Pair<Integer,Integer>> positions = new TreeSet<>();
-								positions.add(new Pair(i,j));
+								Set<Pair<Integer,Integer>> positions = new HashSet<>();
+								Pair<Integer, Integer> p = new Pair<>(i,j);
+								positions.add(p);
 								if(c.equals('*')) {
-									cars.put(c, new Vehicle(2, false, null, positions));
-									n_redcar++;
+									cars.put(c, new Vehicle(0, false, null, positions));
 								}
 								else {
 									cars.put(c, new Vehicle(car_id, false, null, positions));
@@ -104,62 +115,64 @@ public class BoardReader {
 							} else {
 								Vehicle car = cars.get(c);
 								Set<Pair<Integer,Integer>> positions = car.getPosition();
-								positions.add(new Pair(i,j));
+								positions.add(new Pair<Integer, Integer>(i,j));
 								car.setPosition(positions);
 							}
 					}
 					
 				}
-				
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-					
+			}	
 		}
 		
-		//comprobar salida
-		if(n_exit != 2) {
-			//error: no tiene salida o tiene más de una
-			return null;
-		}
+		// check that there is an exit
+		if(n_exit != 1) return null; //error: no tiene salida o tiene más de una
 		
-		//comprobar redcar
-		if(cars.get('*')==null || cars.get('*').getPosition().size() < 2) {
-			//error: no hay redcar o no es del tamaño valido 2
-			return null;
-		}
+		// check that there is a redcar
+		if(cars.get('*')==null || cars.get('*').getPosition().size() != 2) return null;
 		
-		//poner dimensiones a los coches
 		Iterator it = cars.values().iterator();
 		while(it.hasNext()) {
 			Vehicle car = (Vehicle) it.next();
 			
-			//comprobar tamaño coches
+			// check car size
 			int length = car.getPosition().size();
-			if(length<2) {
-				//error: coche con tamaño inválido <2
-				return null;
+			if(length<2) return null;
+			
+			// assign size and direction
+			Iterator<Pair<Integer,Integer>> itv = car.getPosition().iterator();
+			Pair<Integer,Integer> aux1=null;
+			Pair<Integer,Integer> aux2=null;
+			while(itv.hasNext() && aux2==null) {
+				Pair<Integer, Integer> paux = itv.next();
+				if(aux1==null) aux1 = paux;
+				else aux2 = paux;
+			}
+			if(aux1==null || aux2==null) return null; 
+			else {
+				if((aux1.getKey()).equals(aux2.getKey())) car.setDimension(new Pair<Integer, Integer>(1,length));
+				else car.setDimension(new Pair<>(length, 1));
 			}
 			
-			//asignar dimensiones
-			Iterator itv = car.getPosition().iterator();
-			Pair<Integer,Integer> aux1=null, aux2=null;
-			while(it.hasNext() && aux2==null) {
-				if(aux1==null) aux1 = (Pair<Integer, Integer>) itv.next();
-				else aux2 = (Pair<Integer, Integer>) itv.next();
-			}
-			
-			if((aux1.getKey()).equals(aux2.getKey())) car.setDimension(new Pair(1,length));
-			else car.setDimension(new Pair(length, 1));
-			
-			//comprobar vecinos
-			
-			
-			
-			
-			
+			// check neightbours 
+			if(aux_neightbour(car)<0) return null; 
+					
 		}
 		
 		return board;
 	}
+	
+	
+	private int aux_neightbour(Vehicle car){
+		//TODO: Comprobar vecinos
+		int n_neightbours=0;
+		
+		for(Pair<Integer,Integer> p :car.getPosition()) {
+			
+		}
+		
+		return 0;
+	}
+	
 }

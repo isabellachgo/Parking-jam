@@ -22,8 +22,11 @@ public class BoardReader {
 	private Map<Character, Vehicle> cars;
 	private Character[][] board;
 	
-	public BoardReader(String filepath){
+	String filepathFormat = "src/main/resources/levels/level_%d.txt";
+	
+	public BoardReader(int n_level){
 		try {
+			String filepath = String.format(filepathFormat, n_level);
 			file = new FileReader(new File(filepath));
 			reader = new BufferedReader(file);
 			

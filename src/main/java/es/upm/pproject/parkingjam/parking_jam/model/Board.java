@@ -14,13 +14,11 @@ public class Board {
 	private String title;
 	private Pair<Integer,Integer> exit_position;
 	private Map<Character,Vehicle> cars;
-	
-	String filepathFormat = "src/main/resources/levels/level_%d.txt";
+
 	
 	public Board(int n_level) {
 		
-		String filepath = String.format(filepathFormat, n_level);
-		bReader = new BoardReader(filepath);
+		bReader = new BoardReader(n_level);
 		
 		dimensionX = bReader.getDimensionX();
 		dimensionY = bReader.getDimensionY();

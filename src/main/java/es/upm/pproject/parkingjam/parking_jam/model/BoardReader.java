@@ -24,27 +24,22 @@ public class BoardReader {
 	
 	String filepathFormat = "src/main/resources/levels/level_%d.txt";
 	
-	public BoardReader(int n_level){
-		try {
-			String filepath = String.format(filepathFormat, n_level);
-			file = new FileReader(new File(filepath));
-			reader = new BufferedReader(file);
-			
-			title = reader.readLine();
-			String dimensions;
-			dimensions = reader.readLine();
-			if(dimensions != null && dimensions.length() >= 3) {
-				dimX = Character.getNumericValue(dimensions.charAt(0));
-				dimY = Character.getNumericValue(dimensions.charAt(2));
-			}
-			
-			board = createBoard();
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch(IOException e) {
-			e.printStackTrace();
+	public BoardReader(int nlevel) throws FileNotFoundException, IOException{
+		
+		String filepath = String.format(filepathFormat, nlevel);
+		file = new FileReader(new File(filepath));
+		reader = new BufferedReader(file);
+		
+		title = reader.readLine();
+		String dimensions;
+		dimensions = reader.readLine();
+		if(dimensions != null && dimensions.length() >= 3) {
+			dimX = Character.getNumericValue(dimensions.charAt(0));
+			dimY = Character.getNumericValue(dimensions.charAt(2));
 		}
+		
+		board = createBoard();
+		
 	}
 	
 	public String getTitle() {
@@ -74,51 +69,49 @@ public class BoardReader {
 	
 	
 	// Reads the file and returns a character array whit the file board if it represents a valid level, otherwise it returns null.
-	// A map is also filled in with the cars on the board, the red car will always have id 0
+	// A map is also filled in with the cars on the board
 	private Character[][] createBoard(){
 		int n_exit=0;
 		String line;
 		Character c;
-		int car_id=1;
 		cars = new HashMap<>();
 		Character[][] board = new Character[dimX][dimY];
 		
-		for(int i=0; i<dimX; i++) {
+		for(int i=0; i<dimY; i++) {
 			try {
 				line=reader.readLine();
 			
-				for(int j=0; j<dimY; j++) {
+				for(int j=0; j<dimX; j++) {
 					c = line.charAt(j);
-					board[i][j] = c;
+					board[j][i] = c;
 					switch(c) {
 						case '+':
 							break;
 							
 						case '@':
-							exit_p = new Pair<Integer,Integer> (i,j);
+							exit_p = new Pair<Integer,Integer> (j,i);
 							n_exit++;
 							break;
 						
 						case ' ':
-							board[i][j] = null;
+							board[j][i] = null;
 							break;
 							
 						default:
 							if(!cars.containsKey(c)) {
 								Set<Pair<Integer,Integer>> positions = new HashSet<>();
-								Pair<Integer, Integer> p = new Pair<>(i,j);
+								Pair<Integer, Integer> p = new Pair<>(j,i);
 								positions.add(p);
 								if(c.equals('*')) {
-									cars.put(c, new Vehicle(0, false, null, positions));
+									cars.put(c, new Vehicle(c, true, null, positions));
 								}
 								else {
-									cars.put(c, new Vehicle(car_id, false, null, positions));
-									car_id++;
+									cars.put(c, new Vehicle(c, false, null, positions));
 								}
 							} else {
 								Vehicle car = cars.get(c);
 								Set<Pair<Integer,Integer>> positions = car.getPosition();
-								positions.add(new Pair<Integer, Integer>(i,j));
+								positions.add(new Pair<Integer, Integer>(j,i));
 								car.setPosition(positions);
 							}
 					}
@@ -135,7 +128,7 @@ public class BoardReader {
 		// check that there is a redcar
 		if(cars.get('*')==null || cars.get('*').getPosition().size() != 2) return null;
 		
-		Iterator it = cars.values().iterator();
+		Iterator<Vehicle> it = cars.values().iterator();
 		while(it.hasNext()) {
 			Vehicle car = (Vehicle) it.next();
 			
@@ -156,26 +149,10 @@ public class BoardReader {
 			else {
 				if((aux1.getKey()).equals(aux2.getKey())) car.setDimension(new Pair<Integer, Integer>(1,length));
 				else car.setDimension(new Pair<>(length, 1));
-			}
-			
-			// check neightbours 
-			if(aux_neightbour(car)<0) return null; 
-					
+			}					
 		}
 		
 		return board;
 	}
-	
-	
-	private int aux_neightbour(Vehicle car){
-		//TODO: Comprobar vecinos
-		int n_neightbours=0;
 		
-		for(Pair<Integer,Integer> p :car.getPosition()) {
-			
-		}
-		
-		return 0;
-	}
-	
 }

@@ -4,12 +4,12 @@ import java.util.Set;
 import javafx.util.Pair;
 
 public class Vehicle {
-	int id;
+	Character id;
 	boolean redCar;
 	Pair<Integer,Integer> dimension;
 	Set<Pair<Integer,Integer>> position;
 	
-	public Vehicle( int id ,boolean redCar,Pair<Integer,Integer> dimension, Set<Pair<Integer,Integer>> position) {
+	public Vehicle(Character id ,boolean redCar,Pair<Integer,Integer> dimension, Set<Pair<Integer,Integer>> position) {
 		this.redCar=redCar;
 		this.id=id;
 		this.dimension=dimension;
@@ -21,7 +21,7 @@ public class Vehicle {
 	public void setDimension(Pair<Integer,Integer> d) {
 		dimension=d;
 	}
-	public int getId() { 
+	public Character getId() { 
 		return this.id;
 		}
 	public boolean getRedCar() {

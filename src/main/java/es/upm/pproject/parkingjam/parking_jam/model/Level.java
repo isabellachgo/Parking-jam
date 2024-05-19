@@ -19,13 +19,13 @@ public class Level  {
 	private String title;
 	private Pair<Integer,Integer> exit_position;
 	private Map<Character,Vehicle> cars;
-	private int idLevel;
-	private int levelPoints;
-	private int gamePoints;
+	private Integer idLevel;
+	private Integer levelPoints;
+	private Integer gamePoints;
 
 
 // NOTA: he hecho que le vehiculo rojo sea el unico que puede salir, y ocupar la casilla de salida, y una vez alli no imprimirlo, 
-	public Level (int n_level) throws FileNotFoundException, IOException{
+	public Level (Integer n_level) throws FileNotFoundException, IOException{
 		bReader = new BoardReader(n_level);
 		dimensionX = bReader.getDimensionX();
 		dimensionY = bReader.getDimensionY();
@@ -96,10 +96,10 @@ public class Level  {
 		Set<Pair<Integer, Integer>> newPosition = new HashSet<>();
 
 		for (Pair<Integer, Integer> position : currentPosition) {
-			int Y = position.getValue();
-			int X = position.getKey();
-			int newY = Y;
-			int newX = X;
+			Integer Y = position.getValue();
+			Integer X = position.getKey();
+			Integer newY = Y;
+			Integer newX = X;
 
 			// Calcules the new coordinates depending on the direction and distance
 			switch (direction) {
@@ -120,7 +120,7 @@ public class Level  {
 			}
 
 			// Adds the new position to the set of positions
-			newPosition.add(new Pair<>(newX, newY));
+			newPosition.add(new Pair<Integer,Integer>(newX, newY));
 		}
 		if(!CheckMovement(car, direction,currentPosition,newPosition) )return null;
 
@@ -129,16 +129,16 @@ public class Level  {
 
 		// deletes the current position of the vehicle actual 
 		for (Pair<Integer, Integer> pos : currentPosition) {
-			int currentX = pos.getKey();
-			int currentY = pos.getValue();
+			Integer currentX = pos.getKey();
+			Integer currentY = pos.getValue();
 			updatedBoard[currentX][currentY] = null;
 		}
 
 		//Updates the board with the new positions only if the car is not the red one.
 		for (Pair<Integer, Integer> newPos : newPosition) {
 			if(!car.getRedCar()) {
-				int newX = newPos.getKey();
-				int newY = newPos.getValue();
+				Integer newX = newPos.getKey();
+				Integer newY = newPos.getValue();
 				updatedBoard[newX][newY] = car.getId();
 			}
 		}
@@ -149,8 +149,8 @@ public class Level  {
 	private boolean CheckMovement(Vehicle car, char direction, Set<Pair<Integer, Integer>> currentPosition, Set<Pair<Integer, Integer>> newPosition) {
 		boolean Goal=false;
 		for (Pair<Integer, Integer> position : newPosition) {
-			int newX = position.getKey();
-			int newY = position.getValue();
+			Integer newX = position.getKey();
+			Integer newY = position.getValue();
 
 			// The new Position cannot be outside the board
 			if (newX < 0 || newX >= dimensionX || newY < 0 || newY >= dimensionY) {

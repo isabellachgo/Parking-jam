@@ -65,9 +65,6 @@ public class Level  {
 		return levelPoints;
 	}
 
-	public void setLevelPoint(int levelPoint) {
-		this.levelPoints = levelPoint;
-	}
 
 	public int getGamePoints() {
 		return gamePoints + levelPoints;
@@ -156,7 +153,7 @@ public class Level  {
 			if (newX < 0 || newX >= dimensionX || newY < 0 || newY >= dimensionY) {
 				return false;
 			}
-			if(board[newX][newY] != null && board[newX][newY] == '@' ) { // the new position is the exit
+			if(board[newX][newY] != null && this.getExit().equals(position)/* board[newX][newY] == '@'*/ ) { // the new position is the exit
 				if(!car.getRedCar()) {								     // a vehicle that is not the read one cannot be in the exit spot
 					return false;
 				}
@@ -276,7 +273,7 @@ public class Level  {
 				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
 			}
 			Vehicle vehicle7 = b1.getCars().get('f');
-			if (b1.move(vehicle7, 'L', 2)) {
+			if (b1.move( vehicle7, 'L', 2)) {
 				System.out.println("Movimiento exitoso. Tablero después del movimiento:");
 				b1.printBoard(); // Imprimir el tablero después del movimiento
 			} else {
@@ -290,6 +287,7 @@ public class Level  {
 			} else {
 				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
 			}
+			System.out.println("Se han conseguido "+b1.getLevelPoint()+ " puntos en este nivel");
 
 		}
 	}

@@ -237,6 +237,42 @@ public class AppTest {
 				}
 			}
 		}
+		@Test
+		public void InValidBox() {	
+			Vehicle  car1= level.getCars().get('a');
+			Pair<Integer,Integer> pos = new Pair<>(4,4);
+			assertFalse(level.posicionValida(car1, pos));
+		}
+		@Test
+		public void InValidBox2() {	
+			Vehicle  car1= level.getCars().get('c');
+			Pair<Integer,Integer> pos = new Pair<>(6,0);
+			assertFalse(level.posicionValida(car1, pos));
+		}
+		@Test
+		public void ValidBox() {
+			Vehicle  car1= level.getCars().get('e');
+			Pair<Integer,Integer> pos = new Pair<>(2,5);
+			assertTrue(level.posicionValida(car1, pos));
+		}
+		@Test
+		public void ValidBox2() {
+			Vehicle  car1= level.getCars().get('f');
+			Pair<Integer,Integer> pos = new Pair<>(6,4);
+			assertTrue(level.posicionValida(car1, pos));
+		}
+		@Test
+		public void ValidBox3() {
+			Vehicle  car1= level.getCars().get('e');
+			Pair<Integer,Integer> pos = new Pair<>(2,2);
+			assertTrue(level.posicionValida(car1, pos));
+		}
+		@Test
+		public void ValidBoxForRedcAR() {
+			Vehicle  car1= level.getCars().get('*');
+			Pair<Integer,Integer> pos = new Pair<>(4,7);
+			assertTrue(level.posicionValida(car1, pos));
+		}
 
 		@Test 
 		public void testMove(){

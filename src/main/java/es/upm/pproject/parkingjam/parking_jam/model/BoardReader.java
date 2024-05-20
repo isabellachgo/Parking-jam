@@ -122,8 +122,12 @@ public class BoardReader {
 			}	
 		}
 
-		// check that there is an exit
+		// check that there is an exit in valid position
 		if(n_exit != 1) return null; //error: no tiene salida o tiene más de una
+		if((exit_p.getKey()==0 && exit_p.getValue()==0)
+				|| (exit_p.getKey()==0 && exit_p.getValue()==dimY-1)
+				|| (exit_p.getKey()==dimX-1 && exit_p.getValue()==0)
+				|| (exit_p.getKey()==dimX-1 && exit_p.getValue()==dimY-1)) return null;
 
 		// check that there is a redcar
 		if(cars.get('*')==null || cars.get('*').getPosition().size() != 2) return null;

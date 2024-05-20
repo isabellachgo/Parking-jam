@@ -133,13 +133,17 @@ public class Level  {
 		}
 
 		//Updates the board with the new positions only if the car is not the red one.
+		Set<Pair<Integer,Integer>> positionNew= new HashSet<>();
 		for (Pair<Integer, Integer> newPos : newPosition) {
 			if(!car.getRedCar()) {
 				Integer newX = newPos.getKey();
 				Integer newY = newPos.getValue();
 				updatedBoard[newX][newY] = car.getId();
+				Pair<Integer, Integer> p = new Pair<>(newX,newY);
+				positionNew.add(p);
 			}
 		}
+		car.setPosition(positionNew);
 		return updatedBoard;
 	}
 
@@ -277,18 +281,24 @@ public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
 				System.out.println("Bien porque es Posicion valida, ya que el coche rojo si puede ir a salida");
 			}else System.out.println("Posicion NO valida");
 			
+			
 			// nota: no se escogio la ruta mas optima para probar el movimiento de coches.
 			Vehicle vehicle = b1.getCars().get('e'); // 
+			System.out.println("position antes de moverse debe ser: " + vehicle.getPosition().toString());
 			if (b1.move(vehicle, 'U', 3)) {
 				System.out.println("Movimiento exitoso. Tablero después del movimiento:");
 				b1.printBoard(); // Imprimir el tablero después del movimiento
+				System.out.println("position despues de moverse: " + vehicle.getPosition().toString());
 			} else {
 				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
 			}
 			Vehicle vehicle2 = b1.getCars().get('g');
+			System.out.println("position antes de moverse debe ser: " + vehicle2.getPosition().toString());
+			
 			if (b1.move(vehicle2, 'L', 3)) {
 				System.out.println("Movimiento exitoso. Tablero después del movimiento:");
 				b1.printBoard(); // Imprimir el tablero después del movimiento
+				System.out.println("position despues de moverse: " + vehicle2.getPosition().toString());
 			} else {
 				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
 			}

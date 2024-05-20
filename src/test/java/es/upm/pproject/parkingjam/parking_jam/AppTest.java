@@ -82,6 +82,12 @@ public class AppTest {
 				BoardReader br = new BoardReader(102);
 				assertNull(br.getBoard());
 			}
+			
+			@Test
+			public void badFormat_wrongExit() throws FileNotFoundException, IOException {
+				BoardReader br = new BoardReader(101);
+				assertNull(br.getBoard());
+			}
 
 			@Test
 			public void badFormat_noRedcar() throws FileNotFoundException, IOException {

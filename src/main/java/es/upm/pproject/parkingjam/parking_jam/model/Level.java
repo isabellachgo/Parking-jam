@@ -61,12 +61,12 @@ public class Level  {
 	public Character[][] getBoard(){
 		return board;
 	}
-	public int getLevelPoint() {
+	public Integer getLevelPoint() {
 		return levelPoints;
 	}
 
 
-	public int getGamePoints() {
+	public Integer getGamePoints() {
 		return gamePoints + levelPoints;
 	}
 

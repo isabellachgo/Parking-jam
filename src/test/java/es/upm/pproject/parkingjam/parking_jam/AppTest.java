@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -22,15 +23,15 @@ import javafx.util.Pair;
 
 public class AppTest {
 
-   @Nested
-   class VehicleTest{
-	   Vehicle vehicle;
-	   Character id;
-	   boolean redCar;
-	   Pair<Integer,Integer> dimension;
-	   Set<Pair<Integer,Integer>> position;
-	   @BeforeEach
-	   public void createCar() {
+	@Nested
+	class VehicleTest{
+		Vehicle vehicle;
+		Character id;
+		boolean redCar;
+		Pair<Integer,Integer> dimension;
+		Set<Pair<Integer,Integer>> position;
+		@BeforeEach
+		public void createCar() {
 			id= 'a';
 			redCar=false;
 			dimension= new Pair<>(2,3);
@@ -39,32 +40,32 @@ public class AppTest {
 			position.add(new Pair<>(2,3));
 			vehicle = new Vehicle(id, redCar, dimension,position);
 		}
-	   @Test
-	   void testGetId() {
-		   assertEquals(id, vehicle.getId());
-	   }
-	   @Test
-	   void testGetRedCar() {
-		   assertFalse(vehicle.getRedCar());
-	   }
-	   @Test
-	   void testGetDomension() {
-		   assertEquals(dimension, vehicle.getDimension());
-	   }
-	   @Test
-	   void testGetPosition() {
-		   assertEquals(position, vehicle.getPosition());
-	   }
-	   @Test
-	   void testSetPosition() {
-		  Set<Pair<Integer, Integer>> newPosition= new HashSet<>();
-		  newPosition.add(new Pair<>(3,4));
-		  newPosition.add(new Pair<>(4,4));
-		  vehicle.setPosition(newPosition);
-		  assertEquals(newPosition, vehicle.getPosition());
-	   }
+		@Test
+		void testGetId() {
+			assertEquals(id, vehicle.getId());
+		}
+		@Test
+		void testGetRedCar() {
+			assertFalse(vehicle.getRedCar());
+		}
+		@Test
+		void testGetDomension() {
+			assertEquals(dimension, vehicle.getDimension());
+		}
+		@Test
+		void testGetPosition() {
+			assertEquals(position, vehicle.getPosition());
+		}
+		@Test
+		void testSetPosition() {
+			Set<Pair<Integer, Integer>> newPosition= new HashSet<>();
+			newPosition.add(new Pair<>(3,4));
+			newPosition.add(new Pair<>(4,4));
+			vehicle.setPosition(newPosition);
+			assertEquals(newPosition, vehicle.getPosition());
+		}
 
-   }
+	}
 
 
 
@@ -82,7 +83,7 @@ public class AppTest {
 				BoardReader br = new BoardReader(102);
 				assertNull(br.getBoard());
 			}
-			
+
 			@Test
 			public void badFormat_wrongExit() throws FileNotFoundException, IOException {
 				BoardReader br = new BoardReader(101);
@@ -290,7 +291,7 @@ public class AppTest {
 			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='@';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
 			assertEquals(level.getDimensionX(), 8);
 			assertEquals(level.getDimensionY(), 8);
-			
+
 			Character[][] board = level.getBoard();
 			for(int i =0; i<8; i++) {
 				for(int j=0; j<8;j++) {
@@ -300,8 +301,8 @@ public class AppTest {
 
 
 		}
-		
-	
+
+
 		@Test
 		public void MoveTowin() {
 			assertTrue(level.move(level.getCars().get('e'), 'U', 3));
@@ -312,7 +313,7 @@ public class AppTest {
 			assertTrue(level.move(level.getCars().get('d'), 'U', 2));
 			assertTrue(level.move(level.getCars().get('f'), 'L', 2));
 			assertTrue(level.move(level.getCars().get('*'), 'D', 4));
-			
+
 		}
 		@Test
 		public void LevlPoints() {
@@ -325,7 +326,7 @@ public class AppTest {
 			level.move(level.getCars().get('f'), 'L', 2);
 			level.move(level.getCars().get('*'), 'D', 4);
 			assertEquals(level.getLevelPoint(), 8);
-			
+
 		}
 		@Test
 		public void WinGame() {
@@ -337,7 +338,7 @@ public class AppTest {
 			level.move(level.getCars().get('d'), 'U', 2);
 			level.move(level.getCars().get('f'), 'L', 2);
 			level.move(level.getCars().get('*'), 'D', 4);
-			
+
 			Character[][] boardt = new Character[8][8];
 			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 			boardt[0][1]='+'; boardt[1][1]='d';	 boardt[2][1]='a';  boardt[3][1]='a';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='b';  boardt[7][1]='+';
@@ -354,9 +355,9 @@ public class AppTest {
 					assertEquals(board[i][j], boardt[i][j]);
 				}
 			}
-			
+
 		}
-		
+
 		public void testInvalidMove2() {
 			Vehicle car2 = level.getCars().get('g');
 			boolean moved2= level.move(car2,'R',1 ); // A CAR CANNOT MOVE TOWARS A WALL
@@ -382,7 +383,7 @@ public class AppTest {
 		}
 		@Test
 		public void testInvalidMove3() {
-			
+
 			Vehicle car3 = level.getCars().get('*');
 			boolean moved3= level.move(car3,'D',1 ); // A CAR CANNOT MOVE IF THERES ANOHER CAR IN THAT POSITION
 			assertFalse(moved3);
@@ -407,7 +408,7 @@ public class AppTest {
 		}
 		@Test
 		public void testInvalidMove4() {
-			
+
 			Vehicle car4 = level.getCars().get('g');
 			boolean moved4= level.move(car4,'D',19); // A CAR CANNOT MOVE outside of the board
 			assertFalse(moved4);
@@ -430,8 +431,73 @@ public class AppTest {
 			}
 
 		}
+		@Test
+		public void testInvalidMoveCarPosition() {
+
+			Vehicle car4 = level.getCars().get('g');
+			Set<Pair<Integer, Integer>> positionA =car4.getPosition();
+			level.move(car4,'D',19); // A CAR CANNOT MOVE outside of the board
+			Set<Pair<Integer, Integer>> positionD =car4.getPosition();
+
+
+			assertEquals(positionA, positionD);
+
+		}
+		@Test
+		public void testInvalidMoveCarPosition2() {
+
+			Vehicle car3 = level.getCars().get('*');
+			Set<Pair<Integer, Integer>> positionA =car3.getPosition();
+			level.move(car3,'D',1 ); // A CAR CANNOT MOVE IF THERES ANOHER CAR IN THAT POSITION
+			Set<Pair<Integer, Integer>> positionD =car3.getPosition();
+			assertEquals(positionA, positionD);
+
+		}
+		@Test
+		public void testInvalidMoveCarPosition3() {
+
+			Vehicle car2 = level.getCars().get('g');
+			Set<Pair<Integer, Integer>> positionA =car2.getPosition();
+			level.move(car2,'R',1 ); // A CAR CANNOT MOVE TOWARS A WALL
+			Set<Pair<Integer, Integer>> positionD =car2.getPosition();
+			assertEquals(positionA, positionD);
+		}
+
+		@Test
+		public void testValidMoveCarPosition() {
+
+			Vehicle car = level.getCars().get('e');
+
+			Set<Pair<Integer, Integer>> positionA =new HashSet();
+			Pair<Integer, Integer> p1 =new Pair<Integer, Integer>(2,2);
+			Pair<Integer, Integer> p2 =new Pair<Integer, Integer>(2,3);
+			positionA.add(p1);
+			positionA.add(p2);
+			boolean moved =level.move(car, 'U', 3);
+			Set<Pair<Integer, Integer>> positionD =car.getPosition();
+			assertEquals(positionA, positionD);
+		}
 		
+		@Test
+		public void testValidMoveCarPosition2() {
+			level.move(level.getCars().get('e'), 'U', 3);
+			level.move(level.getCars().get('g'), 'L', 3);
+			level.move(level.getCars().get('c'), 'D', 3);
+			level.move(level.getCars().get('b'), 'R', 1);
+			level.move(level.getCars().get('a'), 'R', 1);
+			level.move(level.getCars().get('d'), 'U', 2);
+			level.move(level.getCars().get('f'), 'L', 2);
+			level.move(level.getCars().get('*'), 'D', 4);
+			Vehicle car = level.getCars().get('*');
+			Set<Pair<Integer, Integer>> positionA =new HashSet();
+		
+			Set<Pair<Integer, Integer>> positionD =car.getPosition();
+			assertEquals(positionD, positionA);
+		}
 
 	}
 
+
 }
+
+

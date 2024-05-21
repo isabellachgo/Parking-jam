@@ -213,12 +213,12 @@ public class controller {
 		return new Pair<>(0, 0);
 	}
 
-	public Pair<Integer, Integer> drop(Pair<Integer, Integer> posF) {
+	public Pair<Pair<Integer,Integer>, Integer> drop(Pair<Integer, Integer> posF) {
 //		if (click.equals(convertToGrid(posF.getKey(), posF.getValue())))
 //			return vehicleClicked.getBack();
 		// boolean res;
 		if(vehicleClicked==null)return null;
-		Pair<Integer, Integer> mv;
+		Pair<Pair<Integer, Integer>, Integer> mv;
 		int punt2 = punt;
         if(actLabel!=null && prevLabel!=null) {
         
@@ -239,7 +239,7 @@ public class controller {
 		}
     }
 		// if(!res)return ;
-		mv = vehicleClicked.getBack();
+		mv = new Pair<Pair<Integer, Integer>, Integer>(vehicleClicked.getBack(),lvl.getLevelPoint());
 		casillaBuff.clear();
 		this.vehicleClicked = null;
 		punt = 0;

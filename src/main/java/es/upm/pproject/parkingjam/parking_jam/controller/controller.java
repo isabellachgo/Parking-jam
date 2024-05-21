@@ -44,8 +44,13 @@ public class controller {
 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {
 		// cellSize = 400 / lvl.getDimensionX()-2;
-		int row = y / cellSize;
-		int col = x / cellSize;
+		int row,col;
+		if(x<150)row=0;
+		else if(x>550)row=lvl.getDimensionX()-1;
+		else row = ((x-150) / cellSize)+1;
+		if(y<50)col=0;
+		else if(y>450)col=lvl.getDimensionY()-1;
+		else col = ((x-50) / cellSize)+1;
 		return new Pair<>(row, col);
 	}
 
@@ -82,12 +87,12 @@ public class controller {
 						else if (lvl.posicionValida(vehicleClicked, newLabel)) {
 							casillaBuff.add(newLabel);
 							return new Pair<>(0, 1);
-						} else
-							return new Pair<>(0, 0);
+						} else {punt--;
+							return new Pair<>(0, 0);}
 					} else if (casillaBuff.contains(actLabel))
 						return new Pair<>(0, 1);
-					else
-						return new Pair<>(0, 0);
+					else {punt--;
+					return new Pair<>(0, 0);}
 				} else {// arriba
 					punt--;
 					if (punt + 1 % cellSize == 0) {
@@ -100,12 +105,13 @@ public class controller {
 						else if (lvl.posicionValida(vehicleClicked, newLabel)) {
 							casillaBuff.add(newLabel);
 							return new Pair<>(0, -1);
-						} else
-							return new Pair<>(0, 0);
+						} else {punt++;
+						return new Pair<>(0, 0);}
 					} else if (casillaBuff.contains(actLabel))
 						return new Pair<>(0, -1);
-					else
-						return new Pair<>(0, 0);
+					
+						else {punt++;
+						return new Pair<>(0, 0);}
 				}
 
 			} else {// Se mueve de izq a derecha
@@ -122,12 +128,12 @@ public class controller {
 						else if (lvl.posicionValida(vehicleClicked, newLabel)) {
 							casillaBuff.add(newLabel);
 							return new Pair<>(1, 0);
-						} else
-							return new Pair<>(0, 0);
+						} else {punt--;
+						return new Pair<>(0, 0);}
 					} else if (casillaBuff.contains(actLabel))
 						return new Pair<>(1, 0);
-					else
-						return new Pair<>(0, 0);
+					else {punt--;
+					return new Pair<>(0, 0);}
 				} else {// izq
 					punt--;
 					if (punt + 1 % cellSize == 0) {
@@ -141,12 +147,12 @@ public class controller {
 						else if (lvl.posicionValida(vehicleClicked, newLabel)) {
 							casillaBuff.add(newLabel);
 							return new Pair<>(-1, 0);
-						} else
-							return new Pair<>(0, 0);
+						} else {punt++;
+						return new Pair<>(0, 0);}
 					} else if (casillaBuff.contains(actLabel))
 						return new Pair<>(-1, 0);
-					else
-						return new Pair<>(0, 0);
+					else {punt++;
+					return new Pair<>(0, 0);}
 				}
 			}
 
@@ -155,23 +161,27 @@ public class controller {
 	}
 
 	public Pair<Integer, Integer> drop(Pair<Integer, Integer> posF) {
-		if (click.equals(convertToGrid(posF.getKey(), posF.getValue())))
-			return click;
+//		if (click.equals(convertToGrid(posF.getKey(), posF.getValue())))
+//			return vehicleClicked.getBack();
 		// boolean res;
 		Pair<Integer, Integer> mv;
 		int punt2 = punt;
+		
 		if (punt < 0)
 			punt2 = Math.abs(punt);
 		if (punt2 % cellSize > cellSize / 2) {
+			//if(click.equals(actLabel))return vehicleClicked.getBack();
 			if (punt > 0)
 				moveVehicle(vehicleClicked.getFront(), actLabel);
 			else
 				moveVehicle(vehicleClicked.getBack(), actLabel);
 		} else {
+			//if(click.equals(prevLabel))return vehicleClicked.getBack();
 			if (punt > 0)
 				moveVehicle(vehicleClicked.getFront(), prevLabel);
 			else
 				moveVehicle(vehicleClicked.getBack(), prevLabel);
+			
 		}
 		// if(!res)return ;
 		mv = vehicleClicked.getBack();

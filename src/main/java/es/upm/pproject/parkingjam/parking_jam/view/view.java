@@ -127,6 +127,8 @@ public class view extends JFrame {
         ImageIcon salidaAbajo = new ImageIcon(getClass().getResource("/images/salida_abajo.png"));
         ImageIcon salidaDerecha = new ImageIcon(getClass().getResource("/images/salida_derecha.png"));
         ImageIcon salidaIzquierda = new ImageIcon(getClass().getResource("/images/salida_izquierda.png"));
+        ImageIcon arbol = new ImageIcon(getClass().getResource("/images/arbol.png"));
+		ImageIcon planta = new ImageIcon(getClass().getResource("/images/planta.png"));
         cocheRojoHorizontalImage = cocheRojoHorizontal.getImage().getScaledInstance(133, 67, Image.SCALE_SMOOTH); 
         cocheRojoVerticalImage = cocheRojoVertical.getImage().getScaledInstance(67, 133, Image.SCALE_SMOOTH);  // cada cuadrado es 67 px
         parkingImage= parkingIcon.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH);
@@ -137,7 +139,10 @@ public class view extends JFrame {
         salida_arribaImage=salidaArriba.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH);
         salida_abajoImage=salidaAbajo.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH); 
         salida_derechaImage=salidaDerecha.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH); 
-        salida_izquierdaImage=salidaIzquierda.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH); 
+        salida_izquierdaImage=salidaIzquierda.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH);
+        Image arbolImg1 = arbol.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+		Image arbolImg2 = arbol.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		Image plantaImg1 = planta.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
          
 
 
@@ -162,7 +167,15 @@ public class view extends JFrame {
                 }
                 
 
-                
+                //arboles de fondo
+                g.drawImage(arbolImg1, 20, 30, this);
+                g.drawImage(arbolImg1, 600, 90, this);
+                g.drawImage(arbolImg1, 630, 240, this);
+                g.drawImage(arbolImg2, 40, 430, this);
+                g.drawImage(arbolImg2, 640, 20, this);
+                g.drawImage(plantaImg1, 600, 370, this);
+                g.drawImage(plantaImg1, 15, 280, this);
+                g.drawImage(plantaImg1, 630, 450, this);
                 }
             
         };
@@ -174,6 +187,12 @@ public class view extends JFrame {
 
 		Dimension buttonSize = new Dimension(40,40);
 		Dimension buttonSize2 = new Dimension(195,40);
+		//Color buttonColor = new Color(0,122,63);
+		//Color buttonColor = new Color(50,150,90); //verde oscuro
+		//Color buttonColor = new Color(26,127,217); //azul
+		//Color buttonColor = new Color(129,48,217); //morado
+		//Color buttonColor = new Color(123,189,1);  //mismo verde
+		Color buttonColor = new Color(65,130,4); // mismo verde oscuro
 
 		//fuentes de texto
 		Font titleFont = null;
@@ -225,7 +244,7 @@ public class view extends JFrame {
 		JButton levelsB= new JButton("levels menu");
 		levelsB.setPreferredSize(buttonSize2);
 		levelsB.setIcon(levelsMIcon);
-		levelsB.setBackground(new Color(114,181,63));
+		levelsB.setBackground(buttonColor);
 		levelsB.setForeground(Color.white);
 		levelsB.setFont(menuFont);
 		levelsB.setHorizontalAlignment(SwingConstants.LEFT);
@@ -238,7 +257,7 @@ public class view extends JFrame {
 		JButton saveB = new JButton("save game");
 		saveB.setPreferredSize(buttonSize2);
 		saveB.setIcon(saveMIcon);
-		saveB.setBackground(new Color(114,181,63));
+		saveB.setBackground(buttonColor);
 		saveB.setForeground(Color.white);
 		saveB.setFont(menuFont);
 		saveB.setHorizontalAlignment(SwingConstants.LEFT);
@@ -251,7 +270,7 @@ public class view extends JFrame {
 		JButton loadB= new JButton("load game");
 		loadB.setPreferredSize(buttonSize2);
 		loadB.setIcon(loadMIcon);
-		loadB.setBackground(new Color(114,181,63));
+		loadB.setBackground(buttonColor);
 		loadB.setForeground(Color.white);
 		loadB.setFont(menuFont);
 		loadB.setHorizontalAlignment(SwingConstants.LEFT);
@@ -264,7 +283,7 @@ public class view extends JFrame {
 		JButton newGameB = new JButton("new game");
 		newGameB.setPreferredSize(buttonSize2);
 		newGameB.setIcon(addMIcon);
-		newGameB.setBackground(new Color(114,181,63));
+		newGameB.setBackground(buttonColor);
 		newGameB.setForeground(Color.white);
 		newGameB.setFont(menuFont);
 		newGameB.setHorizontalAlignment(SwingConstants.LEFT);
@@ -277,7 +296,7 @@ public class view extends JFrame {
 		JButton closeB = new JButton("close Parking Jam");
 		closeB.setPreferredSize(buttonSize2);
 		closeB.setIcon(closeMIcon);
-		closeB.setBackground(new Color(114,181,63));
+		closeB.setBackground(buttonColor);
 		closeB.setForeground(Color.white);
 		closeB.setFont(menuFont);
 		closeB.setHorizontalAlignment(SwingConstants.LEFT);
@@ -293,28 +312,17 @@ public class view extends JFrame {
 		menuPanel.add(loadB);
 		menuPanel.add(newGameB);
 		menuPanel.add(closeB);
-		//menuPanel.show(view.this,50,87);
-		//menuPanel.setVisible(false);
-
-		//final boolean[] menuClicked = {false};
 		JButton menuB = new JButton(menuIcon);
 		menuB.setPreferredSize(buttonSize);
-		//menuB.setBackground(new Color(114,181,63));
-		menuB.setBackground(new Color(50,150,90));
-		//menuB.setBackground(new Color(100,160,250));
+		menuB.setBackground(buttonColor);
 		menuB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("menu button pressed ");
-				
-				//if(menuB.getIcon().equals(menuIcon)) {
+		
 				if(!menuPanel.isVisible()) {
-					//menuB.setIcon(closeMIcon);
-					//menuPanel.show(view.this,50,87);
 					menuPanel.setVisible(true);
 				} else {
-					//menuB.setIcon(menuIcon);
-					//opupVisible[0]=false;
 					menuPanel.setVisible(false);
 				}
 			}
@@ -322,7 +330,7 @@ public class view extends JFrame {
 		
 		JButton restartB = new JButton(restartIcon);
 		restartB.setPreferredSize(buttonSize);
-		restartB.setBackground(new Color(50,150,90));
+		restartB.setBackground(buttonColor);
 		restartB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -338,7 +346,7 @@ public class view extends JFrame {
 
 		JButton undoB = new JButton(undoIcon);
 		undoB.setPreferredSize(buttonSize);
-		undoB.setBackground(new Color(50,150,90));
+		undoB.setBackground(buttonColor);
 		undoB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

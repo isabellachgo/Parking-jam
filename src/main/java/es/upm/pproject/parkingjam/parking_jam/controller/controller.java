@@ -1,15 +1,16 @@
 package es.upm.pproject.parkingjam.parking_jam.controller;
 
-import es.upm.pproject.parkingjam.parking_jam.view.view;
-import javafx.util.Pair;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import es.upm.pproject.parkingjam.parking_jam.model.*;
+import es.upm.pproject.parkingjam.parking_jam.model.Level;
+import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
+import es.upm.pproject.parkingjam.parking_jam.view.view;
+import javafx.util.Pair;
 
 public class controller {
 	view v;
@@ -22,9 +23,26 @@ public class controller {
 	Pair<Integer, Integer> actLabel;
 	Pair<Integer, Integer> prevLabel;
 
+	public controller() {
+		try {
+			getBoard();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (lvl != null)
+			showLevel();
+		punt=0;
+		casillaBuff=new HashSet<Pair<Integer, Integer>>();
+		actLabel=new Pair<Integer,Integer>(null,null);
+		click=new Pair<Integer,Integer>(null,null);
+		prevLabel=new Pair<Integer,Integer>(null,null);
+		
+	}
+
 	public boolean getBoard() throws FileNotFoundException, IOException {
 		lvl = new Level(1);
-		cellSize = 400 / lvl.getDimensionX() - 2;
+		cellSize = (400 + (lvl.getDimensionX() / 2)) / (lvl.getDimensionX() - 2);
 		return lvl == null;
 	}
 
@@ -39,120 +57,155 @@ public class controller {
 			mapPositions.put(key, vehicles.get(key).getBack());
 		}
 		mapPositions.put('@', lvl.getExit());
-		// v=new view(vehicles, mapPositions,dimension,this);
+		v = new view(mapPositions, lvl, this);
 	}
 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {
 		// cellSize = 400 / lvl.getDimensionX()-2;
-		int row,col;
-		if(x<150)row=0;
-		else if(x>550)row=lvl.getDimensionX()-1;
-		else row = ((x-150) / cellSize)+1;
-		if(y<50)col=0;
-		else if(y>450)col=lvl.getDimensionY()-1;
-		else col = ((x-50) / cellSize)+1;
+		int row, col;
+		if (x < 150)
+			row = 0;
+		else if (x > 550)
+			row = lvl.getDimensionX() - 1;
+		else
+			row = ((x - 150) / cellSize) + 1;
+            System.out.println(" la x es = "+ row);
+		if (y < 50)
+			col = 0;
+		else if (y > 450)
+			col = lvl.getDimensionY() - 1;
+		else
+			col = ((y - 50) / cellSize) + 1;
+            System.out.println(" la y es = "+ col);
 		return new Pair<>(row, col);
 	}
 
-	public Pair<Integer, Integer> click(Pair<Integer, Integer> click) {
-		this.click = convertToGrid(click.getKey(), click.getValue());
-		this.actLabel = this.click;
-		Pair<Integer, Integer> res = null;
+	public Character click(Pair<Integer, Integer> clicked) {
+        click=clicked;
+		Pair<Integer, Integer> click1 = convertToGrid(clicked.getKey(), clicked.getValue());
+		this.actLabel = click1;
+		char res = ' ';
 		Map<Character, Vehicle> vehicles = lvl.getCars();
 		for (Vehicle v : vehicles.values()) {
-			if (v.getPosition().contains(this.click))
+			if (v.getPosition().contains(click1))
 				this.vehicleClicked = v;
 		} // casillaBuff.add(label);
 		if (vehicleClicked != null) {
-			res = vehicleClicked.getBack();
+			res = vehicleClicked.getId();
 			for (Pair<Integer, Integer> position : vehicles.get(vehicleClicked.getId()).getPosition())
 				casillaBuff.add(position);
 		}
 		return res;
 	}
 
-	public Pair<Integer, Integer> hold(Pair<Integer, Integer> mprev, Pair<Integer, Integer> m) {
+	public Pair<Integer, Integer> hold(Pair<Integer, Integer> m) {
 		if (vehicleClicked != null) {
 			if (vehicleClicked.getDimension().getKey() == 1) {// Se mueve de arriba a abajo
-				if (mprev.getValue() < m.getValue()) {// abajo
+				if (click.getValue() < m.getValue()) {// abajo
 					punt++;
-					if (punt % cellSize == 0) {
+					if ((punt - 1) % cellSize == 0) {
 						Pair<Integer, Integer> newLabel = new Pair<>(vehicleClicked.getFront().getKey(),
 								vehicleClicked.getFront().getValue() + (punt / cellSize) + 1);
 						this.prevLabel = this.actLabel;
 						this.actLabel = newLabel;
-
-						if (casillaBuff.contains(newLabel))
+						if (casillaBuff.contains(newLabel)) {
+							click = m;
 							return new Pair<>(0, 1);
-						else if (lvl.posicionValida(vehicleClicked, newLabel)) {
+						} else if (lvl.posicionValida(vehicleClicked, newLabel)) {
 							casillaBuff.add(newLabel);
+							click = m;
 							return new Pair<>(0, 1);
-						} else {punt--;
-							return new Pair<>(0, 0);}
-					} else if (casillaBuff.contains(actLabel))
+						} else {
+							punt--;
+							return new Pair<>(0, 0);
+						}
+					} else if (casillaBuff.contains(actLabel)) {
+						click = m;
 						return new Pair<>(0, 1);
-					else {punt--;
-					return new Pair<>(0, 0);}
+					} else {
+						punt--;
+						return new Pair<>(0, 0);
+					}
 				} else {// arriba
 					punt--;
-					if (punt + 1 % cellSize == 0) {
+					if ((punt + 1) % cellSize == 0) {
 						Pair<Integer, Integer> newLabel = new Pair<>(vehicleClicked.getBack().getKey(),
 								vehicleClicked.getBack().getValue() + ((punt + 1) / cellSize) - 1);
 						this.prevLabel = this.actLabel;
 						this.actLabel = newLabel;
-						if (casillaBuff.contains(newLabel))
+						if (casillaBuff.contains(newLabel)) {
+							click = m;
 							return new Pair<>(0, -1);
-						else if (lvl.posicionValida(vehicleClicked, newLabel)) {
+						} else if (lvl.posicionValida(vehicleClicked, newLabel)) {
 							casillaBuff.add(newLabel);
+							click = m;
 							return new Pair<>(0, -1);
-						} else {punt++;
-						return new Pair<>(0, 0);}
-					} else if (casillaBuff.contains(actLabel))
+						} else {
+							punt++;
+							return new Pair<>(0, 0);
+						}
+					} else if (casillaBuff.contains(actLabel)) {
+						click = m;
 						return new Pair<>(0, -1);
-					
-						else {punt++;
-						return new Pair<>(0, 0);}
+					} else {
+						punt++;
+						return new Pair<>(0, 0);
+					}
 				}
 
 			} else {// Se mueve de izq a derecha
-				if (mprev.getKey() < m.getKey()) {// derecha
+				if (click.getKey() < m.getKey()) {// derecha
 					punt++;
-					if (punt % cellSize == 0) {
+					if ((punt - 1) % cellSize == 0) {
 						Pair<Integer, Integer> newLabel = new Pair<>(
 								vehicleClicked.getFront().getKey() + (punt / cellSize) + 1,
 								vehicleClicked.getFront().getValue());
 						this.prevLabel = this.actLabel;
 						this.actLabel = newLabel;
-						if (casillaBuff.contains(newLabel))
+						if (casillaBuff.contains(newLabel)) {
+							click = m;
 							return new Pair<>(1, 0);
-						else if (lvl.posicionValida(vehicleClicked, newLabel)) {
+						} else if (lvl.posicionValida(vehicleClicked, newLabel)) {
 							casillaBuff.add(newLabel);
+							click = m;
 							return new Pair<>(1, 0);
-						} else {punt--;
-						return new Pair<>(0, 0);}
-					} else if (casillaBuff.contains(actLabel))
+						} else {
+							punt--;
+							return new Pair<>(0, 0);
+						}
+					} else if (casillaBuff.contains(actLabel)) {
+						click = m;
 						return new Pair<>(1, 0);
-					else {punt--;
-					return new Pair<>(0, 0);}
+					} else {
+						punt--;
+						return new Pair<>(0, 0);
+					}
 				} else {// izq
 					punt--;
-					if (punt + 1 % cellSize == 0) {
+					if ((punt + 1) % cellSize == 0) {
 						Pair<Integer, Integer> newLabel = new Pair<>(
 								vehicleClicked.getBack().getKey() + ((punt + 1) / cellSize) - 1,
 								vehicleClicked.getBack().getValue());
 						this.prevLabel = this.actLabel;
 						this.actLabel = newLabel;
-						if (casillaBuff.contains(newLabel))
+						if (casillaBuff.contains(newLabel)) {
+							click = m;
 							return new Pair<>(-1, 0);
-						else if (lvl.posicionValida(vehicleClicked, newLabel)) {
+						} else if (lvl.posicionValida(vehicleClicked, newLabel)) {
 							casillaBuff.add(newLabel);
+							click = m;
 							return new Pair<>(-1, 0);
-						} else {punt++;
-						return new Pair<>(0, 0);}
-					} else if (casillaBuff.contains(actLabel))
+						} else {
+							punt++;
+							return new Pair<>(0, 0);
+						}
+					} else if (casillaBuff.contains(actLabel)) {
+						click = m;
 						return new Pair<>(-1, 0);
-					else {punt++;
-					return new Pair<>(0, 0);}
+					} else {
+						punt++;
+						return new Pair<>(0, 0);
+					}
 				}
 			}
 
@@ -164,29 +217,31 @@ public class controller {
 //		if (click.equals(convertToGrid(posF.getKey(), posF.getValue())))
 //			return vehicleClicked.getBack();
 		// boolean res;
+		if(vehicleClicked==null)return null;
 		Pair<Integer, Integer> mv;
 		int punt2 = punt;
-		
-		if (punt < 0)
-			punt2 = Math.abs(punt);
+        if(actLabel!=null && prevLabel!=null) {
+        
+		punt2 = Math.abs(punt);
 		if (punt2 % cellSize > cellSize / 2) {
-			//if(click.equals(actLabel))return vehicleClicked.getBack();
+			// if(click.equals(actLabel))return vehicleClicked.getBack();
 			if (punt > 0)
 				moveVehicle(vehicleClicked.getFront(), actLabel);
 			else
 				moveVehicle(vehicleClicked.getBack(), actLabel);
 		} else {
-			//if(click.equals(prevLabel))return vehicleClicked.getBack();
+			// if(click.equals(prevLabel))return vehicleClicked.getBack();
 			if (punt > 0)
 				moveVehicle(vehicleClicked.getFront(), prevLabel);
 			else
 				moveVehicle(vehicleClicked.getBack(), prevLabel);
-			
+
 		}
+    }
 		// if(!res)return ;
 		mv = vehicleClicked.getBack();
 		casillaBuff.clear();
-		vehicleClicked = null;
+		this.vehicleClicked = null;
 		punt = 0;
 		actLabel = null;
 		prevLabel = null;

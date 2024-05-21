@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ public class Level  {
 		exit_position = bReader.getExit();
 		cars = bReader.getCars();
 		this.levelPoints= 0;
-		if (n_level ==1) this.gamePoints= 0; // if n_level is 1, gamePoints is initialized to 0.
+		if (n_level.equals(1)) this.gamePoints= 0; // if n_level is 1, gamePoints is initialized to 0.
 		else this.gamePoints=0; // if is another level getGamePoints ??
 	}
 
@@ -132,13 +133,17 @@ public class Level  {
 		}
 
 		//Updates the board with the new positions only if the car is not the red one.
+		Set<Pair<Integer,Integer>> positionNew= new HashSet<>();
 		for (Pair<Integer, Integer> newPos : newPosition) {
 			if(!car.getRedCar()) {
 				Integer newX = newPos.getKey();
 				Integer newY = newPos.getValue();
 				updatedBoard[newX][newY] = car.getId();
+				Pair<Integer, Integer> p = new Pair<>(newX,newY);
+				positionNew.add(p);
 			}
 		}
+		car.setPosition(positionNew);
 		return updatedBoard;
 	}
 
@@ -217,30 +222,83 @@ public class Level  {
 			System.out.println("");
 		}
 	}
-
-	
+public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
+		boolean result = false;
+		Integer boxX= box.getKey();
+		Integer boxY = box.getValue();
+		
+		if(board[boxX][boxY]== null) result=true;
+		else {
+			if(car.getRedCar() && board[boxX][boxY]=='@')result =true;
+			else {
+				Set<Pair<Integer, Integer>> position =car.getPosition();
+				Iterator <Pair<Integer, Integer>>it = position.iterator();
+				 while(it.hasNext() && !result) {
+					 Pair<Integer, Integer> pos = it.next();
+					 Integer newX = pos.getKey();
+					 Integer newY = pos.getValue();
+					 if(newX.equals(boxX) && newY.equals(boxY)) result=true;
+				 }	
+			}
+		}
+ return result;
+}
 	public void reset() {
 		// TODO Auto-generated method stub
 
 	}
+
 	public static void main(String args[]) throws FileNotFoundException, IOException {
 		Level b1 = new Level(1);
 		if (b1.board == null) {
 			System.out.println("Error al construir el tablero");
 		} else {
 			b1.printBoard();
+			Vehicle car1= b1.getCars().get('a');
+			Pair<Integer,Integer> pos = new Pair<>(4,4);
+			if( b1.posicionValida(car1,pos )) {
+				System.out.println("Posicion valida");
+			}else System.out.println("Bien porque es Posicion NO valida");
+			Vehicle car2= b1.getCars().get('e');
+			Pair<Integer,Integer> pos2 = new Pair<>(2,5);
+			if( b1.posicionValida(car2,pos2 )) {
+				System.out.println("Bien porque es Posicion valida");
+			}else System.out.println("Posicion NO valida");
+			Vehicle car3= b1.getCars().get('f');
+			Pair<Integer,Integer> pos3 = new Pair<>(6,4);
+			if( b1.posicionValida(car3,pos3 )) {
+				System.out.println("Bien porque es Posicion valida");
+			}else System.out.println("Posicion NO valida");
+			Vehicle car4= b1.getCars().get('e');
+			Pair<Integer,Integer> pos4 = new Pair<>(2,2);
+			if( b1.posicionValida(car4,pos4 )) {
+				System.out.println("Bien porque es Posicion valida");
+			}else System.out.println("Posicion NO valida");
+			
+			Vehicle car5= b1.getCars().get('*');
+			Pair<Integer,Integer> pos5 = new Pair<>(4,7);
+			if( b1.posicionValida(car5,pos5 )) {
+				System.out.println("Bien porque es Posicion valida, ya que el coche rojo si puede ir a salida");
+			}else System.out.println("Posicion NO valida");
+			
+			
 			// nota: no se escogio la ruta mas optima para probar el movimiento de coches.
 			Vehicle vehicle = b1.getCars().get('e'); // 
+			System.out.println("position antes de moverse debe ser: " + vehicle.getPosition().toString());
 			if (b1.move(vehicle, 'U', 3)) {
 				System.out.println("Movimiento exitoso. Tablero después del movimiento:");
 				b1.printBoard(); // Imprimir el tablero después del movimiento
+				System.out.println("position despues de moverse: " + vehicle.getPosition().toString());
 			} else {
 				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
 			}
 			Vehicle vehicle2 = b1.getCars().get('g');
+			System.out.println("position antes de moverse debe ser: " + vehicle2.getPosition().toString());
+			
 			if (b1.move(vehicle2, 'L', 3)) {
 				System.out.println("Movimiento exitoso. Tablero después del movimiento:");
 				b1.printBoard(); // Imprimir el tablero después del movimiento
+				System.out.println("position despues de moverse: " + vehicle2.getPosition().toString());
 			} else {
 				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
 			}
@@ -288,6 +346,8 @@ public class Level  {
 				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
 			}
 			System.out.println("Se han conseguido "+b1.getLevelPoint()+ " puntos en este nivel");
+			
+			
 
 		}
 	}

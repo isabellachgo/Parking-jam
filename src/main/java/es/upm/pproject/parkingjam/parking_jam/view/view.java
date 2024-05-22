@@ -421,7 +421,7 @@ public class view extends JFrame {
 		
 		JPanel winPanel = new JPanel();
 		winPanel.setLayout(new BoxLayout(winPanel, BoxLayout.Y_AXIS));
-		winPanel.setPreferredSize(new Dimension(100,100));
+		winPanel.setPreferredSize(new Dimension(200,200));
 		winPanel.setBounds(75, 150, 100, 100);
 		winPanel.setBackground(winPColor);
 		BevelBorder b = new BevelBorder(BevelBorder.RAISED, borderWinPColor, shadeWinPColor); 
@@ -456,9 +456,13 @@ public class view extends JFrame {
 		row2W.add(star1W);
 		row2W.add(levelsWB);
 		row2W.add(star2W);
+		row3W.add(Box.createHorizontalStrut(25));
 		row3W.add(levelsWB);
+		row3W.add(Box.createHorizontalStrut(15));
 		row3W.add(restartWB);
+		row3W.add(Box.createHorizontalStrut(15));
 		row3W.add(nextWB);
+		row3W.add(Box.createHorizontalStrut(25));
 		
 		//layeredP.add(winPanel, JLayeredPane.PALETTE_LAYER);
 

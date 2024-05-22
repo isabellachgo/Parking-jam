@@ -492,19 +492,20 @@ public class view extends JFrame {
               	newPos = newInfo.getKey();
 				if(newPos!=null)
 				{
-				mapPosiciones.put(carSelect, newPos);
+				if(newInfo.getValue().getValue())mapPosiciones.remove(carSelect);
+			
+				else mapPosiciones.put(carSelect, newPos);
 				mapCoordenadas= cambioCoodenadas(mapPosiciones);
 				levelPointsValue.setText(newInfo.getValue().getKey().toString());
                 gamePanel.repaint();
-				//if(newInfo.getValue().getValue()) EN ESTE IF METES LO DEL PANEL DE VICTORIA
-                
-				}
+				
 			}
             }
+		}
 			
     });
         
- 
+
         
    
 

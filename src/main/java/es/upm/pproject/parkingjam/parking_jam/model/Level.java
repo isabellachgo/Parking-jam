@@ -135,13 +135,15 @@ public class Level  {
 		//Updates the board with the new positions only if the car is not the red one.
 		Set<Pair<Integer,Integer>> positionNew= new HashSet<>();
 		for (Pair<Integer, Integer> newPos : newPosition) {
-			if(!car.getRedCar()) {
+			//if(!car.getRedCar() && !newPos.equals(exit_position)) {
 				Integer newX = newPos.getKey();
 				Integer newY = newPos.getValue();
 				updatedBoard[newX][newY] = car.getId();
 				Pair<Integer, Integer> p = new Pair<>(newX,newY);
 				positionNew.add(p);
-			}
+			//}
+			
+			
 		}
 		car.setPosition(positionNew);
 		return updatedBoard;
@@ -337,9 +339,16 @@ public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
 			} else {
 				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
 			}
-			// DINAMICA GANAR
+			// Mover coche rojo
 			Vehicle vehicle8 = b1.getCars().get('*');
-			if (b1.move(vehicle8, 'D', 4)) { // como maximo puedo moverlo hasta la entrada (ocupando su casilla) , y una vez alli no lo imprimo por ser coche rojo
+			if (b1.move(vehicle8, 'D', 2)) { // como maximo puedo moverlo hasta la entrada (ocupando su casilla) , y una vez alli no lo imprimo por ser coche rojo
+				System.out.println("Movimiento exitoso. Tablero después del movimiento:");
+				b1.printBoard(); // Imprimir el tablero después del movimiento
+			} else {
+				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
+			}
+			Vehicle vehicle9 = b1.getCars().get('*');
+			if (b1.move(vehicle9, 'D', 2)) { // como maximo puedo moverlo hasta la entrada (ocupando su casilla) , y una vez alli no lo imprimo por ser coche rojo
 				System.out.println("Movimiento exitoso. Tablero después del movimiento:");
 				b1.printBoard(); // Imprimir el tablero después del movimiento
 			} else {

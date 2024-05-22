@@ -421,7 +421,7 @@ public class view extends JFrame {
 		
 		JPanel winPanel = new JPanel();
 		winPanel.setLayout(new BoxLayout(winPanel, BoxLayout.Y_AXIS));
-		winPanel.setPreferredSize(new Dimension(200,200));
+		winPanel.setPreferredSize(new Dimension(100,100));
 		winPanel.setBounds(75, 150, 100, 100);
 		winPanel.setBackground(winPColor);
 		BevelBorder b = new BevelBorder(BevelBorder.RAISED, borderWinPColor, shadeWinPColor); 
@@ -456,13 +456,9 @@ public class view extends JFrame {
 		row2W.add(star1W);
 		row2W.add(levelsWB);
 		row2W.add(star2W);
-		row3W.add(Box.createHorizontalStrut(25));
 		row3W.add(levelsWB);
-		row3W.add(Box.createHorizontalStrut(15));
 		row3W.add(restartWB);
-		row3W.add(Box.createHorizontalStrut(15));
 		row3W.add(nextWB);
-		row3W.add(Box.createHorizontalStrut(25));
 		
 		//layeredP.add(winPanel, JLayeredPane.PALETTE_LAYER);
 
@@ -490,7 +486,7 @@ public class view extends JFrame {
 				if(carSelect!=' ')
 				{
 				Pair<Integer,Integer> newPos = new Pair<Integer,Integer>(null, null); // pair < par<int,int>,int>
-				Pair<Pair<Integer,Integer>,Integer> newInfo = new Pair<Pair<Integer,Integer>,Integer>(null, null); 
+				Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>> newInfo = new Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>>(null, null); 
 				System.out.println("Mouse Soltado at: " + e.getX() + ", " + e.getY());
               	newInfo = controller.drop(new Pair<Integer,Integer>(e.getX(), e.getY()));
               	newPos = newInfo.getKey();
@@ -498,8 +494,9 @@ public class view extends JFrame {
 				{
 				mapPosiciones.put(carSelect, newPos);
 				mapCoordenadas= cambioCoodenadas(mapPosiciones);
-				levelPointsValue.setText(newInfo.getValue().toString());
+				levelPointsValue.setText(newInfo.getValue().getKey().toString());
                 gamePanel.repaint();
+				//if(newInfo.getValue().getValue()) EN ESTE IF METES LO DEL PANEL DE VICTORIA
                 
 				}
 			}

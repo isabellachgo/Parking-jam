@@ -31,6 +31,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
@@ -243,11 +244,10 @@ public class view extends JFrame {
 		//estructura del header
 		JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10,10)); 
 
-		JPanel menuPanel = new JPanel();
+		JPopupMenu menuPanel = new JPopupMenu();
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		menuPanel.setSize(207,235);
+		menuPanel.setPopupSize(207,235);
 		menuPanel.setBounds(50, 87, 207, 235);
-		//final boolean[] popupVisible= {false};
 		
 		JButton levelsB= new JButton("levels menu");
 		levelsB.setPreferredSize(buttonSize2);
@@ -312,6 +312,7 @@ public class view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("close button pressed");
+				dispose();
 			}
 		});
 
@@ -320,6 +321,7 @@ public class view extends JFrame {
 		menuPanel.add(loadB);
 		menuPanel.add(newGameB);
 		menuPanel.add(closeB);
+		
 		JButton menuB = new JButton(menuIcon);
 		menuB.setPreferredSize(buttonSize);
 		menuB.setBackground(buttonColor);
@@ -329,6 +331,7 @@ public class view extends JFrame {
 				System.out.println("menu button pressed ");
 		
 				if(!menuPanel.isVisible()) {
+					menuPanel.show(view.this, 50,87);
 					menuPanel.setVisible(true);
 				} else {
 					menuPanel.setVisible(false);
@@ -418,12 +421,47 @@ public class view extends JFrame {
 		
 		JPanel winPanel = new JPanel();
 		winPanel.setLayout(new BoxLayout(winPanel, BoxLayout.Y_AXIS));
-		//winPanel.setPreferredSize(new Dimension(100,100));
+		winPanel.setPreferredSize(new Dimension(100,100));
 		winPanel.setBounds(75, 150, 100, 100);
 		winPanel.setBackground(winPColor);
 		BevelBorder b = new BevelBorder(BevelBorder.RAISED, borderWinPColor, shadeWinPColor); 
 		winPanel.setBorder(b);
 		
+		JLabel winL = new JLabel("VICTORY");
+		winL.setFont(titleFont);
+		
+		JLabel pointsWL = new JLabel("0000");
+		pointsWL.setFont(levelPointsFont);
+		
+		JLabel star1W = new JLabel(starIcon);
+		JLabel star2W = new JLabel(starIcon2);
+		
+		JButton levelsWB = new JButton(levelsMIcon);
+		levelsWB.setBackground(buttonColor);
+		levelsWB.setPreferredSize(buttonSize);
+		
+		JButton restartWB = new JButton(restartIcon);
+		restartWB.setBackground(buttonColor);
+		restartWB.setPreferredSize(buttonSize);
+		
+		JButton nextWB = new JButton("n");
+		nextWB.setBackground(buttonColor);
+		nextWB.setPreferredSize(buttonSize);
+		
+		JPanel row1W = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel row2W = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel row3W = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		
+		row1W.add(winL);
+		row2W.add(star1W);
+		row2W.add(levelsWB);
+		row2W.add(star2W);
+		row3W.add(levelsWB);
+		row3W.add(restartWB);
+		row3W.add(nextWB);
+		
+		//layeredP.add(winPanel, JLayeredPane.PALETTE_LAYER);
+
         add(gamePanel, BorderLayout.CENTER);
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -458,13 +496,14 @@ public class view extends JFrame {
 				mapCoordenadas= cambioCoodenadas(mapPosiciones);
 				levelPointsValue.setText(newInfo.getValue().toString());
                 gamePanel.repaint();
+                
 				}
 			}
             }
 			
     });
         
-        //layeredP.add(winPanel, JLayeredPane.PALETTE_LAYER);
+ 
         
    
 

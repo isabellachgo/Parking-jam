@@ -346,8 +346,8 @@ public class AppTest {
 			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]='e'; boardt[3][3]=null; boardt[4][3]=null;  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
 			boardt[0][4]='+'; boardt[1][4]='f';  boardt[2][4]='f'; boardt[3][4]='f';  boardt[4][4]=null;  boardt[5][4]=null;  boardt[6][4]='c'; boardt[7][4]='+';
 			boardt[0][5]='+'; boardt[1][5]=null;  boardt[2][5]=null;  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]='c'; boardt[7][5]='+';
-			boardt[0][6]='+'; boardt[1][6]='g'; boardt[2][6]='g';  boardt[3][6]='g'; boardt[4][6]=null;  boardt[5][6]=null;  boardt[6][6]='c';  boardt[7][6]='+';
-			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='@';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
+			boardt[0][6]='+'; boardt[1][6]='g'; boardt[2][6]='g';  boardt[3][6]='g'; boardt[4][6]='*';  boardt[5][6]=null;  boardt[6][6]='c';  boardt[7][6]='+';
+			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='*';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
 
 			Character[][] board = level.getBoard();
 			for(int i =0; i<8; i++) {
@@ -490,7 +490,10 @@ public class AppTest {
 			level.move(level.getCars().get('*'), 'D', 4);
 			Vehicle car = level.getCars().get('*');
 			Set<Pair<Integer, Integer>> positionA =new HashSet();
-		
+			Pair<Integer, Integer> p1 =new Pair<Integer, Integer>(4,6);
+			Pair<Integer, Integer> p2 =new Pair<Integer, Integer>(4,7);
+			positionA.add(p1);
+			positionA.add(p2);
 			Set<Pair<Integer, Integer>> positionD =car.getPosition();
 			assertEquals(positionD, positionA);
 		}

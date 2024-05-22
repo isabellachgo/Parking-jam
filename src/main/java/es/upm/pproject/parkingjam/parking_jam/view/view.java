@@ -199,6 +199,7 @@ public class view extends JFrame {
 		ImageIcon saveMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
 		ImageIcon loadMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 		ImageIcon levelsMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/levelsMenu.png")),30,30);
+		ImageIcon nextIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/next.png")),30,30);
 
 
 		// Panel donde se dibujan los vehículos
@@ -419,12 +420,18 @@ public class view extends JFrame {
 
 		JLayeredPane layeredP = new JLayeredPane();
 		layeredP.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
+		
+		JPanel shadowPanel = new JPanel();
+		shadowPanel.setPreferredSize(new Dimension(700,700));
+		shadowPanel.setBackground(new Color(61,64,61, 50));		
+		shadowPanel.setForeground(new Color(61,64,61, 90));   // no va !!!!
 
 		JPanel winPanel = new JPanel();
 		winPanel.setLayout(new BoxLayout(winPanel, BoxLayout.Y_AXIS));
 		winPanel.setPreferredSize(new Dimension(100,100));
 		winPanel.setBounds(225, 100, 250, 200);
 		winPanel.setBackground(winPColor);
+		winPanel.setForeground(winPColor);
 		BevelBorder b = new BevelBorder(BevelBorder.RAISED, borderWinPColor, shadeWinPColor); 
 		winPanel.setBorder(b);
 
@@ -445,7 +452,7 @@ public class view extends JFrame {
 		restartWB.setBackground(buttonColor);
 		restartWB.setPreferredSize(buttonSize);
 
-		JButton nextWB = new JButton("n");
+		JButton nextWB = new JButton(nextIcon);
 		nextWB.setBackground(buttonColor);
 		nextWB.setPreferredSize(buttonSize);
 
@@ -509,7 +516,10 @@ public class view extends JFrame {
 						
 						if(newInfo.getValue().getValue()) {
 							pointsWL.setText(newInfo.getValue().getKey().toString());
-							layeredP.add(winPanel, JLayeredPane.PALETTE_LAYER);
+							layeredP.add(shadowPanel, JLayeredPane.PALETTE_LAYER);
+							layeredP.revalidate();
+							layeredP.repaint();
+							layeredP.add(winPanel, JLayeredPane.MODAL_LAYER);
 							layeredP.revalidate();
 							layeredP.repaint();
 							System.out.println("VICTORIA");

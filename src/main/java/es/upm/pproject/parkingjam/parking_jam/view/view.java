@@ -49,43 +49,43 @@ import javafx.util.Pair;
 
 
 public class view extends JFrame {
-	private Map<Character, Vehicle> mapVehiculo; // Mapa con las posiciones de los vehículos
-	private Map <Character,Pair<Integer,Integer>> mapPosiciones;
+    private Map<Character, Vehicle> mapVehiculo; // Mapa con las posiciones de los vehículos
+    private Map <Character,Pair<Integer,Integer>> mapPosiciones;
 	private Map <Character,Pair<Integer,Integer>> mapCoordenadas;
-	private Level level;
+    private Level level;
 	private char carSelect;
-	private controller controller;
+    private controller controller;
 	private Graphics grafic;
 	private Component comp;
-	private int dimensionMapaX;
+    private int dimensionMapaX;
 	private int dimensionMapaY;
 	private int tamanoCeldaX;
 	private int tamanoCeldaY;
-	private Image cocheRojoHorizontalImage;
-	private Image cocheRojoVerticalImage;// Imagen del coche
-	private Image parkingImage;
-	private Image cocheAzulVerticalImage;
-	private Image cocheAzulHorizontalImage;
-	private Image camionVerticalImage;
-	private Image camionHorizontalImage;
-	private Image salida_arribaImage;
-	private Image salida_abajoImage;
-	private Image salida_derechaImage;
-	private Image salida_izquierdaImage;
+    private Image cocheRojoHorizontalImage;
+    private Image cocheRojoVerticalImage;// Imagen del coche
+    private Image parkingImage;
+    private Image cocheAzulVerticalImage;
+    private Image cocheAzulHorizontalImage;
+    private Image camionVerticalImage;
+    private Image camionHorizontalImage;
+    private Image salida_arribaImage;
+    private Image salida_abajoImage;
+    private Image salida_derechaImage;
+    private Image salida_izquierdaImage;
 
-	public view( Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller) {
-		this.mapVehiculo = level.getCars();
-		this.mapPosiciones=posiciones;
-		this.dimensionMapaX=level.getDimensionX();
+    public view( Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller) {
+        this.mapVehiculo = level.getCars();
+        this.mapPosiciones=posiciones;
+        this.dimensionMapaX=level.getDimensionX();
 		this.dimensionMapaY=level.getDimensionY();
 		tamanoCeldaX=Math.round((400+(dimensionMapaX/2))/(dimensionMapaX-2));
 		tamanoCeldaY=Math.round((400+(dimensionMapaY/2))/(dimensionMapaY-2)) ;
 		System.out.println("tamaño celda " +tamanoCeldaX);
-		this.level=level;
-		this.controller=controller;
+        this.level=level;
+        this.controller=controller;
 		mapCoordenadas=cambioCoodenadas(posiciones);
-		initUI();
-	}
+        initUI();
+    }
 
 	private Map <Character,Pair<Integer,Integer>> cambioCoodenadas (Map <Character,Pair<Integer,Integer>> mapPosiciones){
 		Map <Character,Pair<Integer,Integer>> sol = new HashMap<Character,Pair<Integer,Integer>>();
@@ -110,44 +110,44 @@ public class view extends JFrame {
 		return sol;
 	}
 
-	private void initUI() {
-		setTitle("Parking Game");
-		setSize(700, 700);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setResizable(false);  // Impide que la ventana sea redimensionable
+    private void initUI() {
+        setTitle("Parking Game");
+        setSize(700, 700);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);  // Impide que la ventana sea redimensionable
 
-		setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
 
-		// Cargar la imagen del coche
-		ImageIcon cocheRojoHorizontal = new ImageIcon(getClass().getResource("/images/coche_rojo_horizontal.png"));
-		ImageIcon cocheRojoVertical = new ImageIcon(getClass().getResource("/images/coche_rojo_vertical.png")); // Asegúrate de que el path es correcto
-		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking2.jpg"));
-		ImageIcon cocheAzulHorizontal = new ImageIcon(getClass().getResource("/images/coche_azul_horizontal.png"));
-		ImageIcon cocheAzulVertical = new ImageIcon(getClass().getResource("/images/coche_azul_vertical.png"));
-		ImageIcon camionHorizontal = new ImageIcon(getClass().getResource("/images/camion_horizontal.png"));
-		ImageIcon camionVertictal = new ImageIcon(getClass().getResource("/images/camion_vertical.png"));
-		ImageIcon salidaArriba = new ImageIcon(getClass().getResource("/images/salida_arriba.png"));
-		ImageIcon salidaAbajo = new ImageIcon(getClass().getResource("/images/salida_abajo.png"));
-		ImageIcon salidaDerecha = new ImageIcon(getClass().getResource("/images/salida_derecha.png"));
-		ImageIcon salidaIzquierda = new ImageIcon(getClass().getResource("/images/salida_izquierda.png"));
-		ImageIcon arbol = new ImageIcon(getClass().getResource("/images/arbol.png"));
+        // Cargar la imagen del coche
+        ImageIcon cocheRojoHorizontal = new ImageIcon(getClass().getResource("/images/coche_rojo_horizontal.png"));
+        ImageIcon cocheRojoVertical = new ImageIcon(getClass().getResource("/images/coche_rojo_vertical.png")); // Asegúrate de que el path es correcto
+        ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking2.jpg"));
+        ImageIcon cocheAzulHorizontal = new ImageIcon(getClass().getResource("/images/coche_azul_horizontal.png"));
+        ImageIcon cocheAzulVertical = new ImageIcon(getClass().getResource("/images/coche_azul_vertical.png"));
+        ImageIcon camionHorizontal = new ImageIcon(getClass().getResource("/images/camion_horizontal.png"));
+        ImageIcon camionVertictal = new ImageIcon(getClass().getResource("/images/camion_vertical.png"));
+        ImageIcon salidaArriba = new ImageIcon(getClass().getResource("/images/salida_arriba.png"));
+        ImageIcon salidaAbajo = new ImageIcon(getClass().getResource("/images/salida_abajo.png"));
+        ImageIcon salidaDerecha = new ImageIcon(getClass().getResource("/images/salida_derecha.png"));
+        ImageIcon salidaIzquierda = new ImageIcon(getClass().getResource("/images/salida_izquierda.png"));
+        ImageIcon arbol = new ImageIcon(getClass().getResource("/images/arbol.png"));
 		ImageIcon planta = new ImageIcon(getClass().getResource("/images/planta.png"));
-		cocheRojoHorizontalImage = cocheRojoHorizontal.getImage().getScaledInstance(133, 67, Image.SCALE_SMOOTH); 
-		cocheRojoVerticalImage = cocheRojoVertical.getImage().getScaledInstance(67, 133, Image.SCALE_SMOOTH);  // cada cuadrado es 67 px
-		parkingImage= parkingIcon.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH);
-		cocheAzulVerticalImage = cocheAzulVertical.getImage().getScaledInstance(67, 133, Image.SCALE_SMOOTH); 
-		cocheAzulHorizontalImage = cocheAzulHorizontal.getImage().getScaledInstance(133, 67, Image.SCALE_SMOOTH); 
-		camionVerticalImage = camionVertictal.getImage().getScaledInstance(67, 200, Image.SCALE_SMOOTH); 
-		camionHorizontalImage = camionHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH); 
-		salida_arribaImage=salidaArriba.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH);
-		salida_abajoImage=salidaAbajo.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH); 
-		salida_derechaImage=salidaDerecha.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH); 
-		salida_izquierdaImage=salidaIzquierda.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH);
-		Image arbolImg1 = arbol.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        cocheRojoHorizontalImage = cocheRojoHorizontal.getImage().getScaledInstance(133, 67, Image.SCALE_SMOOTH); 
+        cocheRojoVerticalImage = cocheRojoVertical.getImage().getScaledInstance(67, 133, Image.SCALE_SMOOTH);  // cada cuadrado es 67 px
+        parkingImage= parkingIcon.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH);
+        cocheAzulVerticalImage = cocheAzulVertical.getImage().getScaledInstance(67, 133, Image.SCALE_SMOOTH); 
+        cocheAzulHorizontalImage = cocheAzulHorizontal.getImage().getScaledInstance(133, 67, Image.SCALE_SMOOTH); 
+        camionVerticalImage = camionVertictal.getImage().getScaledInstance(67, 200, Image.SCALE_SMOOTH); 
+        camionHorizontalImage = camionHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH); 
+        salida_arribaImage=salidaArriba.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH);
+        salida_abajoImage=salidaAbajo.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH); 
+        salida_derechaImage=salidaDerecha.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH); 
+        salida_izquierdaImage=salidaIzquierda.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH);
+        Image arbolImg1 = arbol.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		Image arbolImg2 = arbol.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 		Image plantaImg1 = planta.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
+         
 		Dimension buttonSize = new Dimension(40,40);
 		Dimension buttonSize2 = new Dimension(195,40);
 		//Color buttonColor = new Color(0,122,63);
@@ -201,43 +201,42 @@ public class view extends JFrame {
 		ImageIcon levelsMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/levelsMenu.png")),30,30);
 
 
-		// Panel donde se dibujan los vehículos
-		JPanel gamePanel = new JPanel() {
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
+        // Panel donde se dibujan los vehículos
+        JPanel gamePanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
 				grafic=g;
 				comp=this;
-				g.drawImage(parkingImage,100,0 , this);
-				Iterator <Character> it = mapCoordenadas.keySet().iterator();
-				while (it.hasNext()) {
-					Character caracter = it.next();
-					boolean esRojo=false;
-					boolean esSalida=false;
-					if(caracter.equals('*')) esRojo=true;
-					if(caracter.equals('@')) esSalida=true;
-					Pair <Boolean,Integer> dimension = conseguirPosicion(caracter);
-					Pair <Integer,Integer> posicion= mapCoordenadas.get(caracter);
-					pintarVehiculo(esRojo,esSalida,dimension.getValue(),dimension.getKey(),posicion.getKey(),posicion.getValue(),g,this);
-				}
+                g.drawImage(parkingImage,100,0 , this);
+                Iterator <Character> it = mapCoordenadas.keySet().iterator();
+                while (it.hasNext()) {
+                    Character caracter = it.next();
+                    boolean esRojo=false;
+                    boolean esSalida=false;
+                    if(caracter.equals('*')) esRojo=true;
+                    if(caracter.equals('@')) esSalida=true;
+                    Pair <Boolean,Integer> dimension = conseguirPosicion(caracter);
+                    Pair <Integer,Integer> posicion= mapCoordenadas.get(caracter);
+                    pintarVehiculo(esRojo,esSalida,dimension.getValue(),dimension.getKey(),posicion.getKey(),posicion.getValue(),g,this);
+                }
+                
 
-
-				//arboles de fondo
-				g.drawImage(arbolImg1, 20, 30, this);
-				g.drawImage(arbolImg1, 600, 90, this);
-				g.drawImage(arbolImg1, 630, 240, this);
-				g.drawImage(arbolImg2, 40, 430, this);
-				g.drawImage(arbolImg2, 640, 20, this);
-				g.drawImage(plantaImg1, 600, 370, this);
-				g.drawImage(plantaImg1, 15, 280, this);
-				g.drawImage(plantaImg1, 630, 450, this);
-			}
-
-		};
-		gamePanel.setBackground(new Color(123,189,1));
-		gamePanel.setBounds(0,0,700,700);
-
-		//--------------------PANEL NORTH-----------------------------
+                //arboles de fondo
+                g.drawImage(arbolImg1, 20, 30, this);
+                g.drawImage(arbolImg1, 600, 90, this);
+                g.drawImage(arbolImg1, 630, 240, this);
+                g.drawImage(arbolImg2, 40, 430, this);
+                g.drawImage(arbolImg2, 640, 20, this);
+                g.drawImage(plantaImg1, 600, 370, this);
+                g.drawImage(plantaImg1, 15, 280, this);
+                g.drawImage(plantaImg1, 630, 450, this);
+                }
+            
+        };
+        gamePanel.setBackground(new Color(123,189,1));
+        
+//--------------------PANEL NORTH-----------------------------
 		// Header del view
 		JPanel headerPanel = new JPanel();
 		headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
@@ -249,7 +248,7 @@ public class view extends JFrame {
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		menuPanel.setPopupSize(207,235);
 		menuPanel.setBounds(50, 87, 207, 235);
-
+		
 		JButton levelsB= new JButton("levels menu");
 		levelsB.setPreferredSize(buttonSize2);
 		levelsB.setIcon(levelsMIcon);
@@ -322,7 +321,7 @@ public class view extends JFrame {
 		menuPanel.add(loadB);
 		menuPanel.add(newGameB);
 		menuPanel.add(closeB);
-
+		
 		JButton menuB = new JButton(menuIcon);
 		menuB.setPreferredSize(buttonSize);
 		menuB.setBackground(buttonColor);
@@ -330,7 +329,7 @@ public class view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("menu button pressed ");
-
+		
 				if(!menuPanel.isVisible()) {
 					menuPanel.show(view.this, 50,87);
 					menuPanel.setVisible(true);
@@ -339,7 +338,7 @@ public class view extends JFrame {
 				}
 			}
 		});
-
+		
 		JButton restartB = new JButton(restartIcon);
 		restartB.setPreferredSize(buttonSize);
 		restartB.setBackground(buttonColor);
@@ -415,254 +414,249 @@ public class view extends JFrame {
 
 		add(headerPanel, BorderLayout.NORTH); 
 
-		//-------------------------PANEL CENTRAL--------------------
+//-------------------------PANEL CENTRAL--------------------
 
 		JLayeredPane layeredP = new JLayeredPane();
 		layeredP.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
-
+		
 		JPanel winPanel = new JPanel();
 		winPanel.setLayout(new BoxLayout(winPanel, BoxLayout.Y_AXIS));
 		winPanel.setPreferredSize(new Dimension(100,100));
-		winPanel.setBounds(225, 100, 250, 200);
+		winPanel.setBounds(75, 150, 100, 100);
 		winPanel.setBackground(winPColor);
 		BevelBorder b = new BevelBorder(BevelBorder.RAISED, borderWinPColor, shadeWinPColor); 
 		winPanel.setBorder(b);
-
+		
 		JLabel winL = new JLabel("VICTORY");
 		winL.setFont(titleFont);
-
+		
 		JLabel pointsWL = new JLabel("0000");
 		pointsWL.setFont(levelPointsFont);
-
+		
 		JLabel star1W = new JLabel(starIcon);
 		JLabel star2W = new JLabel(starIcon2);
-
+		
 		JButton levelsWB = new JButton(levelsMIcon);
 		levelsWB.setBackground(buttonColor);
 		levelsWB.setPreferredSize(buttonSize);
-
+		
 		JButton restartWB = new JButton(restartIcon);
 		restartWB.setBackground(buttonColor);
 		restartWB.setPreferredSize(buttonSize);
-
+		
 		JButton nextWB = new JButton("n");
 		nextWB.setBackground(buttonColor);
 		nextWB.setPreferredSize(buttonSize);
-
+		
 		JPanel row1W = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel row2W = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel row3W = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
+		
 		row1W.add(winL);
 		row2W.add(star1W);
-		row2W.add(pointsWL);
+		row2W.add(levelsWB);
 		row2W.add(star2W);
-
-		row3W.add(Box.createHorizontalStrut(20));
 		row3W.add(levelsWB);
-		row3W.add(Box.createHorizontalStrut(20));
 		row3W.add(restartWB);
-		row3W.add(Box.createHorizontalStrut(20));
 		row3W.add(nextWB);
-		row3W.add(Box.createHorizontalStrut(20));
+		
+		//layeredP.add(winPanel, JLayeredPane.PALETTE_LAYER);
 
-		winPanel.add(row1W);
-		winPanel.add(row2W);
-		winPanel.add(row3W);
-
-		add(layeredP, BorderLayout.CENTER);
-		gamePanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
+        add(gamePanel, BorderLayout.CENTER);
+        gamePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
 				if(e.getX()>150 && e.getX()<550 && e.getY()<450 && e.getY()>50)
 				{
-					int clickX = e.getX();
-					int clickY=e.getY();
-
-					int x = ((clickX-150)/tamanoCeldaX) ; //400 pixeles de ancho y largo el gris del parking
-					int y = ((clickY-50)/tamanoCeldaY);
-
-					System.out.println("Pressed at (" + x + ", " + y + ")");
+				int clickX = e.getX();
+				int clickY=e.getY();
+				
+                int x = ((clickX-150)/tamanoCeldaX) ; //400 pixeles de ancho y largo el gris del parking
+                int y = ((clickY-50)/tamanoCeldaY);
+               
+                System.out.println("Pressed at (" + x + ", " + y + ")");
 				}
 				carSelect = controller.click(new Pair<Integer,Integer>(e.getX(),e.getY()));
 				System.out.println("id pinchado: "+carSelect);
 				System.out.println("coordenadas pinchadas: "+e.getX()+" , " +e.getY());
-			}
+            }
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				//drop
+            public void mouseReleased(MouseEvent e) {
+                //drop
 				if(carSelect!=' ')
 				{
-					Pair<Integer,Integer> newPos = new Pair<Integer,Integer>(null, null); // pair < par<int,int>,int>
-					Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>> newInfo = new Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>>(null, null); 
-					System.out.println("Mouse Soltado at: " + e.getX() + ", " + e.getY());
-					newInfo = controller.drop(new Pair<Integer,Integer>(e.getX(), e.getY()));
-					newPos = newInfo.getKey();
-					if(newPos!=null)
-					{
-						mapPosiciones.put(carSelect, newPos);
-						mapCoordenadas= cambioCoodenadas(mapPosiciones);
-						levelPointsValue.setText(newInfo.getValue().getKey().toString());
-						gamePanel.repaint();
-						if(newInfo.getValue().getValue()) {
-							pointsWL.setText(newInfo.getValue().getKey().toString());
-							layeredP.add(winPanel, JLayeredPane.PALETTE_LAYER);
-							layeredP.revalidate();
-							layeredP.repaint();
-							System.out.println("VICTORIA | "+winPanel.isVisible());
-						}
-
-					}
-				}
-			}
-
-		});
-
-
-		gamePanel.addMouseMotionListener(new MouseAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				System.out.println("Mouse Dragged to: " + e.getX() + ", " + e.getY());
-				if(carSelect!=' ')
+				Pair<Integer,Integer> newPos = new Pair<Integer,Integer>(null, null); // pair < par<int,int>,int>
+				Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>> newInfo = new Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>>(null, null); 
+				System.out.println("Mouse Soltado at: " + e.getX() + ", " + e.getY());
+              	newInfo = controller.drop(new Pair<Integer,Integer>(e.getX(), e.getY()));
+              	newPos = newInfo.getKey();
+				if(newPos!=null)
 				{
-					Pair <Integer,Integer>desp=new Pair<Integer,Integer>(null, null);
-					desp = controller.hold(new Pair<Integer,Integer>(e.getX(), e.getY()));
-
-					if(desp.getKey()!=0)
-					{
-						int x= mapCoordenadas.get(carSelect).getKey();
-						int y= mapCoordenadas.get(carSelect).getValue();
-						x= x+ desp.getKey();
-						mapCoordenadas.put(carSelect, new Pair<>(x, y));
-					}
-					else if(desp.getValue()!=0)
-					{
-						int x= mapCoordenadas.get(carSelect).getKey();
-						int y= mapCoordenadas.get(carSelect).getValue();
-						y= y+ desp.getValue();
-						mapCoordenadas.put(carSelect, new Pair<>(x, y));
-					}
-					gamePanel.repaint();
-				}
+				if(newInfo.getValue().getValue())mapPosiciones.remove(carSelect);
+			
+				else mapPosiciones.put(carSelect, newPos);
+				mapCoordenadas= cambioCoodenadas(mapPosiciones);
+				levelPointsValue.setText(newInfo.getValue().getKey().toString());
+                gamePanel.repaint();
+				
 			}
-		});
+            }
+		}
+			
+    });
+        
+
+        
+   
 
 
-
-
-	}
-	public Pair<Boolean,Integer> conseguirPosicion(Character car){
-		Pair<Boolean,Integer> sol=null;
-		if(car.equals('@'))
+	gamePanel.addMouseMotionListener(new MouseAdapter() {
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		System.out.println("Mouse Dragged to: " + e.getX() + ", " + e.getY());
+	if(carSelect!=' ')
+	{
+		Pair <Integer,Integer>desp=new Pair<Integer,Integer>(null, null);
+		desp = controller.hold(new Pair<Integer,Integer>(e.getX(), e.getY()));
+		
+		if(desp.getKey()!=0)
 		{
-			Pair<Boolean,Integer> par= new Pair<Boolean,Integer>(false, 1);
-			sol=par;
+			int x= mapCoordenadas.get(carSelect).getKey();
+			int y= mapCoordenadas.get(carSelect).getValue();
+			x= x+ desp.getKey();
+			mapCoordenadas.put(carSelect, new Pair<>(x, y));
 		}
-		else{
-
-			int x = mapVehiculo.get(car).getDimension().getKey();
-			int y=mapVehiculo.get(car).getDimension().getValue();
-
-			if(x==1) 
-			{
-				Pair<Boolean,Integer> par= new Pair<Boolean,Integer>(true, y);
-				sol=par;
-			}
-			else if(y==1) 
-			{
-				Pair<Boolean,Integer> par= new Pair<Boolean,Integer>(false, x);
-				sol=par;
-			}
+		else if(desp.getValue()!=0)
+		{
+			int x= mapCoordenadas.get(carSelect).getKey();
+			int y= mapCoordenadas.get(carSelect).getValue();
+			y= y+ desp.getValue();
+			mapCoordenadas.put(carSelect, new Pair<>(x, y));
 		}
-		return sol;
+		gamePanel.repaint();
+}
+}
+});
+
+
+	
+     
+    }
+    public Pair<Boolean,Integer> conseguirPosicion(Character car){
+        Pair<Boolean,Integer> sol=null;
+        if(car.equals('@'))
+        {
+            Pair<Boolean,Integer> par= new Pair<Boolean,Integer>(false, 1);
+            sol=par;
+        }
+        else{
+
+            int x = mapVehiculo.get(car).getDimension().getKey();
+            int y=mapVehiculo.get(car).getDimension().getValue();
+
+            if(x==1) 
+            {
+                Pair<Boolean,Integer> par= new Pair<Boolean,Integer>(true, y);
+                sol=par;
+            }
+            else if(y==1) 
+            {
+                Pair<Boolean,Integer> par= new Pair<Boolean,Integer>(false, x);
+                sol=par;
+            }
+        }
+        return sol;
+    }
+    public void pintarVehiculo(boolean esRojo,boolean esSalida, int tamano, boolean esVertical, int   posX, int posY, Graphics g, Component context) {
+        Image vehiculoPintar = null; // Asegúrate de que esté inicializada a null
+        int x=posX;
+        int y=posY;
+            if(esSalida){
+            if(posX==100)
+            {
+                vehiculoPintar=salida_izquierdaImage;
+             
+            }
+            if(posX>=550)
+            {
+             vehiculoPintar=salida_derechaImage;
+            x=550;
+            }
+            if(posY==0)
+            {
+                vehiculoPintar=salida_arribaImage;
+                
+            }
+            if(posY>=450)
+            {
+                vehiculoPintar=salida_abajoImage;
+            y=450;
+            }
+        }
+        else if (esRojo && !esVertical) {
+            vehiculoPintar = cocheRojoHorizontalImage;
+        } else if( esRojo && esVertical){
+            vehiculoPintar=cocheRojoVerticalImage;
+        } else if (tamano == 2 && esVertical) {
+            vehiculoPintar = cocheAzulVerticalImage;
+        } else if (tamano == 2 && !esVertical) {
+            vehiculoPintar = cocheAzulHorizontalImage;
+        } else if (tamano == 3 && esVertical) {
+            vehiculoPintar = camionVerticalImage;
+        } else if (tamano == 3 && !esVertical) {
+            vehiculoPintar = camionHorizontalImage;
+        }
+    
+        if (vehiculoPintar != null) {
+            g.drawImage(vehiculoPintar, x, y, context);
+        }
+
+        
+    }
+
+	private void moverImagen()
+	{
+
 	}
-	public void pintarVehiculo(boolean esRojo,boolean esSalida, int tamano, boolean esVertical, int   posX, int posY, Graphics g, Component context) {
-		Image vehiculoPintar = null; // Asegúrate de que esté inicializada a null
-		int x=posX;
-		int y=posY;
-		if(esSalida){
-			if(posX==100)
-			{
-				vehiculoPintar=salida_izquierdaImage;
-
-			}
-			if(posX>=550)
-			{
-				vehiculoPintar=salida_derechaImage;
-				x=550;
-			}
-			if(posY==0)
-			{
-				vehiculoPintar=salida_arribaImage;
-
-			}
-			if(posY>=450)
-			{
-				vehiculoPintar=salida_abajoImage;
-				y=450;
-			}
-		}
-		else if (esRojo && !esVertical) {
-			vehiculoPintar = cocheRojoHorizontalImage;
-		} else if( esRojo && esVertical){
-			vehiculoPintar=cocheRojoVerticalImage;
-		} else if (tamano == 2 && esVertical) {
-			vehiculoPintar = cocheAzulVerticalImage;
-		} else if (tamano == 2 && !esVertical) {
-			vehiculoPintar = cocheAzulHorizontalImage;
-		} else if (tamano == 3 && esVertical) {
-			vehiculoPintar = camionVerticalImage;
-		} else if (tamano == 3 && !esVertical) {
-			vehiculoPintar = camionHorizontalImage;
-		}
-
-		if (vehiculoPintar != null) {
-			g.drawImage(vehiculoPintar, x, y, context);
-		}
-
-
-	}
-
-
 	private ImageIcon resizeIcon(ImageIcon icon, int i, int j) {
 		Image img = icon.getImage();
 		Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
 		return new ImageIcon(resizedImg);
 	}
-
+	
 	private ImageIcon rotateIcon(ImageIcon icon, double angle) {
 		Image img = icon.getImage();
 		BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2d = bufferedImage.createGraphics();
-		// Rotar la imagen usando AffineTransform
-		AffineTransform transform = new AffineTransform();
-		transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2, img.getHeight(null) / 2);
-		g2d.setTransform(transform);
-		g2d.drawImage(img, 0, 0, null);
-		g2d.dispose();
+        Graphics2D g2d = bufferedImage.createGraphics();
+        // Rotar la imagen usando AffineTransform
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2, img.getHeight(null) / 2);
+        g2d.setTransform(transform);
+        g2d.drawImage(img, 0, 0, null);
+        g2d.dispose();
 
-		return new ImageIcon(bufferedImage);
+        return new ImageIcon(bufferedImage);
 	}
 
 
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		Map<Character,Pair<Integer,Integer>> mapPosiciones= new HashMap<>();
-		Level level = new Level(1);
-		controller cont= new controller();
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+         Map<Character,Pair<Integer,Integer>> mapPosiciones= new HashMap<>();
+         Level level = new Level(1);
+         controller cont= new controller();
 
-		mapPosiciones.put('@', new Pair<>(4,7 ));
-		mapPosiciones.put('*', new Pair<>(4, 2));
-		mapPosiciones.put('a', new Pair<>(1, 1));
-		mapPosiciones.put('b', new Pair<>(3, 1));
-		mapPosiciones.put('c', new Pair<>(6, 1));
-		mapPosiciones.put('d', new Pair<>(1, 3));
-		mapPosiciones.put('e', new Pair<>(2,5));
-		mapPosiciones.put('f', new Pair<>(3, 4));
-		mapPosiciones.put('g', new Pair<>(4, 6));
-
-		SwingUtilities.invokeLater(() -> {
-			view game = new view(mapPosiciones,level,cont);
-			game.setVisible(true);
-		});
-	}
+        mapPosiciones.put('@', new Pair<>(4,7 ));
+        mapPosiciones.put('*', new Pair<>(4, 2));
+        mapPosiciones.put('a', new Pair<>(1, 1));
+        mapPosiciones.put('b', new Pair<>(3, 1));
+        mapPosiciones.put('c', new Pair<>(6, 1));
+        mapPosiciones.put('d', new Pair<>(1, 3));
+        mapPosiciones.put('e', new Pair<>(2,5));
+        mapPosiciones.put('f', new Pair<>(3, 4));
+        mapPosiciones.put('g', new Pair<>(4, 6));
+        
+        SwingUtilities.invokeLater(() -> {
+            view game = new view(mapPosiciones,level,cont);
+            game.setVisible(true);
+        });
+    }
 }

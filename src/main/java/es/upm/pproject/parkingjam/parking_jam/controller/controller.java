@@ -272,5 +272,10 @@ public class controller {
 
 		return lvl.move(vehicleClicked, direction, distance);
 	}
+	
+	
+	public static void main (String[] args) {
+		controller cont = new controller();
+	}
 
 }

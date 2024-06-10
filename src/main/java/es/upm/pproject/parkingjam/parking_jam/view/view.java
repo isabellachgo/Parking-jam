@@ -85,6 +85,7 @@ public class view extends JFrame {
 		this.controller=controller;
 		mapCoordenadas=cambioCoodenadas(posiciones);
 		initUI();
+		this.setVisible(true);
 	}
 
 	private Map <Character,Pair<Integer,Integer>> cambioCoodenadas (Map <Character,Pair<Integer,Integer>> mapPosiciones){
@@ -657,7 +658,7 @@ public class view extends JFrame {
 		return new ImageIcon(bufferedImage);
 	}
 
-
+/*
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		Map<Character,Pair<Integer,Integer>> mapPosiciones= new HashMap<>();
 		Level level = new Level(1);
@@ -678,4 +679,5 @@ public class view extends JFrame {
 			game.setVisible(true);
 		});
 	}
+	*/
 }

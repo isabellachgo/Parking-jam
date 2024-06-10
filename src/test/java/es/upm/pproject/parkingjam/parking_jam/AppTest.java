@@ -159,7 +159,7 @@ public class AppTest {
 				boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 				boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
 				boardt[0][2]='+'; boardt[1][2]=null; boardt[2][2]=null; boardt[3][2]=null; boardt[4][2]='*';  boardt[5][2]=null; boardt[6][2]='c';  boardt[7][2]='+';
-				boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]='c';  boardt[7][3]='+';
+				boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
 				boardt[0][4]='+'; boardt[1][4]='d';  boardt[2][4]=null; boardt[3][4]='f';  boardt[4][4]='f';  boardt[5][4]='f';  boardt[6][4]=null; boardt[7][4]='+';
 				boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]='e';  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]=null; boardt[7][5]='+';
 				boardt[0][6]='+'; boardt[1][6]=null; boardt[2][6]='e';  boardt[3][6]=null; boardt[4][6]='g';  boardt[5][6]='g';  boardt[6][6]='g';  boardt[7][6]='+';
@@ -225,7 +225,7 @@ public class AppTest {
 			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
 			boardt[0][2]='+'; boardt[1][2]=null; boardt[2][2]=null; boardt[3][2]=null; boardt[4][2]='*';  boardt[5][2]=null; boardt[6][2]='c';  boardt[7][2]='+';
-			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]='c';  boardt[7][3]='+';
+			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
 			boardt[0][4]='+'; boardt[1][4]='d';  boardt[2][4]=null; boardt[3][4]='f';  boardt[4][4]='f';  boardt[5][4]='f';  boardt[6][4]=null; boardt[7][4]='+';
 			boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]='e';  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]=null; boardt[7][5]='+';
 			boardt[0][6]='+'; boardt[1][6]=null; boardt[2][6]='e';  boardt[3][6]=null; boardt[4][6]='g';  boardt[5][6]='g';  boardt[6][6]='g';  boardt[7][6]='+';
@@ -284,7 +284,7 @@ public class AppTest {
 			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
 			boardt[0][2]='+'; boardt[1][2]=null; boardt[2][2]='e'; boardt[3][2]=null; boardt[4][2]='*';  boardt[5][2]=null; boardt[6][2]='c';  boardt[7][2]='+';
-			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]='e'; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]='c';  boardt[7][3]='+';
+			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]='e'; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
 			boardt[0][4]='+'; boardt[1][4]='d';  boardt[2][4]=null; boardt[3][4]='f';  boardt[4][4]='f';  boardt[5][4]='f';  boardt[6][4]=null; boardt[7][4]='+';
 			boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]=null;  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]=null; boardt[7][5]='+';
 			boardt[0][6]='+'; boardt[1][6]=null; boardt[2][6]=null;  boardt[3][6]=null; boardt[4][6]='g';  boardt[5][6]='g';  boardt[6][6]='g';  boardt[7][6]='+';
@@ -316,6 +316,40 @@ public class AppTest {
 
 		}
 		@Test
+		public void undoMov() {
+			level.move(level.getCars().get('e'), 'U', 3);
+			level.move(level.getCars().get('g'), 'L', 3);
+			assertTrue(level.undo());
+			Character[][] boardt = new Character[8][8];
+			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
+			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
+			boardt[0][2]='+'; boardt[1][2]=null; boardt[2][2]='e'; boardt[3][2]=null; boardt[4][2]='*';  boardt[5][2]=null; boardt[6][2]='c';  boardt[7][2]='+';
+			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]='e'; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
+			boardt[0][4]='+'; boardt[1][4]='d';  boardt[2][4]=null; boardt[3][4]='f';  boardt[4][4]='f';  boardt[5][4]='f';  boardt[6][4]=null; boardt[7][4]='+';
+			boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]=null;  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]=null; boardt[7][5]='+';
+			boardt[0][6]='+'; boardt[1][6]=null; boardt[2][6]=null;  boardt[3][6]=null; boardt[4][6]='g';  boardt[5][6]='g';  boardt[6][6]='g';  boardt[7][6]='+';
+			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='@';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
+
+			Character[][] board = level.getBoard();
+			for(int i =0; i<8; i++) {
+				for(int j=0; j<8;j++) {
+					assertEquals(board[i][j], boardt[i][j]);
+				}
+			}
+			
+			
+		}
+		
+		@Test
+		public void carPositionPostMov() {
+			level.move(level.getCars().get('e'), 'U', 3);
+			Set<Pair<Integer, Integer>> position = level.getCars().get('g').getPosition();
+			level.move(level.getCars().get('g'), 'L', 3);
+			
+			assertTrue(level.undo());
+            assertEquals(position, level.getCars().get('g').getPosition());
+		}
+		@Test
 		public void LevlPoints() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
@@ -333,6 +367,7 @@ public class AppTest {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
+			
 			level.move(level.getCars().get('b'), 'R', 1);
 			level.move(level.getCars().get('a'), 'R', 1);
 			level.move(level.getCars().get('d'), 'U', 2);
@@ -346,7 +381,68 @@ public class AppTest {
 			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]='e'; boardt[3][3]=null; boardt[4][3]=null;  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
 			boardt[0][4]='+'; boardt[1][4]='f';  boardt[2][4]='f'; boardt[3][4]='f';  boardt[4][4]=null;  boardt[5][4]=null;  boardt[6][4]='c'; boardt[7][4]='+';
 			boardt[0][5]='+'; boardt[1][5]=null;  boardt[2][5]=null;  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]='c'; boardt[7][5]='+';
-			boardt[0][6]='+'; boardt[1][6]='g'; boardt[2][6]='g';  boardt[3][6]='g'; boardt[4][6]='*';  boardt[5][6]=null;  boardt[6][6]='c';  boardt[7][6]='+';
+			boardt[0][6]='+'; boardt[1][6]='g'; boardt[2][6]='g';  boardt[3][6]='g'; boardt[4][6]='*';  boardt[5][6]=null;  boardt[6][6]=null;  boardt[7][6]='+';
+			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='*';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
+
+			Character[][] board = level.getBoard();
+			for(int i =0; i<8; i++) {
+				for(int j=0; j<8;j++) {
+					assertEquals(board[i][j], boardt[i][j]);
+				}
+			}
+
+		}
+		@Test
+		public void ResetGame() {
+			level.move(level.getCars().get('e'), 'U', 3);
+			level.move(level.getCars().get('g'), 'L', 3);
+			level.move(level.getCars().get('c'), 'D', 3);
+			level.move(level.getCars().get('b'), 'R', 1);
+			level.move(level.getCars().get('a'), 'R', 1);
+			level.move(level.getCars().get('d'), 'U', 2);
+			level.reset();
+			Character[][] boardt = new Character[8][8];
+			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
+			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
+			boardt[0][2]='+'; boardt[1][2]=null; boardt[2][2]=null; boardt[3][2]=null; boardt[4][2]='*';  boardt[5][2]=null; boardt[6][2]='c';  boardt[7][2]='+';
+			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
+			boardt[0][4]='+'; boardt[1][4]='d';  boardt[2][4]=null; boardt[3][4]='f';  boardt[4][4]='f';  boardt[5][4]='f';  boardt[6][4]=null; boardt[7][4]='+';
+			boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]='e';  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]=null; boardt[7][5]='+';
+			boardt[0][6]='+'; boardt[1][6]=null; boardt[2][6]='e';  boardt[3][6]=null; boardt[4][6]='g';  boardt[5][6]='g';  boardt[6][6]='g';  boardt[7][6]='+';
+			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='@';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
+
+			Character[][] board = level.getBoard();
+			for(int i =0; i<8; i++) {
+				for(int j=0; j<8;j++) {
+					assertEquals(board[i][j], boardt[i][j]);
+				}
+			}
+		}
+		
+		
+		@Test
+		public void WinGameWhitUndo() {
+			level.move(level.getCars().get('e'), 'U', 3);
+			level.move(level.getCars().get('f'), 'L', 1);
+			level.undo();
+			level.move(level.getCars().get('g'), 'L', 3);
+			level.move(level.getCars().get('c'), 'D', 3);
+			level.undo();
+			level.move(level.getCars().get('c'), 'D', 3);
+			level.move(level.getCars().get('b'), 'R', 1);
+			level.move(level.getCars().get('a'), 'R', 1);
+			level.move(level.getCars().get('d'), 'U', 2);
+			level.move(level.getCars().get('f'), 'L', 2);
+			level.move(level.getCars().get('*'), 'D', 4);
+
+			Character[][] boardt = new Character[8][8];
+			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
+			boardt[0][1]='+'; boardt[1][1]='d';	 boardt[2][1]='a';  boardt[3][1]='a';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='b';  boardt[7][1]='+';
+			boardt[0][2]='+'; boardt[1][2]='d'; boardt[2][2]='e'; boardt[3][2]=null; boardt[4][2]=null;  boardt[5][2]=null; boardt[6][2]=null;  boardt[7][2]='+';
+			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]='e'; boardt[3][3]=null; boardt[4][3]=null;  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
+			boardt[0][4]='+'; boardt[1][4]='f';  boardt[2][4]='f'; boardt[3][4]='f';  boardt[4][4]=null;  boardt[5][4]=null;  boardt[6][4]='c'; boardt[7][4]='+';
+			boardt[0][5]='+'; boardt[1][5]=null;  boardt[2][5]=null;  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]='c'; boardt[7][5]='+';
+			boardt[0][6]='+'; boardt[1][6]='g'; boardt[2][6]='g';  boardt[3][6]='g'; boardt[4][6]='*';  boardt[5][6]=null;  boardt[6][6]=null;  boardt[7][6]='+';
 			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='*';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
 
 			Character[][] board = level.getBoard();
@@ -367,7 +463,7 @@ public class AppTest {
 			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
 			boardt[0][2]='+'; boardt[1][2]=null; boardt[2][2]=null; boardt[3][2]=null; boardt[4][2]='*';  boardt[5][2]=null; boardt[6][2]='c';  boardt[7][2]='+';
-			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]='c';  boardt[7][3]='+';
+			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
 			boardt[0][4]='+'; boardt[1][4]='d';  boardt[2][4]=null; boardt[3][4]='f';  boardt[4][4]='f';  boardt[5][4]='f';  boardt[6][4]=null; boardt[7][4]='+';
 			boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]='e';  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]=null; boardt[7][5]='+';
 			boardt[0][6]='+'; boardt[1][6]=null; boardt[2][6]='e';  boardt[3][6]=null; boardt[4][6]='g';  boardt[5][6]='g';  boardt[6][6]='g';  boardt[7][6]='+';
@@ -392,7 +488,7 @@ public class AppTest {
 			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
 			boardt[0][2]='+'; boardt[1][2]=null; boardt[2][2]=null; boardt[3][2]=null; boardt[4][2]='*';  boardt[5][2]=null; boardt[6][2]='c';  boardt[7][2]='+';
-			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]='c';  boardt[7][3]='+';
+			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
 			boardt[0][4]='+'; boardt[1][4]='d';  boardt[2][4]=null; boardt[3][4]='f';  boardt[4][4]='f';  boardt[5][4]='f';  boardt[6][4]=null; boardt[7][4]='+';
 			boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]='e';  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]=null; boardt[7][5]='+';
 			boardt[0][6]='+'; boardt[1][6]=null; boardt[2][6]='e';  boardt[3][6]=null; boardt[4][6]='g';  boardt[5][6]='g';  boardt[6][6]='g';  boardt[7][6]='+';
@@ -417,7 +513,7 @@ public class AppTest {
 			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
 			boardt[0][2]='+'; boardt[1][2]=null; boardt[2][2]=null; boardt[3][2]=null; boardt[4][2]='*';  boardt[5][2]=null; boardt[6][2]='c';  boardt[7][2]='+';
-			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]='c';  boardt[7][3]='+';
+			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]=null; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
 			boardt[0][4]='+'; boardt[1][4]='d';  boardt[2][4]=null; boardt[3][4]='f';  boardt[4][4]='f';  boardt[5][4]='f';  boardt[6][4]=null; boardt[7][4]='+';
 			boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]='e';  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]=null; boardt[7][5]='+';
 			boardt[0][6]='+'; boardt[1][6]=null; boardt[2][6]='e';  boardt[3][6]=null; boardt[4][6]='g';  boardt[5][6]='g';  boardt[6][6]='g';  boardt[7][6]='+';

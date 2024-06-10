@@ -5,9 +5,13 @@ import java.util.List;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javafx.util.Pair;
@@ -20,12 +24,13 @@ public class Level  {
 	private String title;
 	private Pair<Integer,Integer> exit_position;
 	private Map<Character,Vehicle> cars;
-	private Integer idLevel;
 	private Integer levelPoints;
 	private Integer gamePoints;
-
-
-// NOTA: he hecho que le vehiculo rojo sea el unico que puede salir, y ocupar la casilla de salida, y una vez alli no imprimirlo, 
+	private Character[][] initialBoard;
+	private Map<Pair<Character,Vehicle>, Set<Pair<Integer, Integer>>> initialVehiclePositions;
+	private Deque<Character[][]> boardHistory;
+	private Deque<Map<Character, Set<Pair<Integer, Integer>>>> vehiclePositionHistory;
+	// NOTA: he hecho que le vehiculo rojo sea el unico que puede salir, y ocupar la casilla de salida, y una vez alli no imprimirlo, 
 	public Level (Integer n_level) throws FileNotFoundException, IOException{
 		bReader = new BoardReader(n_level);
 		dimensionX = bReader.getDimensionX();
@@ -34,6 +39,13 @@ public class Level  {
 		board = bReader.getBoard();
 		exit_position = bReader.getExit();
 		cars = bReader.getCars();
+		this.boardHistory = new ArrayDeque<>();
+		this.vehiclePositionHistory = new ArrayDeque<>();
+		this.initialBoard= cloneBoard();
+		this.initialVehiclePositions = new HashMap<>();
+		for(Entry<Character, Vehicle> vh : cars.entrySet()) {
+			initialVehiclePositions.put(new Pair <>(vh.getKey(),vh.getValue()), vh.getValue().getPosition());
+		}
 		this.levelPoints= 0;
 		if (n_level.equals(1)) this.gamePoints= 0; // if n_level is 1, gamePoints is initialized to 0.
 		else this.gamePoints=0; // if is another level getGamePoints ??
@@ -80,12 +92,18 @@ public class Level  {
 	public boolean move (Vehicle car, char direction, int distance ) {
 		boolean moved=true;
 		if(distance ==0) return false;
+		boardHistory.push(cloneBoard());
+		vehiclePositionHistory.push(cloneCarPositions());
 		Character [][] newBoard = updateBoard(car, direction, distance);
 		if(newBoard !=null) {
 			this.board=newBoard;
 			levelPoints++;
 		}
-		else moved=false;
+		else {
+			moved=false;
+			boardHistory.pop();
+			vehiclePositionHistory.pop();
+		}
 		return moved;
 	}
 	// Checks if the requested movement is valid and calculates de new position of the vehicle.
@@ -136,14 +154,14 @@ public class Level  {
 		Set<Pair<Integer,Integer>> positionNew= new HashSet<>();
 		for (Pair<Integer, Integer> newPos : newPosition) {
 			//if(!car.getRedCar() && !newPos.equals(exit_position)) {
-				Integer newX = newPos.getKey();
-				Integer newY = newPos.getValue();
-				updatedBoard[newX][newY] = car.getId();
-				Pair<Integer, Integer> p = new Pair<>(newX,newY);
-				positionNew.add(p);
+			Integer newX = newPos.getKey();
+			Integer newY = newPos.getValue();
+			updatedBoard[newX][newY] = car.getId();
+			Pair<Integer, Integer> p = new Pair<>(newX,newY);
+			positionNew.add(p);
 			//}
-			
-			
+
+
 		}
 		car.setPosition(positionNew);
 		return updatedBoard;
@@ -166,12 +184,12 @@ public class Level  {
 				}
 				else Goal=true;
 			}
-			
+
 			if (!Goal && board[newX][newY] != null &&  !currentPosition.contains(position) ) {
 				return false;
 			}
 
-			
+
 			switch (direction) {
 			case 'U': 
 				if (car.getDimension().getKey() != 1) { // An horizontal vehicle cannot move up
@@ -210,6 +228,19 @@ public class Level  {
 		}
 		return cloneBoard;
 	}
+	private Map<Character, Set<Pair<Integer, Integer>>> cloneCarPositions() {
+		Map<Character, Set<Pair<Integer, Integer>>> clone = new HashMap<>();
+		for (Map.Entry<Character, Vehicle> entry : cars.entrySet()) {
+			clone.put(entry.getKey(), new HashSet<>(entry.getValue().getPosition()));
+		}
+		return clone;
+	}
+
+	private void restoreCarPositions(Map<Character, Set<Pair<Integer, Integer>>> positions) {
+		for (Map.Entry<Character, Set<Pair<Integer, Integer>>> entry : positions.entrySet()) {
+			cars.get(entry.getKey()).setPosition(entry.getValue());
+		}
+	}
 
 	// prints the level title, dimensions and board
 	public void printBoard () {
@@ -224,30 +255,45 @@ public class Level  {
 			System.out.println("");
 		}
 	}
-public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
+	public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
 		boolean result = false;
 		Integer boxX= box.getKey();
 		Integer boxY = box.getValue();
-		
+
 		if(board[boxX][boxY]== null) result=true;
 		else {
 			if(car.getRedCar() && board[boxX][boxY]=='@')result =true;
 			else {
 				Set<Pair<Integer, Integer>> position =car.getPosition();
 				Iterator <Pair<Integer, Integer>>it = position.iterator();
-				 while(it.hasNext() && !result) {
-					 Pair<Integer, Integer> pos = it.next();
-					 Integer newX = pos.getKey();
-					 Integer newY = pos.getValue();
-					 if(newX.equals(boxX) && newY.equals(boxY)) result=true;
-				 }	
+				while(it.hasNext() && !result) {
+					Pair<Integer, Integer> pos = it.next();
+					Integer newX = pos.getKey();
+					Integer newY = pos.getValue();
+					if(newX.equals(boxX) && newY.equals(boxY)) result=true;
+				}	
 			}
 		}
- return result;
-}
+		return result;
+	}
 	public void reset() {
-		// TODO Auto-generated method stub
-
+		this.board=initialBoard;
+		Map<Character,Vehicle> NewCars = new HashMap<>();
+		for(Entry<Pair<Character, Vehicle>, Set<Pair<Integer, Integer>>> vh : initialVehiclePositions.entrySet()) {
+			Vehicle car = vh.getKey().getValue();
+			car.setPosition(vh.getValue()); // changes the cars position to its initial position
+			NewCars.put(vh.getKey().getKey(),car);
+		}
+		this.cars=NewCars;
+	}
+	public boolean undo() {
+		if(boardHistory.isEmpty() || vehiclePositionHistory.isEmpty()) {
+			return false;
+		}
+		this.board = boardHistory.pop();
+		restoreCarPositions(vehiclePositionHistory.pop());
+		levelPoints--;
+		return true;
 	}
 
 	public static void main(String args[]) throws FileNotFoundException, IOException {
@@ -276,14 +322,14 @@ public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
 			if( b1.posicionValida(car4,pos4 )) {
 				System.out.println("Bien porque es Posicion valida");
 			}else System.out.println("Posicion NO valida");
-			
+
 			Vehicle car5= b1.getCars().get('*');
 			Pair<Integer,Integer> pos5 = new Pair<>(4,7);
 			if( b1.posicionValida(car5,pos5 )) {
 				System.out.println("Bien porque es Posicion valida, ya que el coche rojo si puede ir a salida");
 			}else System.out.println("Posicion NO valida");
-			
-			
+
+
 			// nota: no se escogio la ruta mas optima para probar el movimiento de coches.
 			Vehicle vehicle = b1.getCars().get('e'); // 
 			System.out.println("position antes de moverse debe ser: " + vehicle.getPosition().toString());
@@ -296,7 +342,7 @@ public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
 			}
 			Vehicle vehicle2 = b1.getCars().get('g');
 			System.out.println("position antes de moverse debe ser: " + vehicle2.getPosition().toString());
-			
+
 			if (b1.move(vehicle2, 'L', 3)) {
 				System.out.println("Movimiento exitoso. Tablero después del movimiento:");
 				b1.printBoard(); // Imprimir el tablero después del movimiento
@@ -304,6 +350,21 @@ public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
 			} else {
 				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
 			}
+
+
+		/*	if(b1.undo()) {
+				System.out.println("Undo exitoso. Tablero después del movimiento:");
+
+				b1.printBoard();
+				for(Entry<Character, Vehicle> vh : b1.cars.entrySet()) {
+					Set<Pair<Integer, Integer>> posi =vh.getValue().getPosition();
+					for (Pair<Integer, Integer> p : posi) {
+						System.out.println("el vehiculo con id "+ vh.getKey() +" tiene como positions " + p.getKey()+ " : " + p.getValue() +".");
+					}
+
+				}
+			}
+*/
 			Vehicle vehicle3 = b1.getCars().get('c');
 			if (b1.move(vehicle3, 'D', 3)) {
 				System.out.println("Movimiento exitoso. Tablero después del movimiento:");
@@ -352,17 +413,25 @@ public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
 				System.out.println("Movimiento exitoso. Tablero después del movimiento:");
 				b1.printBoard(); // Imprimir el tablero después del movimiento
 			} else {
-				System.out.println("Movimiento no válido. No se pudo mover el vehículo.");
+				System.out.println("Movimiento no válido. No se pudo mover el vehículo ultimo.");
 			}
 			System.out.println("Se han conseguido "+b1.getLevelPoint()+ " puntos en este nivel");
-			
-			
+
+			b1.reset();
+			b1.printBoard();
+
+			for(Entry<Character, Vehicle> vh : b1.cars.entrySet()) {
+				Set<Pair<Integer, Integer>> posi =vh.getValue().getPosition();
+				for (Pair<Integer, Integer> p : posi) {
+					System.out.println("el vehiculo con id "+ vh.getKey() +" tiene como positions " + p.getKey()+ " : " + p.getValue() +".");
+				}
+
+			}
+
 
 		}
+
+
+
 	}
-
-
-
-
-
 }

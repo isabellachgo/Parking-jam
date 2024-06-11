@@ -243,7 +243,9 @@ public class controller {
         Pair<Integer,Boolean> res=new Pair<>(lvl.getLevelPoint(),vehicleClicked.getPosition().contains(lvl.getExit()));
 		mv = new Pair<>(vehicleClicked.getBack(),res);
 		if(res.getValue()) {
-			g.sumarGamePoints(lvl.getGamePoints());
+			//if(g.getLevel(lvlAct).getLevelPoint()>=lvl.getLevelPoint()) {
+			//g.actualizarGamePoints(lvlAct,lvl.getGamePoints());}
+			g.sumarGamePoints(lvl.getLevelPoint());
 			g.setLevel(lvlAct, lvl);
 			int lastLevel=g.getUltimoLevelPassed();
 			lastLevel=Math.max(lastLevel, lvlAct);
@@ -284,7 +286,9 @@ public class controller {
 	public void levelMenuButon(){
 		LevelsMenuView lmv = new LevelsMenuView(f,g,this);
 	}
-	
+	public void nextLevel() throws FileNotFoundException, IOException {
+		showLevel(lvlAct+1);
+	}
 	public static void main (String[] args) {
 		controller cont = new controller();
 	}

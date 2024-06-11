@@ -465,7 +465,7 @@ public class view {
 		JButton nextWB = new JButton(nextIcon);
 		nextWB.setBackground(buttonColor);
 		nextWB.setPreferredSize(buttonSize);
-		levelsWB.addActionListener(new ActionListener() {
+		nextWB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("next level button pressed");

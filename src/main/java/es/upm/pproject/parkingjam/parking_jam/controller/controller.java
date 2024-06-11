@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 
+import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
 import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
@@ -26,7 +27,6 @@ public class controller {
 	Pair<Integer, Integer> actLabel;
 	Pair<Integer, Integer> prevLabel;
 	JFrame f;
-	int gameId=0;
 
 	public controller() {
 		f = new JFrame();
@@ -42,8 +42,8 @@ public class controller {
 		click=new Pair<Integer,Integer>(null,null);
 		prevLabel=new Pair<Integer,Integer>(null,null);
 		
-		//Game g= new Game(gameId++);//Descomentar
-		LevelsMenuView lmv = new LevelsMenuView(f/*,g,this*/);//Descomentar
+		Game g= new Game("Lucas"); //TODO en menu de partidas
+		LevelsMenuView lmv = new LevelsMenuView(f,g,this);
 	}
 
 
@@ -57,7 +57,7 @@ public class controller {
 			mapPositions.put(key, vehicles.get(key).getBack());
 		}
 		mapPositions.put('@', lvl.getExit());
-		v = new view(/*f,*/mapPositions, lvl, this);//DESCOMENTAR
+		v = new view(f,mapPositions, lvl, this);
 	}
 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {

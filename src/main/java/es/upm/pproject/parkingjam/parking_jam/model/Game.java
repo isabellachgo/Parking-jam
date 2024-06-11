@@ -4,18 +4,20 @@ import java.util.HashMap;
 
 public class Game {
 
-    private int gamePoints;
+    private Integer gamePoints;
     private String gameName;
-    private int ultimoLevelPassed;
+    private Integer ultimoLevelPassed;
     private HashMap <Integer,Level> listaLevels;
 
     public Game( String name)
     {
         gameName=name;
+        gamePoints=0;
+        ultimoLevelPassed = 0;
         if (listaLevels==null) listaLevels=new HashMap<>();
     }
 
-    public int getGamePoints ()
+    public Integer getGamePoints ()
     {
         return gamePoints;
     }

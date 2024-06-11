@@ -25,14 +25,18 @@ import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+import es.upm.pproject.parkingjam.parking_jam.model.Game;
 
 public class LevelsMenuView {
 	
 	private JFrame frame;
+	private Game game;
+	private controller cont;
 	
-	public LevelsMenuView(JFrame frame/*, Game game, controller controller*/) {
-		// TODO : también debe recivir un Game
+	public LevelsMenuView(JFrame frame, Game game, controller cont) {
 		this.frame = frame;
+		this.game = game;
+		this.cont = cont;
 		initLMV();
 		this.frame.setVisible(true);
 	}
@@ -178,11 +182,11 @@ public class LevelsMenuView {
 		
 		JLabel gamePointsVL = new JLabel();
 		gamePointsVL.setFont(gamePointsFont);
-		gamePointsVL.setText("xx"); //TODO : valor a partir de game
+		gamePointsVL.setText(game.getGamePoints().toString()); 
 		
 		JLabel gameNameL = new JLabel();
 		gameNameL.setFont(titleFont);
-		gameNameL.setText("Partida 1"); //TODO : nombre a parir de game
+		gameNameL.setText(game.getName()); 
 		
 		JButton l1B = new JButton();
 		l1B.setText("1");
@@ -197,7 +201,13 @@ public class LevelsMenuView {
 				// abrir view nivel 1
 				System.out.println("level 1");
 				
-				//controller.showLevel(1);
+				frame.getContentPane().removeAll();
+				
+				try {
+					cont.showLevel(1);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		JButton l2B = new JButton();
@@ -327,7 +337,7 @@ public class LevelsMenuView {
 	
 	
 	
-	
+	/*
 	public static void main(String[] args) {
 		JFrame f = new JFrame();
 		f.setTitle("Parking Game");
@@ -339,5 +349,5 @@ public class LevelsMenuView {
 		LevelsMenuView lmv = new LevelsMenuView(f);
 		
 	}
-	
+	*/
 }

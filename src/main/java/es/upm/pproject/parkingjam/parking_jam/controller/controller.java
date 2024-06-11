@@ -7,13 +7,17 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JFrame;
+
+import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
+import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.view;
 import javafx.util.Pair;
 
 public class controller {
-	view v;
+	//view v;
 	Level lvl;
 	Pair<Integer, Integer> click;
 	Vehicle vehicleClicked;
@@ -22,46 +26,44 @@ public class controller {
 	int cellSize;
 	Pair<Integer, Integer> actLabel;
 	Pair<Integer, Integer> prevLabel;
+	JFrame f;
+	Game g;
+	int lvlAct;
 
 	public controller() {
-		try {
-			getBoard();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (lvl != null)
-			showLevel();
+		f = new JFrame();
+		f.setTitle("Parking Game");
+		f.setSize(700, 700);
+		f.setLocationRelativeTo(null);
+		f.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE );
+		f.setResizable(false);
+		
 		punt=0;
 		casillaBuff=new HashSet<Pair<Integer, Integer>>();
 		actLabel=new Pair<Integer,Integer>(null,null);
 		click=new Pair<Integer,Integer>(null,null);
 		prevLabel=new Pair<Integer,Integer>(null,null);
 		
+		g= new Game("Lucas"); //TODO en menu de partidas
+		LevelsMenuView lmv = new LevelsMenuView(f,g,this);
 	}
 
-	public boolean getBoard() throws FileNotFoundException, IOException {
-		lvl = new Level(1);
+
+	public void showLevel(int n) throws FileNotFoundException, IOException {
+		lvl = new Level(n);
 		cellSize = (400 + (lvl.getDimensionX() / 2)) / (lvl.getDimensionX() - 2);
-		return lvl == null;
-	}
-
-	public void showLevel() {
+		g.setLevel(n, lvl);
+		lvlAct=n;
 		Map<Character, Vehicle> vehicles = lvl.getCars();
-		// Pair<Integer, Integer> dimension = new Pair<Integer,
-		// Integer>(lvl.getDimensionX(), lvl.getDimensionY());
 		Map<Character, Pair<Integer, Integer>> mapPositions = new HashMap<>();
 		for (char key : vehicles.keySet()) {
-			// Pair<Integer, Integer> smallestPosition = new Pair<>(Integer.MAX_VALUE,
-			// Integer.MAX_VALUE);
 			mapPositions.put(key, vehicles.get(key).getBack());
 		}
 		mapPositions.put('@', lvl.getExit());
-		v = new view(mapPositions, lvl, this);
+		view v = new view(f,mapPositions, lvl, this);
 	}
 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {
-		// cellSize = 400 / lvl.getDimensionX()-2;
 		int row, col;
 		if (x < 150)
 			row = 0;
@@ -240,6 +242,14 @@ public class controller {
     }	
         Pair<Integer,Boolean> res=new Pair<>(lvl.getLevelPoint(),vehicleClicked.getPosition().contains(lvl.getExit()));
 		mv = new Pair<>(vehicleClicked.getBack(),res);
+		if(res.getValue()) {
+			if(g.getLevel(lvlAct).getLevelPoint()>=lvl.getLevelPoint()) {
+			g.actualizarGamePoints(lvlAct,lvl.getGamePoints());}
+			g.setLevel(lvlAct, lvl);
+			int lastLevel=g.getUltimoLevelPassed();
+			lastLevel=Math.max(lastLevel, lvlAct);
+			g.setUltimoLevelPassed(lastLevel);
+		}
 		casillaBuff.clear();
 		this.vehicleClicked = null;
 		punt = 0;
@@ -272,8 +282,12 @@ public class controller {
 
 		return lvl.move(vehicleClicked, direction, distance);
 	}
-	
-	
+	public void levelMenuButon(){
+		LevelsMenuView lmv = new LevelsMenuView(f,g,this);
+	}
+	public void nextLevel() throws FileNotFoundException, IOException {
+		showLevel(lvlAct+1);
+	}
 	public static void main (String[] args) {
 		controller cont = new controller();
 	}

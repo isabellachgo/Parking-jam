@@ -40,15 +40,11 @@ import es.upm.pproject.parkingjam.parking_jam.controller.controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
 import javafx.scene.layout.Border;
-//import javafx.event.ActionEvent;
-//import javafx.scene.paint.Color;
-//import javafx.scene.shape.Box;
-//import javafx.scene.text.Font;
 import javafx.util.Pair;
 
 
 
-public class view extends JFrame {
+public class view {
 	private Map<Character, Vehicle> mapVehiculo; // Mapa con las posiciones de los vehículos
 	private Map <Character,Pair<Integer,Integer>> mapPosiciones;
 	private Map <Character,Pair<Integer,Integer>> mapCoordenadas;
@@ -72,8 +68,10 @@ public class view extends JFrame {
 	private Image salida_abajoImage;
 	private Image salida_derechaImage;
 	private Image salida_izquierdaImage;
+	private JFrame frame;
 
-	public view( Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller) {
+	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller) {
+		this.frame = fm;
 		this.mapVehiculo = level.getCars();
 		this.mapPosiciones=posiciones;
 		this.dimensionMapaX=level.getDimensionX();
@@ -85,7 +83,7 @@ public class view extends JFrame {
 		this.controller=controller;
 		mapCoordenadas=cambioCoodenadas(posiciones);
 		initUI();
-		this.setVisible(true);
+		frame.setVisible(true);
 	}
 
 	private Map <Character,Pair<Integer,Integer>> cambioCoodenadas (Map <Character,Pair<Integer,Integer>> mapPosiciones){
@@ -112,15 +110,11 @@ public class view extends JFrame {
 	}
 
 	private void initUI() {
-		setTitle("Parking Game");
-		setSize(700, 700);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setResizable(false);  // Impide que la ventana sea redimensionable
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		frame.add(panel);
 
-		setLayout(new BorderLayout());
-
-		// Cargar la imagen del coche
+		// Imagenes:
 		ImageIcon cocheRojoHorizontal = new ImageIcon(getClass().getResource("/images/coche_rojo_horizontal.png"));
 		ImageIcon cocheRojoVertical = new ImageIcon(getClass().getResource("/images/coche_rojo_vertical.png")); // Asegúrate de que el path es correcto
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking2.jpg"));
@@ -149,21 +143,17 @@ public class view extends JFrame {
 		Image arbolImg2 = arbol.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 		Image plantaImg1 = planta.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
+		// Dimensiones:
 		Dimension buttonSize = new Dimension(40,40);
 		Dimension buttonSize2 = new Dimension(195,40);
-		//Color buttonColor = new Color(0,122,63);
-		//Color buttonColor = new Color(50,150,90); //verde oscuro
-		//Color buttonColor = new Color(26,127,217); //azul
-		//Color buttonColor = new Color(129,48,217); //morado
-		//Color buttonColor = new Color(123,189,1);  //mismo verde
-		Color buttonColor = new Color(65,130,4); // mismo verde oscuro
-		Color winPColor = new Color(153,191,82);
-		//Color winPColor = new Color(157,191,98);
-		//Color winPColor = new Color(120,161,82);
+		
+		// Colores:
+		Color buttonColor = new Color(65,130,4); 
+		Color winPColor = new Color(180,220,110);
 		Color borderWinPColor = new Color(50,150,90);
 		Color shadeWinPColor = new Color(57,64,50);
 
-		//fuentes de texto
+		// Fuentes de texto:
 		Font titleFont = null;
 		try {
 			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(35f);
@@ -189,7 +179,7 @@ public class view extends JFrame {
 			e1.printStackTrace();
 		}
 
-		//iconos
+		// Iconos:
 		ImageIcon menuIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/menu.png")),30,30);
 		ImageIcon restartIcon = resizeIcon( new ImageIcon(getClass().getResource("/icons/restart.png")),30,30);
 		ImageIcon undoIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/undo.png")),30,30);
@@ -263,6 +253,9 @@ public class view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("levels button pressed");
+				
+				frame.getContentPane().removeAll();
+				controller.levelMenuButon();
 			}
 		});
 		JButton saveB = new JButton("save game");
@@ -315,7 +308,7 @@ public class view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("close button pressed");
-				dispose();
+				frame.dispose();
 			}
 		});
 
@@ -334,7 +327,7 @@ public class view extends JFrame {
 				System.out.println("menu button pressed ");
 
 				if(!menuPanel.isVisible()) {
-					menuPanel.show(view.this, 50,87);
+					menuPanel.show(frame, 50,87);
 					menuPanel.setVisible(true);
 				} else {
 					menuPanel.setVisible(false);
@@ -415,7 +408,7 @@ public class view extends JFrame {
 		row3.add(star2);
 		headerPanel.add(row3);
 
-		add(headerPanel, BorderLayout.NORTH); 
+		panel.add(headerPanel, BorderLayout.NORTH); 
 
 		//-------------------------PANEL CENTRAL--------------------
 
@@ -423,23 +416,21 @@ public class view extends JFrame {
 		layeredP.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
 		
 		JPanel shadowPanel = new JPanel();
-		shadowPanel.setPreferredSize(new Dimension(700,700));
-		shadowPanel.setBackground(new Color(61,64,61, 50));		
-		shadowPanel.setForeground(new Color(61,64,61, 90));   // no va !!!!
+		shadowPanel.setBounds(0, 1, 700, 600);
+		shadowPanel.setBackground(new Color(61,64,61, 70));		
 
 		JPanel winPanel = new JPanel();
 		winPanel.setLayout(new BoxLayout(winPanel, BoxLayout.Y_AXIS));
-		winPanel.setPreferredSize(new Dimension(100,100));
-		winPanel.setBounds(225, 100, 250, 200);
 		winPanel.setBackground(winPColor);
-		winPanel.setForeground(winPColor);
+		winPanel.setBounds(225, 100, 250, 200);
+		
 		BevelBorder b = new BevelBorder(BevelBorder.RAISED, borderWinPColor, shadeWinPColor); 
 		winPanel.setBorder(b);
 
 		JLabel winL = new JLabel("VICTORY");
 		winL.setFont(titleFont);
 
-		JLabel pointsWL = new JLabel("0000");
+		JLabel pointsWL = new JLabel("0000"); //TODO : valor a parir de game
 		pointsWL.setFont(levelPointsFont);
 
 		JLabel star1W = new JLabel(starIcon);
@@ -448,18 +439,52 @@ public class view extends JFrame {
 		JButton levelsWB = new JButton(levelsMIcon);
 		levelsWB.setBackground(buttonColor);
 		levelsWB.setPreferredSize(buttonSize);
+		levelsWB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("levels button pressed");
+				
+				frame.getContentPane().removeAll();
+				controller.levelMenuButon();
+			}
+		});
 
 		JButton restartWB = new JButton(restartIcon);
 		restartWB.setBackground(buttonColor);
 		restartWB.setPreferredSize(buttonSize);
+		restartWB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("restart button pressed");
+				
+				
+				
+			}
+		});
 
 		JButton nextWB = new JButton(nextIcon);
 		nextWB.setBackground(buttonColor);
 		nextWB.setPreferredSize(buttonSize);
+		levelsWB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("next level button pressed");
+				
+				frame.getContentPane().removeAll();
+				try {
+					controller.nextLevel();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 		JPanel row1W = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		row1W.setBackground(winPColor);
 		JPanel row2W = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		row2W.setBackground(winPColor);
 		JPanel row3W = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		row3W.setBackground(winPColor);
 
 		row1W.add(winL);
 		row2W.add(star1W);
@@ -478,7 +503,7 @@ public class view extends JFrame {
 		winPanel.add(row2W);
 		winPanel.add(row3W);
 
-		add(layeredP, BorderLayout.CENTER);
+		panel.add(layeredP, BorderLayout.CENTER);
 		gamePanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -510,7 +535,7 @@ public class view extends JFrame {
 					{
 						if(newInfo.getValue().getValue())mapPosiciones.remove(carSelect);
 						
-						mapPosiciones.put(carSelect, newPos);
+						else mapPosiciones.put(carSelect, newPos);
 						mapCoordenadas= cambioCoodenadas(mapPosiciones);
 						levelPointsValue.setText(newInfo.getValue().getKey().toString());
 						gamePanel.repaint();
@@ -634,7 +659,6 @@ public class view extends JFrame {
 			g.drawImage(vehiculoPintar, x, y, context);
 		}
 
-
 	}
 
 
@@ -658,26 +682,4 @@ public class view extends JFrame {
 		return new ImageIcon(bufferedImage);
 	}
 
-/*
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		Map<Character,Pair<Integer,Integer>> mapPosiciones= new HashMap<>();
-		Level level = new Level(1);
-		controller cont= new controller();
-
-		mapPosiciones.put('@', new Pair<>(4,7 ));
-		mapPosiciones.put('*', new Pair<>(4, 2));
-		mapPosiciones.put('a', new Pair<>(1, 1));
-		mapPosiciones.put('b', new Pair<>(3, 1));
-		mapPosiciones.put('c', new Pair<>(6, 1));
-		mapPosiciones.put('d', new Pair<>(1, 3));
-		mapPosiciones.put('e', new Pair<>(2,5));
-		mapPosiciones.put('f', new Pair<>(3, 4));
-		mapPosiciones.put('g', new Pair<>(4, 6));
-
-		SwingUtilities.invokeLater(() -> {
-			view game = new view(mapPosiciones,level,cont);
-			game.setVisible(true);
-		});
-	}
-	*/
 }

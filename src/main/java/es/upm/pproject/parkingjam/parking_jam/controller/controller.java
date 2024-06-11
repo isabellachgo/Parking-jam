@@ -7,8 +7,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JFrame;
+
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
+import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.view;
 import javafx.util.Pair;
 
@@ -22,46 +25,42 @@ public class controller {
 	int cellSize;
 	Pair<Integer, Integer> actLabel;
 	Pair<Integer, Integer> prevLabel;
+	JFrame f;
+	int gameId=0;
 
 	public controller() {
-		try {
-			getBoard();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (lvl != null)
-			showLevel();
+		f = new JFrame();
+		f.setTitle("Parking Game");
+		f.setSize(700, 700);
+		f.setLocationRelativeTo(null);
+		f.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE );
+		f.setResizable(false);
+		
 		punt=0;
 		casillaBuff=new HashSet<Pair<Integer, Integer>>();
 		actLabel=new Pair<Integer,Integer>(null,null);
 		click=new Pair<Integer,Integer>(null,null);
 		prevLabel=new Pair<Integer,Integer>(null,null);
 		
+		//Game g= new Game(gameId++);//Descomentar
+		LevelsMenuView lmv = new LevelsMenuView(f/*,g,this*/);//Descomentar
 	}
 
-	public boolean getBoard() throws FileNotFoundException, IOException {
-		lvl = new Level(1);
+
+	public void showLevel(int n) throws FileNotFoundException, IOException {
+		lvl = new Level(n);
 		cellSize = (400 + (lvl.getDimensionX() / 2)) / (lvl.getDimensionX() - 2);
-		return lvl == null;
-	}
-
-	public void showLevel() {
+		
 		Map<Character, Vehicle> vehicles = lvl.getCars();
-		// Pair<Integer, Integer> dimension = new Pair<Integer,
-		// Integer>(lvl.getDimensionX(), lvl.getDimensionY());
 		Map<Character, Pair<Integer, Integer>> mapPositions = new HashMap<>();
 		for (char key : vehicles.keySet()) {
-			// Pair<Integer, Integer> smallestPosition = new Pair<>(Integer.MAX_VALUE,
-			// Integer.MAX_VALUE);
 			mapPositions.put(key, vehicles.get(key).getBack());
 		}
 		mapPositions.put('@', lvl.getExit());
-		v = new view(mapPositions, lvl, this);
+		v = new view(/*f,*/mapPositions, lvl, this);//DESCOMENTAR
 	}
 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {
-		// cellSize = 400 / lvl.getDimensionX()-2;
 		int row, col;
 		if (x < 150)
 			row = 0;
@@ -272,7 +271,6 @@ public class controller {
 
 		return lvl.move(vehicleClicked, direction, distance);
 	}
-	
 	
 	public static void main (String[] args) {
 		controller cont = new controller();

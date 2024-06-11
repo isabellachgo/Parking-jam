@@ -245,6 +245,9 @@ public class controller {
 		if(res.getValue()) {
 			g.sumarGamePoints(lvl.getGamePoints());
 			g.setLevel(lvlAct, lvl);
+			int lastLevel=g.getUltimoLevelPassed();
+			lastLevel=Math.max(lastLevel, lvlAct);
+			g.setUltimoLevelPassed(lastLevel);
 		}
 		casillaBuff.clear();
 		this.vehicleClicked = null;

@@ -17,7 +17,7 @@ import es.upm.pproject.parkingjam.parking_jam.view.view;
 import javafx.util.Pair;
 
 public class controller {
-	view v;
+	//view v;
 	Level lvl;
 	Pair<Integer, Integer> click;
 	Vehicle vehicleClicked;
@@ -60,7 +60,7 @@ public class controller {
 			mapPositions.put(key, vehicles.get(key).getBack());
 		}
 		mapPositions.put('@', lvl.getExit());
-		v = new view(f,mapPositions, lvl, this);
+		view v = new view(f,mapPositions, lvl, this);
 	}
 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {
@@ -243,9 +243,8 @@ public class controller {
         Pair<Integer,Boolean> res=new Pair<>(lvl.getLevelPoint(),vehicleClicked.getPosition().contains(lvl.getExit()));
 		mv = new Pair<>(vehicleClicked.getBack(),res);
 		if(res.getValue()) {
-			if(g.getLevel(lvlAct).getLevelPoint()>=lvl.getLevelPoint()) {
+			if(g.getLevel(lvlAct).getLevelPoint()>lvl.getLevelPoint()) {
 			g.actualizarGamePoints(lvlAct,lvl.getGamePoints());}
-			//g.sumarGamePoints(lvl.getLevelPoint());
 			g.setLevel(lvlAct, lvl);
 			int lastLevel=g.getUltimoLevelPassed();
 			lastLevel=Math.max(lastLevel, lvlAct);

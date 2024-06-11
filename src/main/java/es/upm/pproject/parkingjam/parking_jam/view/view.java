@@ -254,8 +254,8 @@ public class view {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("levels button pressed");
 				
-				
-				
+				frame.getContentPane().removeAll();
+				controller.levelMenuButon();
 			}
 		});
 		JButton saveB = new JButton("save game");
@@ -442,19 +442,42 @@ public class view {
 		levelsWB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO :
-				// llamada a controller
-				// pintar nueva view tipo level con level n+1
+				System.out.println("levels button pressed");
+				
+				frame.getContentPane().removeAll();
+				controller.levelMenuButon();
 			}
 		});
 
 		JButton restartWB = new JButton(restartIcon);
 		restartWB.setBackground(buttonColor);
 		restartWB.setPreferredSize(buttonSize);
+		restartWB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("restart button pressed");
+				
+				
+				
+			}
+		});
 
 		JButton nextWB = new JButton(nextIcon);
 		nextWB.setBackground(buttonColor);
 		nextWB.setPreferredSize(buttonSize);
+		levelsWB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("next level button pressed");
+				
+				frame.getContentPane().removeAll();
+				try {
+					controller.nextLevel();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 		JPanel row1W = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		row1W.setBackground(winPColor);

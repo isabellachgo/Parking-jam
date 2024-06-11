@@ -33,6 +33,9 @@ public class LevelsMenuView {
 	private Game game;
 	private controller cont;
 	
+	Color levelBColor;
+	Color lockedLevelBColor;
+	
 	public LevelsMenuView(JFrame frame, Game game, controller cont) {
 		this.frame = frame;
 		this.game = game;
@@ -72,8 +75,8 @@ public class LevelsMenuView {
 		// Colores:
 		Color bg = new Color(180,220,110);
 		Color buttonColor = new Color(65,130,4); 
-		Color levelBColor = new Color(39,193,245);
-		Color lockedLevelBColor = new Color(80,155,180);
+		levelBColor = new Color(39,193,245);
+		lockedLevelBColor = new Color(80,155,180);
 		
 		// Dimensiones:
 		Dimension buttonSize = new Dimension(40,40);
@@ -192,17 +195,13 @@ public class LevelsMenuView {
 		l1B.setText("1");
 		l1B.setFont(levelFont);
 		l1B.setPreferredSize(levelBSize);
-		l1B.setBackground(levelBColor);
+		levelsStatus(l1B);
 		l1B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO 
-				// llamar a controller
-				// abrir view nivel 1
 				System.out.println("level 1");
 				
 				frame.getContentPane().removeAll();
-				
 				try {
 					cont.showLevel(1);
 				} catch (IOException e) {
@@ -214,45 +213,54 @@ public class LevelsMenuView {
 		l2B.setText("2");
 		l2B.setFont(levelFont);
 		l2B.setPreferredSize(levelBSize);
-		l2B.setBackground(lockedLevelBColor);
-		l2B.setEnabled(false);
+		levelsStatus(l2B);
 		l2B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO 
-				// llamar a controller
-				// abrir view nivel 2
 				System.out.println("level 2");
+				
+				frame.getContentPane().removeAll();
+				try {
+					cont.showLevel(2);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		JButton l3B = new JButton();
 		l3B.setText("3");
 		l3B.setFont(levelFont);
 		l3B.setPreferredSize(levelBSize);
-		l3B.setBackground(lockedLevelBColor);
-		l3B.setEnabled(false);
+		levelsStatus(l3B);
 		l3B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO 
-				// llamar a controller
-				// abrir view nivel 3
 				System.out.println("level 3");
+				
+				frame.getContentPane().removeAll();
+				try {
+					cont.showLevel(3);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		JButton l4B = new JButton();
 		l4B.setText("4");
 		l4B.setFont(levelFont);
 		l4B.setPreferredSize(levelBSize);
-		l4B.setBackground(lockedLevelBColor);
-		l4B.setEnabled(false);
+		levelsStatus(l4B);
 		l4B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO 
-				// llamar a controller
-				// abrir view nivel 4
 				System.out.println("level 4");
+				
+				frame.getContentPane().removeAll();
+				try {
+					cont.showLevel(4);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -329,10 +337,16 @@ public class LevelsMenuView {
 		return new ImageIcon(resizedImg);
 	}
 	
-	private void unlockLevel(Integer n) {
-		// TODO
-		// desbloquear siguiente nivel
-		// actualizar puntos game
+	private void levelsStatus(JButton b) {
+		int last = game.getUltimoLevelPassed() + 1;
+		if(Integer.parseInt(b.getText()) <= last) {
+			b.setBackground(levelBColor);
+			b.setEnabled(true);
+		} else {
+			b.setBackground(lockedLevelBColor);
+			b.setEnabled(false);
+		}
+
 	}
 	
 	

@@ -511,7 +511,7 @@ public class view extends JFrame {
 					{
 						if(newInfo.getValue().getValue())mapPosiciones.remove(carSelect);
 						
-						mapPosiciones.put(carSelect, newPos);
+						else mapPosiciones.put(carSelect, newPos);
 						mapCoordenadas= cambioCoodenadas(mapPosiciones);
 						levelPointsValue.setText(newInfo.getValue().getKey().toString());
 						gamePanel.repaint();

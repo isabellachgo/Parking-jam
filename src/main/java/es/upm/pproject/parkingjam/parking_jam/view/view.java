@@ -44,7 +44,7 @@ import javafx.util.Pair;
 
 
 
-public class view extends JFrame {
+public class view {
 	private Map<Character, Vehicle> mapVehiculo; // Mapa con las posiciones de los vehículos
 	private Map <Character,Pair<Integer,Integer>> mapPosiciones;
 	private Map <Character,Pair<Integer,Integer>> mapCoordenadas;
@@ -68,8 +68,10 @@ public class view extends JFrame {
 	private Image salida_abajoImage;
 	private Image salida_derechaImage;
 	private Image salida_izquierdaImage;
+	private JFrame frame;
 
-	public view( Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller) {
+	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller) {
+		this.frame = fm;
 		this.mapVehiculo = level.getCars();
 		this.mapPosiciones=posiciones;
 		this.dimensionMapaX=level.getDimensionX();
@@ -81,7 +83,7 @@ public class view extends JFrame {
 		this.controller=controller;
 		mapCoordenadas=cambioCoodenadas(posiciones);
 		initUI();
-		this.setVisible(true);
+		frame.setVisible(true);
 	}
 
 	private Map <Character,Pair<Integer,Integer>> cambioCoodenadas (Map <Character,Pair<Integer,Integer>> mapPosiciones){
@@ -108,13 +110,9 @@ public class view extends JFrame {
 	}
 
 	private void initUI() {
-		setTitle("Parking Game");
-		setSize(700, 700);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setResizable(false);  // Impide que la ventana sea redimensionable
-
-		setLayout(new BorderLayout());
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		frame.add(panel);
 
 		// Imagenes:
 		ImageIcon cocheRojoHorizontal = new ImageIcon(getClass().getResource("/images/coche_rojo_horizontal.png"));
@@ -255,6 +253,9 @@ public class view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("levels button pressed");
+				
+				
+				
 			}
 		});
 		JButton saveB = new JButton("save game");
@@ -307,7 +308,7 @@ public class view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("close button pressed");
-				dispose();
+				frame.dispose();
 			}
 		});
 
@@ -326,7 +327,7 @@ public class view extends JFrame {
 				System.out.println("menu button pressed ");
 
 				if(!menuPanel.isVisible()) {
-					menuPanel.show(view.this, 50,87);
+					menuPanel.show(frame, 50,87);
 					menuPanel.setVisible(true);
 				} else {
 					menuPanel.setVisible(false);
@@ -407,7 +408,7 @@ public class view extends JFrame {
 		row3.add(star2);
 		headerPanel.add(row3);
 
-		add(headerPanel, BorderLayout.NORTH); 
+		panel.add(headerPanel, BorderLayout.NORTH); 
 
 		//-------------------------PANEL CENTRAL--------------------
 
@@ -479,7 +480,7 @@ public class view extends JFrame {
 		winPanel.add(row2W);
 		winPanel.add(row3W);
 
-		add(layeredP, BorderLayout.CENTER);
+		panel.add(layeredP, BorderLayout.CENTER);
 		gamePanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {

@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 
+import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
 import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
@@ -26,7 +27,8 @@ public class controller {
 	Pair<Integer, Integer> actLabel;
 	Pair<Integer, Integer> prevLabel;
 	JFrame f;
-	int gameId=0;
+	Game g;
+	int lvlAct;
 
 	public controller() {
 		f = new JFrame();
@@ -42,22 +44,23 @@ public class controller {
 		click=new Pair<Integer,Integer>(null,null);
 		prevLabel=new Pair<Integer,Integer>(null,null);
 		
-		//Game g= new Game(gameId++);//Descomentar
-		LevelsMenuView lmv = new LevelsMenuView(f/*,g,this*/);//Descomentar
+		g= new Game("Lucas"); //TODO en menu de partidas
+		LevelsMenuView lmv = new LevelsMenuView(f,g,this);
 	}
 
 
 	public void showLevel(int n) throws FileNotFoundException, IOException {
 		lvl = new Level(n);
 		cellSize = (400 + (lvl.getDimensionX() / 2)) / (lvl.getDimensionX() - 2);
-		
+		g.setLevel(n, lvl);
+		lvlAct=n;
 		Map<Character, Vehicle> vehicles = lvl.getCars();
 		Map<Character, Pair<Integer, Integer>> mapPositions = new HashMap<>();
 		for (char key : vehicles.keySet()) {
 			mapPositions.put(key, vehicles.get(key).getBack());
 		}
 		mapPositions.put('@', lvl.getExit());
-		v = new view(/*f,*/mapPositions, lvl, this);//DESCOMENTAR
+		v = new view(f,mapPositions, lvl, this);
 	}
 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {
@@ -239,6 +242,13 @@ public class controller {
     }	
         Pair<Integer,Boolean> res=new Pair<>(lvl.getLevelPoint(),vehicleClicked.getPosition().contains(lvl.getExit()));
 		mv = new Pair<>(vehicleClicked.getBack(),res);
+		if(res.getValue()) {
+			g.sumarGamePoints(lvl.getGamePoints());
+			g.setLevel(lvlAct, lvl);
+			int lastLevel=g.getUltimoLevelPassed();
+			lastLevel=Math.max(lastLevel, lvlAct);
+			g.setUltimoLevelPassed(lastLevel);
+		}
 		casillaBuff.clear();
 		this.vehicleClicked = null;
 		punt = 0;
@@ -270,6 +280,9 @@ public class controller {
 			return false;// en cualquier otro caso el coche no se ha movido
 
 		return lvl.move(vehicleClicked, direction, distance);
+	}
+	public void levelMenuButon(){
+		LevelsMenuView lmv = new LevelsMenuView(f,g,this);
 	}
 	
 	public static void main (String[] args) {

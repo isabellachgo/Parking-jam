@@ -1,5 +1,6 @@
 package es.upm.pproject.parkingjam.parking_jam.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
@@ -8,11 +9,13 @@ public class Game {
     private String gameName;
     private int ultimoLevelPassed;
     private HashMap <Integer,Level> listaLevels;
+    private ArrayList <Integer> listaPoints;
 
     public Game( String name)
     {
         gameName=name;
         if (listaLevels==null) listaLevels=new HashMap<>();
+        if (listaPoints==null) listaPoints=new ArrayList<Integer>();
     }
 
     public int getGamePoints ()
@@ -20,14 +23,14 @@ public class Game {
         return gamePoints;
     }
 
-    public void setGamePoints (int newPoints)
+    public void actualizarGamePoints (int id , int points)
     {
-        gamePoints = newPoints;
-    }
-
-    public void sumarGamePoints (int cantidad)
-    {
-        gamePoints = gamePoints + cantidad;
+        listaPoints.add(id, points);
+        gamePoints=0;
+        for(int i=0; i< listaPoints.size();i++)
+        {
+            if(listaPoints.get(i)!=null) gamePoints=gamePoints+ listaPoints.get(i);
+        }
     }
 
     public  String getName()
@@ -53,6 +56,11 @@ public class Game {
     public void setLevel( int numero , Level level)
     {
         listaLevels.put(numero, level);
+    }
+
+    public void guardarGame()
+    {
+
     }
 
 }

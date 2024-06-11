@@ -69,7 +69,7 @@ public class view extends JFrame {
 	private Image salida_derechaImage;
 	private Image salida_izquierdaImage;
 
-	public view( Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller) {
+	public view(Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller) {
 		this.mapVehiculo = level.getCars();
 		this.mapPosiciones=posiciones;
 		this.dimensionMapaX=level.getDimensionX();

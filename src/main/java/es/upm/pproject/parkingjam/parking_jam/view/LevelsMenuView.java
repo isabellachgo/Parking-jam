@@ -24,11 +24,13 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
 
+import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+
 public class LevelsMenuView {
 	
 	private JFrame frame;
 	
-	public LevelsMenuView(JFrame frame) {
+	public LevelsMenuView(JFrame frame/*, Game game, controller controller*/) {
 		// TODO : también debe recivir un Game
 		this.frame = frame;
 		initLMV();
@@ -194,6 +196,8 @@ public class LevelsMenuView {
 				// llamar a controller
 				// abrir view nivel 1
 				System.out.println("level 1");
+				
+				//controller.showLevel(1);
 			}
 		});
 		JButton l2B = new JButton();

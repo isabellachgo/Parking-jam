@@ -90,7 +90,7 @@ public class Game {
             // Escribir en el fichero
             for (HashMap.Entry<Integer, Level> entry : listaLevels.entrySet())             
            { 
-                bw.write(entry.getKey()+" : " + entry.getValue().getGamePoints());
+                bw.write(entry.getKey()+" : " + entry.getValue().getLevelPoint());
                 bw.newLine();  // Salto de línea
            }
             System.out.println("El archivo se ha creado y se ha escrito correctamente en: " + rutaFichero);

@@ -27,6 +27,8 @@ public class controller {
 	Pair<Integer, Integer> actLabel;
 	Pair<Integer, Integer> prevLabel;
 	JFrame f;
+	Game g;
+	int lvlAct;
 
 	public controller() {
 		f = new JFrame();
@@ -42,7 +44,7 @@ public class controller {
 		click=new Pair<Integer,Integer>(null,null);
 		prevLabel=new Pair<Integer,Integer>(null,null);
 		
-		Game g= new Game("Lucas"); //TODO en menu de partidas
+		g= new Game("Lucas"); //TODO en menu de partidas
 		LevelsMenuView lmv = new LevelsMenuView(f,g,this);
 	}
 
@@ -50,7 +52,8 @@ public class controller {
 	public void showLevel(int n) throws FileNotFoundException, IOException {
 		lvl = new Level(n);
 		cellSize = (400 + (lvl.getDimensionX() / 2)) / (lvl.getDimensionX() - 2);
-		
+		g.setLevel(n, lvl);
+		lvlAct=n;
 		Map<Character, Vehicle> vehicles = lvl.getCars();
 		Map<Character, Pair<Integer, Integer>> mapPositions = new HashMap<>();
 		for (char key : vehicles.keySet()) {
@@ -239,6 +242,10 @@ public class controller {
     }	
         Pair<Integer,Boolean> res=new Pair<>(lvl.getLevelPoint(),vehicleClicked.getPosition().contains(lvl.getExit()));
 		mv = new Pair<>(vehicleClicked.getBack(),res);
+		if(res.getValue()) {
+			g.sumarGamePoints(lvl.getGamePoints());
+			g.setLevel(lvlAct, lvl);
+		}
 		casillaBuff.clear();
 		this.vehicleClicked = null;
 		punt = 0;
@@ -270,6 +277,9 @@ public class controller {
 			return false;// en cualquier otro caso el coche no se ha movido
 
 		return lvl.move(vehicleClicked, direction, distance);
+	}
+	public void levelMenuButon(){
+		LevelsMenuView lmv = new LevelsMenuView(f,g,this);
 	}
 	
 	public static void main (String[] args) {

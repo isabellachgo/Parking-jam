@@ -112,6 +112,9 @@ public class view {
 		}
 		return sol;
 	}
+	public Pair<Integer,Integer> devuelveCoordenadas(Character c){
+		return mapCoordenadas.get(c);
+	}
 
 	private void initUI() {
 		JPanel panel = new JPanel();
@@ -482,7 +485,7 @@ public class view {
 		JButton nextWB = new JButton(nextIcon);
 		nextWB.setBackground(buttonColor);
 		nextWB.setPreferredSize(buttonSize);
-		levelsWB.addActionListener(new ActionListener() {
+		nextWB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("next level button pressed");
@@ -588,14 +591,14 @@ public class view {
 					{
 						int x= mapCoordenadas.get(carSelect).getKey();
 						int y= mapCoordenadas.get(carSelect).getValue();
-						x= x+ desp.getKey();
+						x=desp.getKey();
 						mapCoordenadas.put(carSelect, new Pair<>(x, y));
 					}
 					else if(desp.getValue()!=0)
 					{
 						int x= mapCoordenadas.get(carSelect).getKey();
 						int y= mapCoordenadas.get(carSelect).getValue();
-						y= y+ desp.getValue();
+						y= desp.getValue();
 						mapCoordenadas.put(carSelect, new Pair<>(x, y));
 					}
 					gamePanel.repaint();

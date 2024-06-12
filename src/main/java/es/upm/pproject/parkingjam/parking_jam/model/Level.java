@@ -38,13 +38,18 @@ public class Level  {
 		board = bReader.getBoard();
 		exit_position = bReader.getExit();
 		cars = bReader.getCars();
-		this.boardHistory = new ArrayDeque<>();
+
 		this.vehiclePositionHistory = new ArrayDeque<>();
+
 		this.initialBoard= cloneBoard();
+		this.boardHistory = new ArrayDeque<>();
+		boardHistory.add(initialBoard);
 		this.initialVehiclePositions = new HashMap<>();
 		for(Entry<Character, Vehicle> vh : cars.entrySet()) {
 			initialVehiclePositions.put(new Pair <>(vh.getKey(),vh.getValue()), vh.getValue().getPosition());
-		}
+		}	
+		vehiclePositionHistory.add(cloneCarPositions());
+
 		this.levelPoints= 0;
 
 	}
@@ -91,21 +96,20 @@ public class Level  {
 	public boolean move (Vehicle car, char direction, int distance ) {
 		boolean moved=true;
 		if(distance ==0) return false;
-		getBoardHistory().push(cloneBoard());
-		vehiclePositionHistory.push(cloneCarPositions());
+
 		Character [][] newBoard = updateBoard(car, direction, distance);
 		if(newBoard !=null) {
 			this.board=newBoard;
 			levelPoints++;
+			boardHistory.push(this.board);
+			vehiclePositionHistory.push(cloneCarPositions());
+
 		}
-		else {
-			moved=false;
-			getBoardHistory().pop();
-			vehiclePositionHistory.pop();
-		}
+		else moved=false;
+			
 		return moved;
 	}
-	
+
 
 	// Checks if the requested movement is valid and calculates de new position of the vehicle.
 	public Character[][] updateBoard(Vehicle car, char direction, int distance) {
@@ -284,13 +288,20 @@ public class Level  {
 		this.cars=newCars;
 	}
 	public boolean undo() {
-		if(getBoardHistory().isEmpty() || vehiclePositionHistory.isEmpty()) {
-			return false;
+		if(!boardHistory.isEmpty() && !vehiclePositionHistory.isEmpty()) {
+			boardHistory.pop();
+			vehiclePositionHistory.pop();
+			if(!boardHistory.isEmpty() && !vehiclePositionHistory.isEmpty()) {
+
+
+				this.board = boardHistory.peek();
+				restoreCarPositions(vehiclePositionHistory.peek());
+				levelPoints--;
+
+				return true;
+			}
 		}
-		this.board = getBoardHistory().pop();
-		restoreCarPositions(vehiclePositionHistory.pop());
-		levelPoints--;
-		return true;
+		return false;
 	}
 
 	/*public static void main(String args[]) throws FileNotFoundException, IOException {

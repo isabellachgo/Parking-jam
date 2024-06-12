@@ -8,8 +8,11 @@ public class Vehicle {
 	boolean redCar;
 	Pair<Integer,Integer> dimension;
 	Set<Pair<Integer,Integer>> position;
-	Pair<Integer,Integer> front;
-	Pair<Integer,Integer> back;
+	Pair<Integer,Integer> frontLabel;
+	Pair<Integer,Integer> backLabel;
+	Pair<Integer,Integer> pix;
+	//Pair<Integer,Integer> backPix;
+	
 	
 	public Vehicle(Character id ,boolean redCar,Pair<Integer,Integer> dimension, Set<Pair<Integer,Integer>> position) {
 		this.redCar=redCar;
@@ -20,20 +23,20 @@ public class Vehicle {
 	}
 	public void setPosition(Set<Pair<Integer,Integer>> position) {
 		this.position=position;
-		this.back = new Pair<>(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        this.front = new Pair<>(Integer.MIN_VALUE, Integer.MIN_VALUE);
+		this.backLabel = new Pair<>(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        this.frontLabel = new Pair<>(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
         // Buscar el par menor y el par mayor
         for (Pair<Integer, Integer> p : position) {
             // Comparar para encontrar el menor par
-            if (p.getKey() < back.getKey() || 
-                (p.getKey().equals(back.getKey()) && p.getValue() < back.getValue())) {
-                this.back = p;
+            if (p.getKey() < backLabel.getKey() || 
+                (p.getKey().equals(backLabel.getKey()) && p.getValue() < backLabel.getValue())) {
+                this.backLabel = p;
             }
             // Comparar para encontrar el mayor par
-            if (p.getKey() > front.getKey() || 
-                (p.getKey().equals(front.getKey()) && p.getValue() > front.getValue())) {
-                this.front = p;
+            if (p.getKey() > frontLabel.getKey() || 
+                (p.getKey().equals(frontLabel.getKey()) && p.getValue() > frontLabel.getValue())) {
+                this.frontLabel = p;
             }
         }
 	}
@@ -52,10 +55,18 @@ public class Vehicle {
 	public Set<Pair<Integer,Integer>> getPosition() {
 		return this.position;
 	}
-	public Pair<Integer,Integer> getFront(){
-		return this.front;
+	public Pair<Integer,Integer> getfrontLabel(){
+		return this.frontLabel;
 	}
-	public Pair<Integer,Integer> getBack(){
-		return this.back;
+	public Pair<Integer,Integer> getbackLabel(){
+		return this.backLabel;
 	}
+	
+	public void setPix(Pair<Integer, Integer> p){
+		this.pix=p;
+	}
+	public Pair<Integer,Integer> getPix(){
+		return this.pix;
+	}
+	
 }

@@ -288,12 +288,12 @@ public class controller {
 	public void nextLevel() throws FileNotFoundException, IOException {
 		showLevel(lvlAct+1);
 	}
-	public Pair<Character, Pair<Integer,Integer>> undo() {
+	public Pair<Pair<Character,Integer>, Pair<Integer,Integer>> undo() {
 		Character c= lvl.undo();
 		if(c.equals(' ')) {
-			return new Pair<Character, Pair<Integer, Integer>>(' ',new Pair<Integer,Integer>(0,0));
+			return new Pair<Pair<Character,Integer>, Pair<Integer, Integer>>(new Pair<Character,Integer>(' ',lvl.getLevelPoint()),new Pair<Integer,Integer>(0,0));
 		}
-		Pair<Character, Pair<Integer,Integer>> res=new Pair<Character, Pair<Integer, Integer>>(c,lvl.getCars().get(c).getBack());
+		Pair<Pair<Character,Integer>, Pair<Integer,Integer>> res=new Pair<Pair<Character,Integer>, Pair<Integer, Integer>>(new Pair<Character,Integer>(c,lvl.getLevelPoint()),lvl.getCars().get(c).getBack());
 		return res;
 	}
 	public void restart() {

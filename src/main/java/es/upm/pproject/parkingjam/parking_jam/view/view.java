@@ -51,6 +51,7 @@ public class view {
 	private Level level;
 	private char carSelect;
 	private controller controller;
+	private Integer gamePoints;
 	private Graphics grafic;
 	private Component comp;
 	private int dimensionMapaX;
@@ -70,12 +71,13 @@ public class view {
 	private Image salida_izquierdaImage;
 	private JFrame frame;
 
-	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller) {
+	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller, int gamePoints) {
 		this.frame = fm;
 		this.mapVehiculo = level.getCars();
 		this.mapPosiciones=posiciones;
 		this.dimensionMapaX=level.getDimensionX();
 		this.dimensionMapaY=level.getDimensionY();
+		this.gamePoints=gamePoints;
 		tamanoCeldaX=Math.round((400+(dimensionMapaX/2))/(dimensionMapaX-2));
 		tamanoCeldaY=Math.round((400+(dimensionMapaY/2))/(dimensionMapaY-2)) ;
 		System.out.println("tamaño celda " +tamanoCeldaX);
@@ -294,7 +296,7 @@ public class view {
 		newGameB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("nwe game button pressed");
+				System.out.println("new game button pressed");
 			}
 		});
 		JButton closeB = new JButton("close Parking Jam");
@@ -371,7 +373,7 @@ public class view {
 		if(gamePointsFont!=null){ gamePointsLabel.setFont(gamePointsFont); }
 		else {gamePointsLabel.setFont(new Font("Serif",Font.PLAIN,25)); }
 
-		JLabel gamePointsValue= new JLabel(level.getGamePoints().toString());
+		JLabel gamePointsValue= new JLabel(gamePoints.toString());
 		if(gamePointsFont!=null){ gamePointsValue.setFont(gamePointsFont); }
 		else {gamePointsValue.setFont(new Font("Serif",Font.PLAIN,25)); }
 
@@ -465,7 +467,7 @@ public class view {
 		JButton nextWB = new JButton(nextIcon);
 		nextWB.setBackground(buttonColor);
 		nextWB.setPreferredSize(buttonSize);
-		levelsWB.addActionListener(new ActionListener() {
+		nextWB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("next level button pressed");

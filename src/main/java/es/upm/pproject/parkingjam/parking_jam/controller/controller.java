@@ -60,7 +60,7 @@ public class controller {
 			mapPositions.put(key, vehicles.get(key).getBack());
 		}
 		mapPositions.put('@', lvl.getExit());
-		view v = new view(f,mapPositions, lvl, this);
+		view v = new view(f,mapPositions, lvl, this, g.getGamePoints());
 	}
 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {
@@ -243,8 +243,8 @@ public class controller {
         Pair<Integer,Boolean> res=new Pair<>(lvl.getLevelPoint(),vehicleClicked.getPosition().contains(lvl.getExit()));
 		mv = new Pair<>(vehicleClicked.getBack(),res);
 		if(res.getValue()) {
-			if(g.getLevel(lvlAct).getLevelPoint()>=lvl.getLevelPoint()) {
-			g.actualizarGamePoints(lvlAct,lvl.getGamePoints());}
+			if(g.getLevelPoints(lvlAct)==null || g.getLevelPoints(lvlAct)>=lvl.getLevelPoint()) {
+			g.actualizarGamePoints(lvlAct,lvl.getLevelPoint());}
 			g.setLevel(lvlAct, lvl);
 			int lastLevel=g.getUltimoLevelPassed();
 			lastLevel=Math.max(lastLevel, lvlAct);
@@ -287,6 +287,23 @@ public class controller {
 	}
 	public void nextLevel() throws FileNotFoundException, IOException {
 		showLevel(lvlAct+1);
+	}
+	public Pair<Pair<Character,Integer>, Pair<Integer,Integer>> undo() {
+		Character c= lvl.undo();
+		if(c.equals(' ')) {
+			return new Pair<Pair<Character,Integer>, Pair<Integer, Integer>>(new Pair<Character,Integer>(' ',lvl.getLevelPoint()),new Pair<Integer,Integer>(0,0));
+		}
+		Pair<Pair<Character,Integer>, Pair<Integer,Integer>> res=new Pair<Pair<Character,Integer>, Pair<Integer, Integer>>(new Pair<Character,Integer>(c,lvl.getLevelPoint()),lvl.getCars().get(c).getBack());
+		return res;
+	}
+	public void restart() {
+		lvl.reset();
+		try {
+			showLevel(lvlAct);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public static void main (String[] args) {
 		controller cont = new controller();

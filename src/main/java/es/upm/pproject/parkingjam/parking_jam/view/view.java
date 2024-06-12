@@ -57,6 +57,7 @@ public class view {
 	private int dimensionMapaY;
 	private int tamanoCeldaX;
 	private int tamanoCeldaY;
+	private Integer gamePoints;
 	private Image cocheRojoHorizontalImage;
 	private Image cocheRojoVerticalImage;// Imagen del coche
 	private Image parkingImage;
@@ -69,13 +70,15 @@ public class view {
 	private Image salida_derechaImage;
 	private Image salida_izquierdaImage;
 	private JFrame frame;
+	
 
-	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller) {
+	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller, int GamePoints) {
 		this.frame = fm;
 		this.mapVehiculo = level.getCars();
 		this.mapPosiciones=posiciones;
 		this.dimensionMapaX=level.getDimensionX();
 		this.dimensionMapaY=level.getDimensionY();
+		this.gamePoints=GamePoints;
 		tamanoCeldaX=Math.round((400+(dimensionMapaX/2))/(dimensionMapaX-2));
 		tamanoCeldaY=Math.round((400+(dimensionMapaY/2))/(dimensionMapaY-2)) ;
 		System.out.println("tamaño celda " +tamanoCeldaX);
@@ -84,6 +87,7 @@ public class view {
 		mapCoordenadas=cambioCoodenadas(posiciones);
 		initUI();
 		frame.setVisible(true);
+		
 	}
 
 	private Map <Character,Pair<Integer,Integer>> cambioCoodenadas (Map <Character,Pair<Integer,Integer>> mapPosiciones){
@@ -346,10 +350,16 @@ public class view {
 				 * recibir nueva situación del tablero y los puntos 
 				 * pintar 
 				 */
+				
+				frame.getContentPane().removeAll();
+				controller.restart();
 				System.out.println("restart button pressed");
 			}
 
 		});
+		JLabel levelPointsValue= new JLabel(level.getLevelPoint().toString());
+		if(levelPointsFont!=null){ levelPointsValue.setFont(levelPointsFont); }
+		else {levelPointsValue.setFont(new Font("Serif",Font.PLAIN,30));}
 
 		JButton undoB = new JButton(undoIcon);
 		undoB.setPreferredSize(buttonSize);
@@ -362,6 +372,15 @@ public class view {
 				 * recibir nueva situación del tablero y los puntos 
 				 * pintar 
 				 */
+				Pair <Pair<Character,Integer>,Pair<Integer,Integer>> newPos = controller.undo();
+				if(!newPos.getKey().getKey().equals(' '))
+				{
+					mapPosiciones.put(newPos.getKey().getKey(), newPos.getValue());
+					mapCoordenadas= cambioCoodenadas(mapPosiciones);
+					levelPointsValue.setText(newPos.getKey().getValue().toString());
+					gamePanel.repaint();
+				}
+				else System.out.println(" no hay mas movimientos que deshacer");
 				System.out.println("undo button pressed");
 			}
 
@@ -371,7 +390,7 @@ public class view {
 		if(gamePointsFont!=null){ gamePointsLabel.setFont(gamePointsFont); }
 		else {gamePointsLabel.setFont(new Font("Serif",Font.PLAIN,25)); }
 
-		//JLabel gamePointsValue= new JLabel(level.getGamePoints().toString());
+		JLabel gamePointsValue= new JLabel(gamePoints.toString());
 		if(gamePointsFont!=null){ gamePointsValue.setFont(gamePointsFont); }
 		else {gamePointsValue.setFont(new Font("Serif",Font.PLAIN,25)); }
 
@@ -397,9 +416,7 @@ public class view {
 		JPanel row3 = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
 		JLabel star1 = new JLabel(starIcon);
 
-		JLabel levelPointsValue = new JLabel(level.getLevelPoint().toString());
-		if(levelPointsFont!=null){ levelPointsValue.setFont(levelPointsFont); }
-		else {levelPointsValue.setFont(new Font("Serif",Font.PLAIN,30));}
+		
 
 		JLabel star2 = new JLabel(starIcon2);
 
@@ -456,16 +473,16 @@ public class view {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("restart button pressed");
-				
-				
-				
+				frame.getContentPane().removeAll();
+				controller.restart();
+			
 			}
 		});
 
 		JButton nextWB = new JButton(nextIcon);
 		nextWB.setBackground(buttonColor);
 		nextWB.setPreferredSize(buttonSize);
-		nextWB.addActionListener(new ActionListener() {
+		levelsWB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("next level button pressed");

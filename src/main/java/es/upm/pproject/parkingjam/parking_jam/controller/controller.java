@@ -243,7 +243,7 @@ public class controller {
         Pair<Integer,Boolean> res=new Pair<>(lvl.getLevelPoint(),vehicleClicked.getPosition().contains(lvl.getExit()));
 		mv = new Pair<>(vehicleClicked.getBack(),res);
 		if(res.getValue()) {
-			if(g.getLevel(lvlAct).getLevelPoint()>=lvl.getLevelPoint()) {
+			if(g.getLevelPoints(lvlAct)>=lvl.getLevelPoint()) {
 			g.actualizarGamePoints(lvlAct,lvl.getLevelPoint());}
 			g.setLevel(lvlAct, lvl);
 			int lastLevel=g.getUltimoLevelPassed();
@@ -288,8 +288,13 @@ public class controller {
 	public void nextLevel() throws FileNotFoundException, IOException {
 		showLevel(lvlAct+1);
 	}
-	public void undo() {
-		Pair<Character, Pair<Integer,Integer>> res;
+	public Pair<Character, Pair<Integer,Integer>> undo() {
+		Character c= lvl.undo();
+		if(c.equals(' ')) {
+			return new Pair<Character, Pair<Integer, Integer>>(' ',new Pair<Integer,Integer>(0,0));
+		}
+		Pair<Character, Pair<Integer,Integer>> res=new Pair<Character, Pair<Integer, Integer>>(c,lvl.getCars().get(c).getBack());
+		return res;
 	}
 	public void restart() {
 		lvl.reset();

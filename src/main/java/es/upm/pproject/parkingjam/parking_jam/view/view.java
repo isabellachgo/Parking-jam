@@ -371,7 +371,7 @@ public class view {
 		if(gamePointsFont!=null){ gamePointsLabel.setFont(gamePointsFont); }
 		else {gamePointsLabel.setFont(new Font("Serif",Font.PLAIN,25)); }
 
-		JLabel gamePointsValue= new JLabel(level.getGamePoints().toString());
+		//JLabel gamePointsValue= new JLabel(level.getGamePoints().toString());
 		if(gamePointsFont!=null){ gamePointsValue.setFont(gamePointsFont); }
 		else {gamePointsValue.setFont(new Font("Serif",Font.PLAIN,25)); }
 

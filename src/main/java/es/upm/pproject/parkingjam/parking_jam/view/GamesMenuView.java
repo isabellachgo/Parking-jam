@@ -43,7 +43,9 @@ public class GamesMenuView {
 	public void initGMV() {
 		
 		// Altura scroll:
-		Integer scrollHeight = (menu.getNumGames()+1)*80 + (menu.getNumGames())*10;
+		Integer listH = (menu.getNumGames()+1)*80 + (menu.getNumGames())*10;
+		Integer pictureH = listH +80;
+		Integer scrollH = pictureH +100;
 
 		// Fuentes:
 		Font titleFont = null;
@@ -74,7 +76,7 @@ public class GamesMenuView {
 		ImageIcon addIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/add.png")),40,40);
 		
 		// Imagenes:
-		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(scrollHeight, 450), Image.SCALE_SMOOTH);		
+		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 450), Image.SCALE_SMOOTH);		
 		
 		// Elementos:
 		JLabel titleL = new JLabel();
@@ -137,7 +139,8 @@ public class GamesMenuView {
 		
 		JLayeredPane panelCenter = new JLayeredPane();
 		panelCenter.setBackground(bg);
-		panelCenter.setBounds(0,0,700, Math.max(scrollHeight+20, 550));
+		panelCenter.setPreferredSize(new Dimension(700,Math.max(scrollH, 550)));
+		panelCenter.setBounds(0,0,700, Math.max(scrollH, 550));
 		
 		JPanel panelBg = new JPanel() {
 			@Override
@@ -147,10 +150,10 @@ public class GamesMenuView {
 			}
 		};
 		panelBg.setBackground(bg);
-		panelBg.setBounds(0, 0, 700, Math.max(scrollHeight+20, 550) );
+		panelBg.setBounds(0, 0, 700, Math.max(scrollH, 550) );
 		
 		JPanel panelElem = new JPanel();
-		panelElem.setBounds(140, 90, 420, scrollHeight);
+		panelElem.setBounds(140, 90, 420, listH);
 		panelElem.setBackground(new Color(0,0,0,0));
 		panelElem.setLayout(new BoxLayout(panelElem, BoxLayout.Y_AXIS));
 		JPanel row3 = new JPanel(new FlowLayout(FlowLayout.CENTER));

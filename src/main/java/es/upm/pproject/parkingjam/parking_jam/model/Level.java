@@ -106,7 +106,7 @@ public class Level  {
 
 		}
 		else moved=false;
-			
+
 		return moved;
 	}
 
@@ -288,27 +288,27 @@ public class Level  {
 		this.cars=newCars;
 	}
 	public Character findChangedVehicle(Map<Character, Set<Pair<Integer, Integer>>> oldState, Map<Character, Set<Pair<Integer, Integer>>> newState) {
-        for (Character vehicleId : oldState.keySet()) {
-            Set<Pair<Integer, Integer>> oldPosition = oldState.get(vehicleId);
-            Set<Pair<Integer, Integer>> newPosition = newState.get(vehicleId);
-            if (!oldPosition.equals(newPosition)) {
-                return vehicleId;
-            }
-        }
-        return ' '; 
-    }
+		for (Character vehicleId : oldState.keySet()) {
+			Set<Pair<Integer, Integer>> oldPosition = oldState.get(vehicleId);
+			Set<Pair<Integer, Integer>> newPosition = newState.get(vehicleId);
+			if (!oldPosition.equals(newPosition)) {
+				return vehicleId;
+			}
+		}
+		return ' '; 
+	}
 	public Character undo() {
 		if(!boardHistory.isEmpty() && !vehiclePositionHistory.isEmpty()) {
-			boardHistory.pop();
-			Map<Character, Set<Pair<Integer, Integer>>> vv=vehiclePositionHistory.pop();
-			if(!boardHistory.isEmpty() && !vehiclePositionHistory.isEmpty()) {
-
-
-				this.board = boardHistory.peek();
-				restoreCarPositions(vehiclePositionHistory.peek());
-				levelPoints--;
-
-				return findChangedVehicle(vv,vehiclePositionHistory.peek()) ;
+			
+			if(vehiclePositionHistory.size()!=1 && boardHistory.size()!=1 ) {
+				boardHistory.pop();
+				Map<Character, Set<Pair<Integer, Integer>>> vv=vehiclePositionHistory.pop();
+				if(!boardHistory.isEmpty() && !vehiclePositionHistory.isEmpty()) {
+					this.board = boardHistory.peek();
+					restoreCarPositions(vehiclePositionHistory.peek());
+					levelPoints--;
+				    return findChangedVehicle(vv,vehiclePositionHistory.peek()) ;
+				}
 			}
 		}
 		return ' ';

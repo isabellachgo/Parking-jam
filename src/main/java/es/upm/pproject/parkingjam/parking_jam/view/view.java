@@ -198,6 +198,7 @@ public class view {
 		ImageIcon loadMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 		ImageIcon levelsMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/levelsMenu.png")),30,30);
 		ImageIcon nextIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/next.png")),30,30);
+		ImageIcon homeMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
 
 
 		// Panel donde se dibujan los vehículos
@@ -246,9 +247,25 @@ public class view {
 
 		JPopupMenu menuPanel = new JPopupMenu();
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		menuPanel.setPopupSize(207,235);
-		menuPanel.setBounds(50, 87, 207, 235);
-
+		menuPanel.setPopupSize(207,280);
+		menuPanel.setBounds(50, 87, 207, 280);
+		
+		JButton gamesB= new JButton("games menu");
+		gamesB.setPreferredSize(buttonSize2);
+		gamesB.setIcon(homeMIcon);
+		gamesB.setBackground(buttonColor);
+		gamesB.setForeground(Color.white);
+		gamesB.setFont(menuFont);
+		gamesB.setHorizontalAlignment(SwingConstants.LEFT);
+		gamesB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("games button pressed");
+				
+				frame.getContentPane().removeAll();
+				controller.gamesMenuButton();
+			}
+		});
 		JButton levelsB= new JButton("levels menu");
 		levelsB.setPreferredSize(buttonSize2);
 		levelsB.setIcon(levelsMIcon);
@@ -319,6 +336,7 @@ public class view {
 			}
 		});
 
+		menuPanel.add(gamesB);
 		menuPanel.add(levelsB);
 		menuPanel.add(saveB);
 		menuPanel.add(loadB);
@@ -348,15 +366,9 @@ public class view {
 		restartB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/* TODO: 
-				 * notificar al controller 'restart' pulsado
-				 * recibir nueva situación del tablero y los puntos 
-				 * pintar 
-				 */
-				
+				System.out.println("restart button pressed");
 				frame.getContentPane().removeAll();
 				controller.restart();
-				System.out.println("restart button pressed");
 			}
 
 		});
@@ -370,11 +382,8 @@ public class view {
 		undoB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/* TODO: 
-				 * notificar al controller 'undo' pulsado
-				 * recibir nueva situación del tablero y los puntos 
-				 * pintar 
-				 */
+				System.out.println("undo button pressed");
+				
 				Pair <Pair<Character,Integer>,Pair<Integer,Integer>> newPos = controller.undo();
 				if(!newPos.getKey().getKey().equals(' '))
 				{
@@ -384,7 +393,6 @@ public class view {
 					gamePanel.repaint();
 				}
 				else System.out.println(" no hay mas movimientos que deshacer");
-				System.out.println("undo button pressed");
 			}
 
 		});
@@ -418,11 +426,7 @@ public class view {
 
 		JPanel row3 = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
 		JLabel star1 = new JLabel(starIcon);
-
-		
-
 		JLabel star2 = new JLabel(starIcon2);
-
 		row3.add(star1);
 		row3.add(levelPointsValue);
 		row3.add(star2);
@@ -450,7 +454,7 @@ public class view {
 		JLabel winL = new JLabel("VICTORY");
 		winL.setFont(titleFont);
 
-		JLabel pointsWL = new JLabel("0000"); //TODO : valor a parir de game
+		JLabel pointsWL = new JLabel("0000"); //TODO : valor a partir de game
 		pointsWL.setFont(levelPointsFont);
 
 		JLabel star1W = new JLabel(starIcon);

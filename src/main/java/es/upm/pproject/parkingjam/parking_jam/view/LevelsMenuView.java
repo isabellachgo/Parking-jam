@@ -90,6 +90,8 @@ public class LevelsMenuView {
 		ImageIcon loadMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 		ImageIcon menuIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/menu.png")),30,30);
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
+		ImageIcon homeMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
+
 		
 		// Imagenes:
 		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, 400, Image.SCALE_SMOOTH);
@@ -97,9 +99,25 @@ public class LevelsMenuView {
 		// Elementos:
 		JPopupMenu menuPanel = new JPopupMenu();
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		menuPanel.setPopupSize(207,195);
-		menuPanel.setBounds(50, 80, 207, 193);
+		menuPanel.setPopupSize(207,235);
+		menuPanel.setBounds(50, 80, 207, 235);
 
+		JButton gamesB= new JButton("games menu");
+		gamesB.setPreferredSize(buttonSize2);
+		gamesB.setIcon(homeMIcon);
+		gamesB.setBackground(buttonColor);
+		gamesB.setForeground(Color.white);
+		gamesB.setFont(menuFont);
+		gamesB.setHorizontalAlignment(SwingConstants.LEFT);
+		gamesB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("games button pressed");
+				
+				frame.getContentPane().removeAll();
+				cont.gamesMenuButton();
+			}
+		});
 		JButton saveB = new JButton("save game");
 		saveB.setPreferredSize(buttonSize2);
 		saveB.setIcon(saveMIcon);
@@ -154,6 +172,7 @@ public class LevelsMenuView {
 			}
 		});
 
+		menuPanel.add(gamesB);
 		menuPanel.add(saveB);
 		menuPanel.add(loadB);
 		menuPanel.add(newGameB);

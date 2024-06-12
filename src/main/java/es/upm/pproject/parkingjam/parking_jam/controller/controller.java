@@ -11,7 +11,9 @@ import javax.swing.JFrame;
 
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
+import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
+import es.upm.pproject.parkingjam.parking_jam.view.GamesMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.view;
 import javafx.util.Pair;
@@ -28,6 +30,7 @@ public class controller {
 	Pair<Integer, Integer> prevLabel;
 	JFrame f;
 	Game g;
+	Menu m;
 	int lvlAct;
 
 	public controller() {
@@ -44,8 +47,10 @@ public class controller {
 		click = new Pair<Integer, Integer>(null, null);
 		prevLabel = new Pair<Integer, Integer>(null, null);
 
-		g = new Game("Lucas"); // TODO en menu de partidas
-		LevelsMenuView lmv = new LevelsMenuView(f, g, this);
+		//g = new Game("Lucas"); // TODO en menu de partidas
+		//LevelsMenuView lmv = new LevelsMenuView(f, g, this);
+		m = new Menu();
+		GamesMenuView gmv= new GamesMenuView(f,m,this);
 	}
 
 	public void showLevel(int n) throws FileNotFoundException, IOException {
@@ -300,11 +305,26 @@ public class controller {
 		try {
 			showLevel(lvlAct);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	public void newGame(String name) {
+		Game game = new Game(name);
+		m.addGame(game);
+		GamesMenuView gmv = new GamesMenuView(f, m, this);
+	}
+	
+	public void openGame(Game game) {
+		this.g=game;
+		LevelsMenuView lmv = new LevelsMenuView(f, game, this);
+	}
+	
+	public void gamesMenuButton() {
+		GamesMenuView gmv = new GamesMenuView(f,m,this);
+	}
 
+	
 	public static void main(String[] args) {
 		controller cont = new controller();
 	}

@@ -18,13 +18,17 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import es.upm.pproject.parkingjam.parking_jam.controller.controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 
@@ -32,10 +36,12 @@ public class GamesMenuView {
 
 	private JFrame frame ;
 	private Menu menu;
+	private controller cont;
 
-	public GamesMenuView(JFrame frame, Menu menu) {
+	public GamesMenuView(JFrame frame, Menu menu, controller cont) {
 		this.frame = frame;
 		this.menu = menu;
+		this.cont = cont;
 		initGMV();
 		this.frame.setVisible(true);
 	}
@@ -60,6 +66,12 @@ public class GamesMenuView {
 		} catch (FontFormatException | IOException e1) {
 			e1.printStackTrace();
 		}
+		Font newGameFont = null;
+		try {
+			newGameFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(23f);
+		} catch (FontFormatException | IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		// Dimensiones:
 		Dimension gameButtonSize = new Dimension(420, 80);
@@ -73,7 +85,8 @@ public class GamesMenuView {
 		
 		// Iconos:
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
-		ImageIcon addIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/add.png")),40,40);
+		ImageIcon addIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/add_black.png")),40,40);
+		ImageIcon carIcon = resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
 		
 		// Imagenes:
 		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 450), Image.SCALE_SMOOTH);		
@@ -82,6 +95,22 @@ public class GamesMenuView {
 		JLabel titleL = new JLabel();
 		titleL.setText("Parking Jam");
 		titleL.setFont(titleFont);
+		
+		JPanel panelGameName = new JPanel();
+		panelGameName.setLayout(new BorderLayout());
+		//panelGameName.setBackground(bg);
+		
+		JLabel pgnText = new JLabel();
+		pgnText.setFont(newGameFont);
+		pgnText.setOpaque(true);
+		//pgnText.setBackground(bg);
+		pgnText.setText("Game name: ");
+		
+		JTextField pgnInput = new JTextField();
+		pgnInput.setBackground(Color.white);
+		
+		panelGameName.add(pgnText, BorderLayout.NORTH);
+		panelGameName.add(pgnInput, BorderLayout.CENTER);
 		
 		JButton addGameB = new JButton("New game");
 		addGameB.setPreferredSize(gameButtonSize);
@@ -92,15 +121,31 @@ public class GamesMenuView {
 		addGameB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("game button pressed");
+				System.out.println("new game button pressed");
+				
+				JDialog dialog = new JOptionPane(panelGameName, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, carIcon).createDialog(frame, "New Game");
+				dialog.setLocationRelativeTo(frame);
+				dialog.setVisible(true);
+				Object res = ((JOptionPane) dialog.getContentPane().getComponent(0)).getValue();
+				
+				if(res!=null && res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
+					String input = pgnInput.getText();
+					if(input != null && !input.trim().isEmpty()) {
+						System.out.println("Ok new game button pressed");
+						// TODO crear game
+						frame.getContentPane().removeAll();
+						cont.newGame(input);
+					}
+				}
 			}
 		});
 		
 		ArrayList<JButton> buttons = new ArrayList<>();
 		ArrayList<Game> games = menu.getGames();
 		for(Game g : games) {
-			JButton b = new JButton(g.getName());
+			JButton b = new JButton(" "+g.getName());
 			b.setPreferredSize(gameButtonSize);
+			b.setIcon(carIcon);
 			b.setBackground(gameBColor);
 			b.setFont(gameFont);
 			b.setHorizontalAlignment(SwingConstants.LEFT);
@@ -108,6 +153,10 @@ public class GamesMenuView {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					System.out.println(g.getName()+" game button pressed");
+					//TODO abrir game
+					frame.getContentPane().removeAll();
+					//llamada al controller: Abrir vista de ese Game
+					cont.openGame(g);
 				}
 			});
 			
@@ -185,7 +234,7 @@ public class GamesMenuView {
 		frame.add(panel);
 	}
 	
-
+	/*
 	public static void main (String[] args) {
 		JFrame f = new JFrame();
 		f.setTitle("Parking Game");
@@ -209,9 +258,10 @@ public class GamesMenuView {
 		m.addGame(g5);
 		m.addGame(g6);
 		
-		GamesMenuView gmv = new GamesMenuView(f, m);
+		GamesMenuView gmv = new GamesMenuView(f, m, cont);
 		
 	}
+	*/
 	
 	private ImageIcon resizeIcon(ImageIcon icon, int i, int j) {
 		Image img = icon.getImage();

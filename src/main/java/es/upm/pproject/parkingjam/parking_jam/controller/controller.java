@@ -243,7 +243,7 @@ public class controller {
         Pair<Integer,Boolean> res=new Pair<>(lvl.getLevelPoint(),vehicleClicked.getPosition().contains(lvl.getExit()));
 		mv = new Pair<>(vehicleClicked.getBack(),res);
 		if(res.getValue()) {
-			if(g.getLevelPoints(lvlAct)>=lvl.getLevelPoint()) {
+			if(g.getLevelPoints(lvlAct)==null || g.getLevelPoints(lvlAct)>=lvl.getLevelPoint()) {
 			g.actualizarGamePoints(lvlAct,lvl.getLevelPoint());}
 			g.setLevel(lvlAct, lvl);
 			int lastLevel=g.getUltimoLevelPassed();

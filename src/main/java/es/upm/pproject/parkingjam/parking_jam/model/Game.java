@@ -33,7 +33,9 @@ public class Game {
 
     public Integer getLevelPoints(int id)
     {
+        if(listaPoints.containsKey(id))
         return listaPoints.get(id);
+        else return null;
     }
 
     public void actualizarGamePoints (int id , int points)
@@ -170,17 +172,17 @@ public class Game {
             System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
         }
     }
-/*
-    public static void main (String[] args) throws FileNotFoundException, IOException
+
+   /* public static void main (String[] args) throws FileNotFoundException, IOException
         {
             Game g =new Game("Rachilin3");
-            
+            /* 
             Level lv1 = new Level(1);
-            lv1.setGamePoints(33);
+            lv1.setLevelPoints(33);
             Level lv2 = new Level(2);
-            lv2.setGamePoints(456);
+            lv2.setLevelPoints(456);
             Level lv3 = new Level(3);
-            lv3.setGamePoints(43);
+            lv3.setLevelPoints(43);
 
             
             g.setLevel(1, lv1);
@@ -191,10 +193,10 @@ public class Game {
             
             //Level lv1 = new Level(1);
            
-            g.guardarGame(1, lv1);
+            //g.guardarGame(1, lv1);
             g.cargarGame("Rachilin3");
             System.out.println(g.getGamePoints());
-        }
- */
+        }*/
+ 
 }
 

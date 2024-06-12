@@ -719,7 +719,7 @@ public class AppTest {
 		public void undoMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
-			assertTrue(level.undo());
+			assertEquals('g',level.undo());
 			Character[][] boardt = new Character[8][8];
 			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
@@ -744,7 +744,7 @@ public class AppTest {
 		public void carPositionPostMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
-			assertTrue(level.undo());
+			assertEquals('g',level.undo());
 			Set<Pair<Integer, Integer>> position = new HashSet<>();
 			Pair<Integer, Integer> par1 = new Pair<>(2,2);
 			Pair<Integer, Integer> par2 = new Pair<>(2,3);
@@ -1057,9 +1057,9 @@ public class AppTest {
 			level.undo();
 			level.undo();
 			level.undo();
-			level.undo();
-			level.undo();
-			assertFalse(level.undo());
+			assertEquals('e',level.undo());
+		
+			assertEquals(' ',level.undo());
 		}
 		@Test
 		public void UndoAlTheWay_PositionStatus() {

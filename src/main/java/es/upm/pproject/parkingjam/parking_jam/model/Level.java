@@ -287,10 +287,20 @@ public class Level  {
 		}
 		this.cars=newCars;
 	}
-	public boolean undo() {
+	public Character findChangedVehicle(Map<Character, Set<Pair<Integer, Integer>>> oldState, Map<Character, Set<Pair<Integer, Integer>>> newState) {
+        for (Character vehicleId : oldState.keySet()) {
+            Set<Pair<Integer, Integer>> oldPosition = oldState.get(vehicleId);
+            Set<Pair<Integer, Integer>> newPosition = newState.get(vehicleId);
+            if (!oldPosition.equals(newPosition)) {
+                return vehicleId;
+            }
+        }
+        return ' '; 
+    }
+	public Character undo() {
 		if(!boardHistory.isEmpty() && !vehiclePositionHistory.isEmpty()) {
 			boardHistory.pop();
-			vehiclePositionHistory.pop();
+			Map<Character, Set<Pair<Integer, Integer>>> vv=vehiclePositionHistory.pop();
 			if(!boardHistory.isEmpty() && !vehiclePositionHistory.isEmpty()) {
 
 
@@ -298,10 +308,10 @@ public class Level  {
 				restoreCarPositions(vehiclePositionHistory.peek());
 				levelPoints--;
 
-				return true;
+				return findChangedVehicle(vv,vehiclePositionHistory.peek()) ;
 			}
 		}
-		return false;
+		return ' ';
 	}
 
 	/*public static void main(String args[]) throws FileNotFoundException, IOException {

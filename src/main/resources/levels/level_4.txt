@@ -1,10 +1,10 @@
 Fourth level
 8 8
-++++++++
-+a  b  +
-+a  b  +
-+a**b  @
-+  cddd+
-+  c  f+
-+  eeef+
++++@++++
++aabbcd+
++ eeecd+
++fffg  +
++  *g  +
++h *g  +
++hiiijj+
 ++++++++

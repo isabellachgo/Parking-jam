@@ -51,7 +51,8 @@ public class GamesMenuView {
 		// Altura scroll:
 		Integer listH = (menu.getNumGames()+1)*80 + (menu.getNumGames())*10;
 		Integer pictureH = listH +80;
-		Integer scrollH = pictureH +100;
+		Integer gamesH = pictureH +80;
+		Integer scrollH = gamesH + 40;
 
 		// Fuentes:
 		Font titleFont = null;
@@ -72,26 +73,51 @@ public class GamesMenuView {
 		} catch (FontFormatException | IOException e1) {
 			e1.printStackTrace();
 		}
+		Font menuFont = null;
+		try {
+			menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(16f);
+		} catch (FontFormatException | IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		// Dimensiones:
 		Dimension gameButtonSize = new Dimension(420, 80);
+		Dimension buttonSize2 = new Dimension(180,40);
 
 		// Colores:
 		Color bg = new Color(180,220,110);
-		//Color buttonColor = new Color(65,130,4); //verde oscuro
-		//Color gameBColor = new Color(39,193,245); //azul
+		Color buttonColor = new Color(65,130,4); //verde oscuro
 		Color gameBColor = new Color(252,231,68); //amarillo
-		//Color gameBColor = new Color(252,197,68); //naranja
 		
 		// Iconos:
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
 		ImageIcon addIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/add_black.png")),40,40);
 		ImageIcon carIcon = resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
+		ImageIcon loadIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
+		
 		
 		// Imagenes:
-		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 450), Image.SCALE_SMOOTH);		
+		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 430), Image.SCALE_SMOOTH);		
 		
 		// Elementos:
+		JButton loadGameB = new JButton("Load game");
+		loadGameB.setPreferredSize(buttonSize2);
+		loadGameB.setIcon(loadIcon);
+		loadGameB.setBackground(buttonColor);
+		loadGameB.setForeground(Color.white);
+		loadGameB.setFont(menuFont);
+		loadGameB.setHorizontalAlignment(SwingConstants.CENTER);
+		loadGameB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("load game button pressed");
+				// TODO 
+				//frame.getContentPane().removeAll();
+				// llamada a controller: abrir vista de games guardadas
+				
+			}
+		});
+
 		JLabel titleL = new JLabel();
 		titleL.setText("Parking Jam");
 		titleL.setFont(titleFont);
@@ -132,7 +158,6 @@ public class GamesMenuView {
 					String input = pgnInput.getText();
 					if(input != null && !input.trim().isEmpty()) {
 						System.out.println("Ok new game button pressed");
-						// TODO crear game
 						frame.getContentPane().removeAll();
 						cont.newGame(input);
 					}
@@ -153,9 +178,7 @@ public class GamesMenuView {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					System.out.println(g.getName()+" game button pressed");
-					//TODO abrir game
 					frame.getContentPane().removeAll();
-					//llamada al controller: Abrir vista de ese Game
 					cont.openGame(g);
 				}
 			});
@@ -171,7 +194,7 @@ public class GamesMenuView {
 		JPanel panelNorth = new JPanel();
 		panelNorth.setBackground(bg);
 		panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
-		JPanel row0= new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel row0= new JPanel(new FlowLayout(FlowLayout.LEFT));
 		row0.setBackground(bg);
 		row0.add(new JLabel(" "));
 		JPanel row1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -185,24 +208,33 @@ public class GamesMenuView {
 		panelNorth.add(row1);
 		panelNorth.add(row2);
 		
-		
-		JLayeredPane panelCenter = new JLayeredPane();
+		JPanel panelCenter = new JPanel();
+		panelCenter.setLayout(new BorderLayout());
 		panelCenter.setBackground(bg);
-		panelCenter.setPreferredSize(new Dimension(700,Math.max(scrollH, 550)));
+		panelCenter.setPreferredSize(new Dimension(700,Math.max(scrollH, 540)));
 		panelCenter.setBounds(0,0,700, Math.max(scrollH, 550));
+		
+		JPanel panelLoadGameB = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		panelLoadGameB.setBackground(bg);
+		panelLoadGameB.add(loadGameB);
+		
+		JLayeredPane panelGames = new JLayeredPane();
+		panelGames.setBackground(bg);
+		panelGames.setPreferredSize(new Dimension(700,Math.max(gamesH, 500)));
+		panelGames.setBounds(0,0,700, Math.max(gamesH, 500));
 		
 		JPanel panelBg = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				g.drawImage(parkingImage,100, 50, this);
+				g.drawImage(parkingImage,100, 30, this);
 			}
 		};
 		panelBg.setBackground(bg);
-		panelBg.setBounds(0, 0, 700, Math.max(scrollH, 550) );
+		panelBg.setBounds(0, 0, 700, Math.max(gamesH, 500) ); 
 		
 		JPanel panelElem = new JPanel();
-		panelElem.setBounds(140, 90, 420, listH);
+		panelElem.setBounds(140, 70, 420, listH);
 		panelElem.setBackground(new Color(0,0,0,0));
 		panelElem.setLayout(new BoxLayout(panelElem, BoxLayout.Y_AXIS));
 		JPanel row3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -217,10 +249,13 @@ public class GamesMenuView {
 			panelElem.add(rowX);
 		}
 		
-		panelCenter.add(panelBg, JLayeredPane.DEFAULT_LAYER);
-		panelCenter.add(panelElem, JLayeredPane.PALETTE_LAYER);
-		panelCenter.revalidate();
-		panelCenter.repaint();
+		panelGames.add(panelBg, JLayeredPane.DEFAULT_LAYER);
+		panelGames.add(panelElem, JLayeredPane.PALETTE_LAYER);
+		panelGames.revalidate();
+		panelGames.repaint();
+		
+		panelCenter.add(panelLoadGameB, BorderLayout.NORTH);
+		panelCenter.add(panelGames, BorderLayout.CENTER);
 		
 		JScrollPane panelScroll = new JScrollPane(panelCenter);
 		panelScroll.setBackground(bg);
@@ -234,34 +269,6 @@ public class GamesMenuView {
 		frame.add(panel);
 	}
 	
-	/*
-	public static void main (String[] args) {
-		JFrame f = new JFrame();
-		f.setTitle("Parking Game");
-		f.setSize(700, 700);
-		f.setLocationRelativeTo(null);
-		f.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE );
-		f.setResizable(false);
-		
-		Game g1 = new Game("Sonia");
-		Game g2 = new Game("Lucas");
-		Game g3 = new Game("Isa");
-		Game g4 = new Game("Raul");
-		Game g5 = new Game("Nacho");
-		Game g6 = new Game("Javi");
-		
-		Menu m = new Menu();
-		m.addGame(g1);
-		m.addGame(g2);
-		m.addGame(g3);
-		m.addGame(g4);
-		m.addGame(g5);
-		m.addGame(g6);
-		
-		GamesMenuView gmv = new GamesMenuView(f, m, cont);
-		
-	}
-	*/
 	
 	private ImageIcon resizeIcon(ImageIcon icon, int i, int j) {
 		Image img = icon.getImage();

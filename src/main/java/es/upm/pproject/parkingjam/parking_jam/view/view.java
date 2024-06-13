@@ -247,8 +247,8 @@ public class view {
 
 		JPopupMenu menuPanel = new JPopupMenu();
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		menuPanel.setPopupSize(207,280);
-		menuPanel.setBounds(50, 87, 207, 280);
+		menuPanel.setPopupSize(207,190);
+		menuPanel.setBounds(50, 87, 207, 190);
 		
 		JButton gamesB= new JButton("games menu");
 		gamesB.setPreferredSize(buttonSize2);
@@ -295,32 +295,6 @@ public class view {
 				System.out.println("save button pressed");
 			}
 		});
-		JButton loadB= new JButton("load game");
-		loadB.setPreferredSize(buttonSize2);
-		loadB.setIcon(loadMIcon);
-		loadB.setBackground(buttonColor);
-		loadB.setForeground(Color.white);
-		loadB.setFont(menuFont);
-		loadB.setHorizontalAlignment(SwingConstants.LEFT);
-		loadB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("load button pressed");
-			}
-		});
-		JButton newGameB = new JButton("new game");
-		newGameB.setPreferredSize(buttonSize2);
-		newGameB.setIcon(addMIcon);
-		newGameB.setBackground(buttonColor);
-		newGameB.setForeground(Color.white);
-		newGameB.setFont(menuFont);
-		newGameB.setHorizontalAlignment(SwingConstants.LEFT);
-		newGameB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("nwe game button pressed");
-			}
-		});
 		JButton closeB = new JButton("close Parking Jam");
 		closeB.setPreferredSize(buttonSize2);
 		closeB.setIcon(closeMIcon);
@@ -339,8 +313,6 @@ public class view {
 		menuPanel.add(gamesB);
 		menuPanel.add(levelsB);
 		menuPanel.add(saveB);
-		menuPanel.add(loadB);
-		menuPanel.add(newGameB);
 		menuPanel.add(closeB);
 
 		JButton menuB = new JButton(menuIcon);

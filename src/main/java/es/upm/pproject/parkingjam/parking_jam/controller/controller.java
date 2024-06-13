@@ -15,6 +15,7 @@ import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
 import es.upm.pproject.parkingjam.parking_jam.view.GamesMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
+import es.upm.pproject.parkingjam.parking_jam.view.StartView;
 import es.upm.pproject.parkingjam.parking_jam.view.view;
 import javafx.util.Pair;
 
@@ -49,8 +50,10 @@ public class controller {
 
 		//g = new Game("Lucas"); // TODO en menu de partidas
 		//LevelsMenuView lmv = new LevelsMenuView(f, g, this);
-		m = new Menu();
-		GamesMenuView gmv= new GamesMenuView(f,m,this);
+		//m = new Menu();
+		//GamesMenuView gmv= new GamesMenuView(f,m,this);
+		StartView sv= new StartView(f,this);
+		
 	}
 
 	public void showLevel(int n) throws FileNotFoundException, IOException {
@@ -322,6 +325,10 @@ public class controller {
 	
 	public void gamesMenuButton() {
 		GamesMenuView gmv = new GamesMenuView(f,m,this);
+	}
+	public void gamesMenu(Menu menu) {
+		this.m=menu;
+		GamesMenuView gm = new GamesMenuView(f,m,this);
 	}
 
 	

@@ -33,7 +33,7 @@ public class SavedGamesView {
 	private controller cont;
 	private ArrayList<String> savedGames;
 
-	public SavedGamesView(JFrame f, ArrayList<String> savedGames, controller cont)	{
+	public SavedGamesView(JFrame f, ArrayList<String> savedGames/*, controller cont*/)	{
 		this.frame= f;
 		this.savedGames = savedGames;
 		this.cont= cont;
@@ -45,7 +45,7 @@ public class SavedGamesView {
 	public void initSGV() {
 		// Altura scroll:
 		Integer listH = (savedGames.size()+1)*80 + (savedGames.size())*10;
-		Integer pictureH = listH +80;
+		Integer pictureH = listH +60;
 		Integer gamesH = pictureH +80;
 		Integer scrollH = gamesH + 40;
 
@@ -82,7 +82,7 @@ public class SavedGamesView {
 		ImageIcon loadIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 
 		// Imagenes:
-		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 430), Image.SCALE_SMOOTH);		
+		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 450), Image.SCALE_SMOOTH);		
 
 		// Elementos:
 		JLabel titleL = new JLabel();
@@ -135,20 +135,16 @@ public class SavedGamesView {
 		row1.add(titleL);
 		JPanel row2= new JPanel(new FlowLayout(FlowLayout.CENTER));
 		row2.setBackground(bg);
-		row2.add(new JLabel(" "));
-		JPanel row3= new JPanel(new FlowLayout(FlowLayout.CENTER));
-		row3.setBackground(bg);
-		row3.add(textL);
+		row2.add(textL);
 
 		panelNorth.add(row0);
 		panelNorth.add(row1);
 		panelNorth.add(row2);
-		panelNorth.add(row3);
 
 		JLayeredPane panelCenter = new JLayeredPane();
 		panelCenter.setBackground(bg);
-		panelCenter.setPreferredSize(new Dimension(700,Math.max(gamesH, 500)));
-		panelCenter.setBounds(0,0,700, Math.max(gamesH, 500));
+		panelCenter.setPreferredSize(new Dimension(700,Math.max(gamesH, 540)));
+		panelCenter.setBounds(0,0,700, Math.max(gamesH, 540));
 
 		JPanel panelBg = new JPanel() {
 			@Override
@@ -158,7 +154,7 @@ public class SavedGamesView {
 			}
 		};
 		panelBg.setBackground(bg);
-		panelBg.setBounds(0, 0, 700, Math.max(gamesH, 500) ); 
+		panelBg.setBounds(0, 0, 700, Math.max(gamesH, 540) ); 
 
 		JPanel panelElem = new JPanel();
 		panelElem.setBounds(140, 70, 420, listH);
@@ -198,5 +194,28 @@ public class SavedGamesView {
 		Image img = icon.getImage();
 		Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
 		return new ImageIcon(resizedImg);
+	}
+	
+	
+	
+	
+	
+	
+	public static void main(String[] args) {
+		ArrayList<String> sg = new ArrayList<>();
+		sg.add("p1");
+		sg.add("aaa");
+		sg.add("p1");
+		sg.add("aaa");
+		sg.add("aaa");
+		
+		JFrame f = new JFrame();
+		f.setTitle("Parking Game");
+		f.setSize(700, 700);
+		f.setLocationRelativeTo(null);
+		f.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		f.setResizable(false);
+		
+		SavedGamesView sgv = new SavedGamesView(f, sg);
 	}
 }

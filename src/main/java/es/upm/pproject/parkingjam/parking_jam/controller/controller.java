@@ -13,6 +13,7 @@ import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
+import es.upm.pproject.parkingjam.parking_jam.view.EndGameView;
 import es.upm.pproject.parkingjam.parking_jam.view.GamesMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.StartView;
@@ -380,7 +381,8 @@ public class controller {
 	}
 
 	public void nextLevel() throws FileNotFoundException, IOException {
-		showLevel(lvlAct + 1);
+	 if(lvlAct<4)	showLevel(lvlAct + 1);
+	 else endGame();
 	}
 
 	public Pair<Pair<Character, Integer>, Pair<Integer, Integer>> undo() {
@@ -420,6 +422,9 @@ public class controller {
 	public void gamesMenu(Menu menu) {
 		this.m=menu;
 		GamesMenuView gm = new GamesMenuView(f,m,this);
+	}
+	public void endGame() {
+		EndGameView ev= new EndGameView(f,m,g,this);
 	}
 
 	public static void main(String[] args) {

@@ -1,0 +1,10 @@
+Fourth level
+8 8
++++@++++
++aabbcd+
++ eeecd+
++fffg  +
++  *g  +
++h *g  +
++hiiijj+
+++++++++

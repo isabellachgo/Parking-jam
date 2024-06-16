@@ -2,6 +2,7 @@ package es.upm.pproject.parkingjam.parking_jam.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -41,6 +42,7 @@ public class controller {
 	Pair<Integer, Integer> mPr;
 	boolean avanza;
 	Integer lvlAct;
+	Integer estado =null;
 
 	public controller() { 
 		f = new JFrame();
@@ -65,7 +67,9 @@ public class controller {
 	}
 
 	public void showLevel(int n) throws FileNotFoundException, IOException {
-		lvl = new Level(n);
+		if(g.getLastLevel()!=null) lvl=g.getLastLevel();
+		else lvl = new Level(n);
+		estado=n;
 		cellSize = (400 + (lvl.getDimensionX() / 2)) / (lvl.getDimensionX() - 2);
 		g.setLevel(n, lvl);
 		lvlAct = n;
@@ -347,7 +351,7 @@ public class controller {
 			int lastLevel = g.getUltimoLevelPassed();
 			lastLevel = Math.max(lastLevel, lvlAct);
 			g.setUltimoLevelPassed(lastLevel);
-			lvlAct=null;
+			estado=null;
 			lvl=null;
 		}
 		vehicleClicked.setPix(v.devuelveCoordenadas(vehicleClicked.getId()));
@@ -387,6 +391,7 @@ public class controller {
 	}
 
 	public void levelMenuButon() {
+		estado=null;
 		LevelsMenuView lmv = new LevelsMenuView(f, g, this);
 	}
 
@@ -416,19 +421,29 @@ public class controller {
 	}
 	
 	public void saveGame() {
-		if(lvlAct==null) {
+		if(estado==null) {
 			try {
 				g.guardarGame(null);
+				gl.addGame(g.getName());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else if(lvlAct!=null) { //level a medias
+		} else if(estado!=null) { //level a medias
 			try {
 				g.guardarGame(lvl);
+				gl.addGame(g.getName());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+	}
+	public void openSavedGame(String name) {
+		
+		Game game= new Game(name);
+		Level lv=game.cargarGame(name);
+		game.setLastLevel(lv);
+		m.addGame(game);
+		GamesMenuView gmv = new GamesMenuView(f, m, this);
 	}
 	
 	public void openSavedGames() {
@@ -447,6 +462,7 @@ public class controller {
 	}
 	
 	public void gamesMenuButton() {
+		estado=null;
 		GamesMenuView gmv = new GamesMenuView(f,m,this);
 	}
 	public void gamesMenu(Menu menu) {

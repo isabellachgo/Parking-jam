@@ -53,6 +53,29 @@ public class Level  {
 		this.levelPoints= 0;
 
 	}
+	public Level (String filepath) throws FileNotFoundException, IOException{
+		bReader = new BoardReader(filepath);
+		dimensionX = bReader.getDimensionX();
+		dimensionY = bReader.getDimensionY();
+		title = bReader.getTitle();
+		board = bReader.getBoard();
+		exit_position = bReader.getExit();
+		cars = bReader.getCars();
+
+		this.vehiclePositionHistory = new ArrayDeque<>();
+
+		this.initialBoard= cloneBoard();
+		this.boardHistory = new ArrayDeque<>();
+		boardHistory.add(initialBoard);
+		this.initialVehiclePositions = new HashMap<>();
+		for(Entry<Character, Vehicle> vh : cars.entrySet()) {
+			initialVehiclePositions.put(new Pair <>(vh.getKey(),vh.getValue()), vh.getValue().getPosition());
+		}	
+		vehiclePositionHistory.add(cloneCarPositions());
+
+		this.levelPoints= 0;
+
+	}
 
 	public String getTitle() {
 		return title;
@@ -77,8 +100,17 @@ public class Level  {
 	public Character[][] getBoard(){
 		return board;
 	}
+	public void setBoard(Character[][] b){
+		this.board=b;
+	}
 	public Integer getLevelPoint() {
 		return levelPoints;
+	}
+	public void setBoardHistory( Deque<Character[][]> bh) {
+		boardHistory =bh;
+	}
+	public void seVehiclePositionHistory(Deque<Map<Character, Set<Pair<Integer, Integer>>>> ph) {
+		vehiclePositionHistory= ph;
 	}
 
 

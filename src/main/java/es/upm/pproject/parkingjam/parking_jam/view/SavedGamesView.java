@@ -111,8 +111,9 @@ public class SavedGamesView {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					System.out.println(g+" game button pressed");
-					// frame.getContentPane().removeAll();
+					frame.getContentPane().removeAll();
 					// llamar controller: añadir game al menu (y abrir game???)
+					cont.openSavedGame(g);
 				}
 			});
 			

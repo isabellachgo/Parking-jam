@@ -41,6 +41,22 @@ public class BoardReader {
 		board = createBoard();
 
 	}
+	public BoardReader(String filepath) throws FileNotFoundException, IOException{
+		
+		file = new FileReader(new File(filepath));
+		reader = new BufferedReader(file);
+
+		title = reader.readLine();
+		String dimensions;
+		dimensions = reader.readLine();
+		if(dimensions != null && dimensions.length() >= 3) {
+			dimX = Character.getNumericValue(dimensions.charAt(0));
+			dimY = Character.getNumericValue(dimensions.charAt(2));
+		}
+
+		board = createBoard();
+	
+	}
 
 	public String getTitle() {
 		return title;
@@ -172,28 +188,4 @@ public class BoardReader {
 			System.out.println("");
 		}
 	}
-
-/*
-	public static void main(String args[]) throws FileNotFoundException, IOException {
-		BoardReader b1 = new BoardReader(1);
-		if(b1.board==null) System.out.println("error al construir tablero");
-		else {
-			b1.printBoard();
-			System.out.println("");
-			System.out.println(b1.getExit().getKey()+" "+b1.getExit().getValue());
-			System.out.println("");
-			Iterator<Vehicle> i = b1.getCars().values().iterator();
-			while(i.hasNext()) {
-				Vehicle v = i.next();
-				System.out.print("["+v.getId()+",("+v.getDimension().getKey()+","+v.getDimension().getValue()+"),");
-				System.out.print("->");
-				Iterator<Pair<Integer,Integer>> p = v.getPosition().iterator();
-				while(p.hasNext()) {
-					Pair<Integer,Integer> pos = p.next();
-					System.out.print("("+pos.getKey()+","+pos.getValue()+") ");
-				}
-			}
-		}
-	}
-*/
 }

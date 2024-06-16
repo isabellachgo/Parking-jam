@@ -39,7 +39,7 @@ public class controller {
 	Menu m;
 	int lvlAct;
 
-	public controller() {
+	public controller() { 
 		f = new JFrame();
 		f.setTitle("Parking Game");
 		f.setSize(700, 700);

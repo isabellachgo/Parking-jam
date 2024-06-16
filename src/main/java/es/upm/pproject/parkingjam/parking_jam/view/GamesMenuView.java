@@ -111,10 +111,9 @@ public class GamesMenuView {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("load game button pressed");
-				// TODO 
-				//frame.getContentPane().removeAll();
-				// llamada a controller: abrir vista de games guardadas
 				
+				frame.getContentPane().removeAll();
+				cont.openSavedGames();
 			}
 		});
 

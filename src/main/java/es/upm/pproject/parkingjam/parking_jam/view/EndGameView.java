@@ -164,6 +164,8 @@ public class EndGameView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("save button pressed");
+				
+				cont.saveGame();
 			}
 		});
 

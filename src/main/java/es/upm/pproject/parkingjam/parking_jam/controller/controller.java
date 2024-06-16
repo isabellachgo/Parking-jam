@@ -10,19 +10,25 @@ import java.util.Set;
 import javax.swing.JFrame;
 
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
+import es.upm.pproject.parkingjam.parking_jam.model.GamesList;
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
 import es.upm.pproject.parkingjam.parking_jam.view.EndGameView;
 import es.upm.pproject.parkingjam.parking_jam.view.GamesMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
+import es.upm.pproject.parkingjam.parking_jam.view.SavedGamesView;
 import es.upm.pproject.parkingjam.parking_jam.view.StartView;
 import es.upm.pproject.parkingjam.parking_jam.view.view;
 import javafx.util.Pair;
 
 public class controller {
+	JFrame f;
+	Game g;
+	Menu m;
 	view v;
 	Level lvl;
+	GamesList gl;
 	Pair<Integer, Integer> click;
 	Vehicle vehicleClicked;
 	int punt;
@@ -34,10 +40,7 @@ public class controller {
 	Pair<Integer, Integer> conflLabelB;
 	Pair<Integer, Integer> mPr;
 	boolean avanza;
-	JFrame f;
-	Game g;
-	Menu m;
-	int lvlAct;
+	Integer lvlAct;
 
 	public controller() {
 		f = new JFrame();
@@ -48,6 +51,11 @@ public class controller {
 		f.setResizable(false);
 
 		punt = 0;
+		
+		//cargar partidas guardadas
+		gl = new GamesList();
+		gl.loadList();
+		
 		//casillaBuff = new HashSet<Pair<Integer, Integer>>();
 		
 
@@ -339,6 +347,8 @@ public class controller {
 			int lastLevel = g.getUltimoLevelPassed();
 			lastLevel = Math.max(lastLevel, lvlAct);
 			g.setUltimoLevelPassed(lastLevel);
+			lvlAct=null;
+			lvl=null;
 		}
 		vehicleClicked.setPix(v.devuelveCoordenadas(vehicleClicked.getId()));
 		//casillaBuff.clear();
@@ -401,10 +411,30 @@ public class controller {
 		try {
 			showLevel(lvlAct);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	public void saveGame() {
+		if(lvlAct==null) {
+			try {
+				g.guardarGame(null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if(lvlAct!=null) { //level a medias
+			try {
+				g.guardarGame(lvl);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void openSavedGames() {
+		SavedGamesView sgv = new SavedGamesView(f, gl.getList(), this);
+	}
+	
 	public void newGame(String name) {
 		Game game = new Game(name);
 		m.addGame(game);

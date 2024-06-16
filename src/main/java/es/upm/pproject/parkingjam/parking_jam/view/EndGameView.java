@@ -1,14 +1,6 @@
 package es.upm.pproject.parkingjam.parking_jam.view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
@@ -16,18 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
-import javax.swing.border.BevelBorder;
+import javax.swing.*;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
@@ -37,7 +18,6 @@ public class EndGameView {
     private JFrame frame;
     private Menu menu;
     private Game game;
-    private int pos;
     private controller cont;
 
     public EndGameView(JFrame frame, Menu menu, Game g, controller cont) {
@@ -45,17 +25,11 @@ public class EndGameView {
         this.menu = menu;
         this.cont = cont;
         this.game = g;
-        for (int i = 0; i < menu.getNumGames(); i++) {
-            if (menu.getGames().get(i).equals(g)) {
-                this.pos = i;
-            }
-        }
-
-        initSV();
+        initEG();
         this.frame.setVisible(true);
     }
 
-    private void initSV() {
+    private void initEG() {
         // Fuentes:
         Font titleFont = null;
         try {
@@ -71,29 +45,34 @@ public class EndGameView {
         }
         Font levelPointsFont = null;
         try {
-            levelPointsFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/pointsfont.ttf")).deriveFont(27f);
+            levelPointsFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/pointsfont.ttf")).deriveFont(50f);
+        } catch (FontFormatException | IOException e1) {
+            e1.printStackTrace();
+        }
+        Font infoFont = null;
+        try {
+           infoFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/pointsfont.ttf")).deriveFont(27f);
         } catch (FontFormatException | IOException e1) {
             e1.printStackTrace();
         }
 
         // Dimensiones:
-        Dimension buttonSize = new Dimension(200, 50);
+        Dimension buttonSize = new Dimension(60, 60);
 
         // Colores:
         Color bg = new Color(180, 220, 110);
         Color buttonColor = new Color(39, 193, 245); // Azul
         Color buttonActionColor = new Color(100, 170, 200);
         Color winPColor = new Color(180,220,110);
-      //  Color borderWinPColor = new Color(50, 150, 90);
-        //Color shadeWinPColor = new Color(57, 64, 50);
 
         // Iconos:
         ImageIcon levelsMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/levelsMenu.png")), 30, 30);
-        ImageIcon startIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/playicon.png")), 97, 60);
         ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/finalParking.png"));
-        ImageIcon starIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/yellowstar.png")), 30, 30);
+        ImageIcon starIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/yellowstar.png")), 50, 50);
         ImageIcon starIcon2 = rotateIcon(starIcon, 180);
-
+        ImageIcon saveMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
+        ImageIcon homeMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
+        ImageIcon closeMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
         // Imagenes:
         Image parkingImage = parkingIcon.getImage().getScaledInstance(600, 600, Image.SCALE_SMOOTH);
 
@@ -126,17 +105,17 @@ public class EndGameView {
         winPanel.setBackground(winPColor);
         winPanel.setBounds(123, 230, 450, 300);
 
-      //  BevelBorder b = new BevelBorder(BevelBorder.RAISED, borderWinPColor, shadeWinPColor);
-       // winPanel.setBorder(b);
-
+       
         JLabel winL = new JLabel("Congratulations!");
         winL.setFont(titleFont);
-       // winL.setAlignmentX(JLabel.);
-        
-        JLabel info = new JLabel("You have passed all the levels in the game '"+ game.getName()+"'");
-        winL.setFont(titleFont);
-    //    winL.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        JLabel pointsWL = new JLabel(game.getGamePoints().toString()); // TODO : valor a partir de game
+        winL.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+
+        JLabel info = new JLabel("<html><div style='text-align: center;'>You have completed all the levels in the game '" + game.getName() + "'</div></html>");
+        info.setFont(infoFont);
+        info.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        info.setPreferredSize(new Dimension(400, 70));  // Set preferred size to ensure it fits
+
+        JLabel pointsWL = new JLabel(game.getGamePoints().toString());
         pointsWL.setFont(levelPointsFont);
         pointsWL.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
@@ -148,24 +127,42 @@ public class EndGameView {
         starPanel.add(pointsWL);
         starPanel.add(star2W);
 
-        JButton levelsWB = new JButton(levelsMIcon);
-        levelsWB.setBackground(buttonColor);
-        levelsWB.setPreferredSize(buttonSize);
-        levelsWB.setAlignmentX(JButton.CENTER_ALIGNMENT);
-        levelsWB.addActionListener(new ActionListener() {
+        JPanel buttonpanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonpanel.setBackground(winPColor);
+
+        JButton gamesB = new JButton(homeMIcon);
+        gamesB.setPreferredSize(buttonSize);
+        gamesB.setBackground(buttonColor);
+        gamesB.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        gamesB.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent arg0) {
-                System.out.println("levels button pressed");
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("games button pressed");
                 frame.getContentPane().removeAll();
-                cont.levelMenuButon();
+                cont.gamesMenuButton();
             }
         });
+
+        JButton closeB = new JButton(closeMIcon);
+        closeB.setPreferredSize(buttonSize);
+        closeB.setBackground(buttonColor);
+        closeB.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        closeB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("close button pressed");
+                frame.dispose();
+            }
+        });
+
+        buttonpanel.add(gamesB);
+        buttonpanel.add(closeB);
 
         winPanel.add(Box.createVerticalGlue());
         winPanel.add(winL);
         winPanel.add(info);
         winPanel.add(starPanel);
-        winPanel.add(levelsWB);
+        winPanel.add(buttonpanel);
         winPanel.add(Box.createVerticalGlue());
 
         panelCenter.add(panelBg, JLayeredPane.DEFAULT_LAYER);
@@ -185,7 +182,6 @@ public class EndGameView {
         Image img = icon.getImage();
         BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufferedImage.createGraphics();
-        // Rotar la imagen usando AffineTransform
         AffineTransform transform = new AffineTransform();
         transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2, img.getHeight(null) / 2);
         g2d.setTransform(transform);

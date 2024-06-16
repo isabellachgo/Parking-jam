@@ -43,6 +43,7 @@ public class StartView {
             titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(45f);
         } catch (FontFormatException | IOException e1) {
             e1.printStackTrace();
+           
         }
         Font buttonFont = null;
         try {

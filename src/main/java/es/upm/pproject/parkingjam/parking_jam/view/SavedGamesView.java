@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -71,15 +72,18 @@ public class SavedGamesView {
 
 		// Dimensiones:
 		Dimension gameButtonSize = new Dimension(420, 80);
+		Dimension buttonSize = new Dimension(40,40);
 
 		// Colores:
 		Color bg = new Color(180,220,110);
 		Color gameBColor = new Color(252,231,68); //amarillo
+		Color buttonColor = new Color(65,130,4); 
 
 		// Iconos:
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
 		ImageIcon carIcon = resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
 		ImageIcon loadIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
+		ImageIcon backIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/back.png")),30,30);
 
 		// Imagenes:
 		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 450), Image.SCALE_SMOOTH);		
@@ -98,7 +102,19 @@ public class SavedGamesView {
 		noGamesTextL.setFont(textFont);
 		noGamesTextL.setForeground(Color.white);
 		
-
+		JButton goBackB = new JButton();
+		goBackB.setPreferredSize(buttonSize);
+		goBackB.setIcon(backIcon);
+		goBackB.setBackground(buttonColor);
+		goBackB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("back button pressed");
+				frame.getContentPane().removeAll();
+				cont.gamesMenuButton();
+			}
+		});
+		
 		ArrayList<JButton> buttons = new ArrayList<>();
 		for(String g : savedGames) {
 			JButton b = new JButton(" "+g);
@@ -130,7 +146,9 @@ public class SavedGamesView {
 		panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
 		JPanel row0= new JPanel(new FlowLayout(FlowLayout.LEFT));
 		row0.setBackground(bg);
-		row0.add(new JLabel(" "));
+		//row0.add(new JLabel(" "));
+		row0.add(Box.createHorizontalStrut(30));
+		row0.add(goBackB);
 		JPanel row1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		row1.setBackground(bg);
 		row1.add(titleL);

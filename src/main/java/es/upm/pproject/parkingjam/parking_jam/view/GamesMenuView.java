@@ -123,12 +123,10 @@ public class GamesMenuView {
 		
 		JPanel panelGameName = new JPanel();
 		panelGameName.setLayout(new BorderLayout());
-		//panelGameName.setBackground(bg);
 		
 		JLabel pgnText = new JLabel();
 		pgnText.setFont(newGameFont);
 		pgnText.setOpaque(true);
-		//pgnText.setBackground(bg);
 		pgnText.setText("Game name: ");
 		
 		JTextField pgnInput = new JTextField();
@@ -136,7 +134,7 @@ public class GamesMenuView {
 		
 		panelGameName.add(pgnText, BorderLayout.NORTH);
 		panelGameName.add(pgnInput, BorderLayout.CENTER);
-		
+				
 		JButton addGameB = new JButton("New game");
 		addGameB.setPreferredSize(gameButtonSize);
 		addGameB.setIcon(addIcon);
@@ -158,7 +156,20 @@ public class GamesMenuView {
 					if(input != null && !input.trim().isEmpty()) {
 						System.out.println("Ok new game button pressed");
 						frame.getContentPane().removeAll();
-						cont.newGame(input);
+						if(cont.newGame(input) == 1) {
+							JDialog existingGame = new JDialog(frame, "Existing Game", true);
+							existingGame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+							existingGame.setSize(new Dimension(400,200));
+							JLabel errorM = new JLabel("There is alredy a game with the same name, please change the name of the new game.");
+							errorM.setForeground(Color.red);
+							JPanel errorP = new JPanel();
+							errorP.setLayout(new BoxLayout(errorP, BoxLayout.Y_AXIS));
+							errorP.add(errorM);
+							existingGame.add(errorP);
+							existingGame.pack();
+							existingGame.setLocationRelativeTo(frame);
+							existingGame.setVisible(true);
+						}
 					}
 				}
 			}

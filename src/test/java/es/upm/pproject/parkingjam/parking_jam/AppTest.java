@@ -1195,7 +1195,7 @@ public class AppTest {
 
 
 	}
-
+@Nested
 	class GameTest{
 		private Game game;
 
@@ -1498,6 +1498,7 @@ public class AppTest {
 
 
 	}
+@Nested
 	class GameListTest{
 
 		private GamesList gamesList;

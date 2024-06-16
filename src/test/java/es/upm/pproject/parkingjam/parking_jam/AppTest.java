@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1493,6 +1494,68 @@ public class AppTest {
 			assertEquals(level2, gameTest.getLevel(2));
 			assertEquals(level3.getBoardHistory(), pair.getKey());
 			assertEquals(level3, pair.getValue());
+		}
+
+
+	}
+	class GameListTest{
+
+		private GamesList gamesList;
+
+		@BeforeEach
+		public void Ini() throws FileNotFoundException,IOException {
+			gamesList = new GamesList();
+		}
+		@Test
+		public void addGameTest()
+		{
+			gamesList.addGame("Paco");
+			gamesList.addGame("Antonio");
+			ArrayList<String> lista = gamesList.getList();
+			assertTrue(lista.contains("Paco"));
+			assertTrue(lista.contains("Antonio"));
+			assertTrue(lista.size()==2);
+			String rutaFicheroListaGames=System.getProperty("user.dir")+"/src/main/gamesSaved/GamesList.txt"; 
+			File ficheroListaGames = new File(rutaFicheroListaGames);
+
+			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
+			try (FileReader fr = new FileReader(ficheroListaGames);
+				BufferedReader br = new BufferedReader(fr)) {
+				String linea = br.readLine();
+				assertEquals("Paco", linea);
+				linea = br.readLine();
+				assertEquals("Antonio", linea);
+				linea = br.readLine();
+				assertEquals(null, linea);
+			}catch (IOException e) {
+			// Manejo de posibles excepciones
+			System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
+			}
+		}
+		@Test
+		public void addGameVacioTest()
+		{
+			ArrayList<String> lista = gamesList.getList();
+			assertTrue(lista.isEmpty());
+		}
+		@Test 
+		public void loadListTest()
+		{
+			gamesList.addGame("Paco");
+			gamesList.addGame("Roberto");
+			gamesList.addGame("Sandra");
+			ArrayList<String> list= gamesList.loadList();
+			assertEquals(3, list.size());
+			assertEquals("Paco", list.get(1));
+			assertEquals("Roberto", list.get(2));
+			assertEquals("Sandra", list.get(3));
+			
+		}
+		@Test
+		public void loadListVaciaTest()
+		{
+			ArrayList <String> list= gamesList.loadList();
+			assertTrue(list.isEmpty());
 		}
 
 

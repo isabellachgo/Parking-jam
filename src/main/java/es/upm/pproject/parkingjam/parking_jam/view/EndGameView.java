@@ -31,6 +31,7 @@ public class EndGameView {
 
     private void initEG() {
         // Fuentes:
+    	
         Font titleFont = null;
         try {
             titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(45f);
@@ -58,7 +59,6 @@ public class EndGameView {
 
         // Dimensiones:
         Dimension buttonSize = new Dimension(60, 60);
-
         // Colores:
         Color bg = new Color(180, 220, 110);
         Color buttonColor = new Color(39, 193, 245); // Azul
@@ -133,6 +133,7 @@ public class EndGameView {
         JButton gamesB = new JButton(homeMIcon);
         gamesB.setPreferredSize(buttonSize);
         gamesB.setBackground(buttonColor);
+       
         gamesB.setAlignmentX(JButton.CENTER_ALIGNMENT);
         gamesB.addActionListener(new ActionListener() {
             @Override
@@ -154,10 +155,21 @@ public class EndGameView {
                 frame.dispose();
             }
         });
+        JButton saveB = new JButton(saveMIcon);
+		saveB.setPreferredSize(buttonSize);
+		saveB.setBackground(buttonColor);
+		saveB.setForeground(Color.white);
+		saveB.setHorizontalAlignment(SwingConstants.LEFT);
+		saveB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("save button pressed");
+			}
+		});
 
         buttonpanel.add(gamesB);
         buttonpanel.add(closeB);
-
+        buttonpanel.add(saveB);
         winPanel.add(Box.createVerticalGlue());
         winPanel.add(winL);
         winPanel.add(info);

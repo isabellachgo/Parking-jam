@@ -293,6 +293,8 @@ public class view {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("save button pressed");
+				
+				controller.saveGame();
 			}
 		});
 		JButton closeB = new JButton("close Parking Jam");

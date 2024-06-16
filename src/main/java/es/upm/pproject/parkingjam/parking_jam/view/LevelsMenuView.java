@@ -129,6 +129,8 @@ public class LevelsMenuView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("save button pressed");
+				
+				cont.saveGame();
 			}
 		});
 		JButton closeB = new JButton("close Parking Jam");

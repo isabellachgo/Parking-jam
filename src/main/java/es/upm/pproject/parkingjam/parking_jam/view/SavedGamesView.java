@@ -33,7 +33,7 @@ public class SavedGamesView {
 	private controller cont;
 	private ArrayList<String> savedGames;
 
-	public SavedGamesView(JFrame f, ArrayList<String> savedGames/*, controller cont*/)	{
+	public SavedGamesView(JFrame f, ArrayList<String> savedGames, controller cont)	{
 		this.frame= f;
 		this.savedGames = savedGames;
 		this.cont= cont;
@@ -200,7 +200,7 @@ public class SavedGamesView {
 	
 	
 	
-	
+	/*
 	public static void main(String[] args) {
 		ArrayList<String> sg = new ArrayList<>();
 		sg.add("p1");
@@ -218,4 +218,5 @@ public class SavedGamesView {
 		
 		SavedGamesView sgv = new SavedGamesView(f, sg);
 	}
+	*/
 }

@@ -648,6 +648,7 @@ public class view {
 		} else if (tamano == 2 && !esVertical) {
 			vehiculoPintar = cocheAzulHorizontalImage;
 		} else if (tamano == 3 && esVertical) {
+		
 			vehiculoPintar = camionVerticalImage;
 		} else if (tamano == 3 && !esVertical) {
 			vehiculoPintar = camionHorizontalImage;

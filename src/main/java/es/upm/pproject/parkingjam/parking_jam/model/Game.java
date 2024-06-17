@@ -112,7 +112,7 @@ public class Game {
 	public  void guardarGame(Level level) throws IOException
 	{
 
-		String rutaFichero = System.getProperty("user.dir");  // Cambia esto a la ruta deseada
+		String rutaFichero = System.getProperty("user.dir");  
 		String rutaDirectorio=rutaFichero+"/src/main/gamesSaved/"+ gameName ;
 
 		File directorio = new File(rutaDirectorio);

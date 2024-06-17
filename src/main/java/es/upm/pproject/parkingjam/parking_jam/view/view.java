@@ -75,17 +75,14 @@ public class view {
 	private Image cocheNaranjaHorizontalImage;
 	private Image cocheNegroVerticalImage;
 	private Image cocheNegroHorizontalImage;
-
 	private Image camionMarronVerticalImage;
 	private Image camionMarronHorizontalImage;
-
 	private Image camionAmarilloVerticalImage;
 	private Image camionAmarilloHorizontalImage;
 	private Image camionGrisVerticalImage;
 	private Image camionGrisHorizontalImage;
 	private Image camionVerdeVerticalImage;
 	private Image camionVerdeHorizontalImage;
-
 	private Image salida_arribaImage;
 	private Image salida_abajoImage;
 	private Image salida_derechaImage;
@@ -196,7 +193,6 @@ public class view {
 		camionGrisHorizontalImage = camionGrisHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH);
 		camionMarronVerticalImage = camionMarronVertictal.getImage().getScaledInstance(67, 200, Image.SCALE_SMOOTH); 
 		camionMarronHorizontalImage = camionMarronHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH);
-
 		salida_arribaImage=salidaArriba.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH);
 		salida_abajoImage=salidaAbajo.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH); 
 		salida_derechaImage=salidaDerecha.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH); 

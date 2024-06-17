@@ -29,6 +29,7 @@ public class Game {
 	private HashMap <Integer,Level> listaLevels;
 	private HashMap <Integer,Integer> listaPoints;
 	private Level l;
+	private Map<Integer, Boolean> okLevels;
 	public Game( String name)
 	{
 		gameName=name;
@@ -37,6 +38,12 @@ public class Game {
 		l=null;
 		if (listaLevels==null) listaLevels=new HashMap<>();
 		if (listaPoints==null) listaPoints=new HashMap<>();
+		
+		okLevels= new HashMap<>();
+		okLevels.put(1,true);
+		okLevels.put(2,true);
+		okLevels.put(3,true);
+		okLevels.put(4,true);
 	}
 
 	public Integer getGamePoints ()
@@ -83,13 +90,20 @@ public class Game {
 	public void setLevel( int numero , Level level)
 	{
 		listaLevels.put(numero, level);
-		actualizarGamePoints(numero, level.getLevelPoint());
+		//actualizarGamePoints(numero, level.getLevelPoint());
 	}
 	public Level getLastLevel() {
 		return l;
 	}
 	public void setLastLevel(Level l) {
 		this.l=l;
+	}
+	
+	public boolean getOkLevel(Integer n) {
+		return okLevels.get(n);
+	}
+	public void setOkLevel (Integer n, Boolean b) {
+		okLevels.put(n, b);
 	}
 
 	public  void guardarGame(Level level) throws IOException

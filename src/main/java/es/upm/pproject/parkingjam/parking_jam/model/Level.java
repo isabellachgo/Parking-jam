@@ -36,20 +36,21 @@ public class Level  {
 		dimensionY = bReader.getDimensionY();
 		title = bReader.getTitle();
 		board = bReader.getBoard();
-		exit_position = bReader.getExit();
-		cars = bReader.getCars();
+		if(board!=null) {
+			exit_position = bReader.getExit();
+			cars = bReader.getCars();
 
-		this.vehiclePositionHistory = new ArrayDeque<>();
+			this.vehiclePositionHistory = new ArrayDeque<>();
 
-		this.initialBoard= cloneBoard();
-		this.boardHistory = new ArrayDeque<>();
-		boardHistory.add(initialBoard);
-		this.initialVehiclePositions = new HashMap<>();
-		for(Entry<Character, Vehicle> vh : cars.entrySet()) {
-			initialVehiclePositions.put(vh.getKey(), vh.getValue().getPosition());
-		}	
-		vehiclePositionHistory.add(cloneCarPositions());
-
+			this.initialBoard= cloneBoard();
+			this.boardHistory = new ArrayDeque<>();
+			boardHistory.add(initialBoard);
+			this.initialVehiclePositions = new HashMap<>();
+			for(Entry<Character, Vehicle> vh : cars.entrySet()) {
+				initialVehiclePositions.put(vh.getKey(), vh.getValue().getPosition());
+			}	
+			vehiclePositionHistory.add(cloneCarPositions());
+		}
 		this.levelPoints= 0;
 
 	}
@@ -336,7 +337,7 @@ public class Level  {
 	}
 	public Character undo() {
 		if(!boardHistory.isEmpty() && !vehiclePositionHistory.isEmpty()) {
-			
+
 			if(vehiclePositionHistory.size()!=1 && boardHistory.size()!=1 ) {
 				boardHistory.pop();
 				Map<Character, Set<Pair<Integer, Integer>>> vv=vehiclePositionHistory.pop();
@@ -344,7 +345,7 @@ public class Level  {
 					this.board = boardHistory.peek();
 					restoreCarPositions(vehiclePositionHistory.peek());
 					levelPoints--;
-				    return findChangedVehicle(vv,vehiclePositionHistory.peek()) ;
+					return findChangedVehicle(vv,vehiclePositionHistory.peek()) ;
 				}
 			}
 		}

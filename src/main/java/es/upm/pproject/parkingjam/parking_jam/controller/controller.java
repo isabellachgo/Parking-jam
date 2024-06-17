@@ -67,9 +67,14 @@ public class controller {
 
 	}
 
-	public void showLevel(int n) throws FileNotFoundException, IOException {
+	public int showLevel(int n) throws FileNotFoundException, IOException {
 		if(g.getLastLevel()!=null) lvl=g.getLastLevel();
 		else lvl = new Level(n);
+		if(lvl.getBoard()==null) {
+			LevelsMenuView lmv = new LevelsMenuView(f,g,this);
+			return 1;
+		}
+		
 		estado=n;
 		cellSize = (400 + (lvl.getDimensionX() / 2)) / (lvl.getDimensionX() - 2);
 		g.setLevel(n, lvl);
@@ -81,7 +86,7 @@ public class controller {
 		}
 		mapPositions.put('@', lvl.getExit());
 		v = new view(f, mapPositions, lvl, this, g.getGamePoints());
-
+		return 0;
 	}
 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {
@@ -107,8 +112,6 @@ public class controller {
 		click = clicked;
 		mPr=clicked;
 		Pair<Integer, Integer> click1 = convertToGrid(clicked.getKey(), clicked.getValue());
-		//if(actLabel.getKey()==null)System.out.println("aaaaaaaaaaaaaaaaaaaaa");
-		//this.actLabel = new Pair(0,0);
 		char res = ' ';
 		Map<Character, Vehicle> vehicles = lvl.getCars();
 		for (Vehicle ve : vehicles.values()) {
@@ -116,12 +119,10 @@ public class controller {
 				this.vehicleClicked = ve;
 				this.vehicleClicked.setPix(v.devuelveCoordenadas(vehicleClicked.getId()));
 			}
-		} // casillaBuff.add(label);
+		} 
 		if (vehicleClicked != null) 
 			res = vehicleClicked.getId();
-		//for (Pair<Integer, Integer> position : vehicles.get(vehicleClicked.getId()).getPosition())
-		//casillaBuff.add(position);
-		//}
+	
 		return res;
 	}
 
@@ -353,7 +354,7 @@ public class controller {
 			lastLevel = Math.max(lastLevel, lvlAct);
 			g.setUltimoLevelPassed(lastLevel);
 			estado=null;
-			lvl=null;
+			//lvl=null;
 		}
 		vehicleClicked.setPix(v.devuelveCoordenadas(vehicleClicked.getId()));
 		//casillaBuff.clear();

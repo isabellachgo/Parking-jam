@@ -176,7 +176,6 @@ public class SavedGamesView {
 		panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
 		JPanel row0= new JPanel(new FlowLayout(FlowLayout.LEFT));
 		row0.setBackground(bg);
-		//row0.add(new JLabel(" "));
 		row0.add(Box.createHorizontalStrut(30));
 		row0.add(goBackB);
 		JPanel row1 = new JPanel(new FlowLayout(FlowLayout.CENTER));

@@ -23,9 +23,9 @@ El proyecto esta divivido en varias carpetas que derivan de una carpeta inicial 
 
 ## Cómo Jugar
 
-- Para jugar tan solo se deberá ejecutar el archivo ejecutable del proyecto situado en el directorio raíz.
-- Al inicio tendrás que crear una nueva partida y al crearla ya podrás acceder a los niveles del juego, que irás desbloqueando cada vez que logres pasarte uno. Una vez logres pasarte un nivel podrás volver a intentarlo para buscar obtener una mejor puntuación. En todo momento podras volver al menu de niveles, al de partidas, cerrar el juego o guardar partida clickando los botones del menu desplegable.
-- Para guardar partida solo tendrás que hacer click en el boton 'save game' del menu desplegable, y cuando quieras volver a cargar la partida, en el menu de partidas, al hacer click en el boton load game, se te mostrarán las partidas guardadas y podrás elegir la partida que guardaste para continuar donde lo dejaste.
+- Para jugar deberá situarse en el directorio raíz del repositorio. Posteriormente, deberá compilar el proyecto mediante el comando `mvn clean compile`, y finalmente ejecutarlo con el comando `mvn exec:java`.
+- Al inicio tendrá que crear una nueva partida y al crearla ya podrá acceder a los niveles del juego, que irá desbloqueando cada vez que logres terminar uno. Una vez logre pasarse un nivel podrá volver a intentarlo para buscar obtener una mejor puntuación. En todo momento podrá volver al menu de niveles, al de partidas, cerrar el juego o guardar partida haciendo click en los botones del menu desplegable.
+- Para guardar partida solo tendrá que hacer click en el boton 'save game' del menu desplegable, y cuando quiera cargar la partida guardada, en el menu de partidas, al hacer click en el boton load game, se le mostrarán las partidas guardadas y podrá elegir la partida que guardó para continuar jugando donde lo dejó.
 
 ## Autores
 

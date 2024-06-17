@@ -40,14 +40,19 @@ public class AppTest {
 		boolean redCar;
 		Pair<Integer,Integer> dimension;
 		Set<Pair<Integer,Integer>> position;
+		Pair<Integer,Integer> backLabel;
+		Pair<Integer,Integer> frontLabel;
 		@BeforeEach
 		public void createCar() {
 			id= 'a';
 			redCar=false;
-			dimension= new Pair<>(2,3);
+			dimension= new Pair<>(1,3);
 			position = new HashSet<>();
-			position.add(new Pair<>(1,2));
+			position.add(new Pair<>(1,3));
 			position.add(new Pair<>(2,3));
+			position.add(new Pair<>(3,3));
+			backLabel=new Pair<>(1,3);
+			frontLabel=new Pair<>(3,3);
 			vehicle = new Vehicle(id, redCar, dimension,position);
 		}
 		@Test
@@ -59,12 +64,20 @@ public class AppTest {
 			assertFalse(vehicle.getRedCar());
 		}
 		@Test
-		void testGetDomension() {
+		void testGetDimension() {
 			assertEquals(dimension, vehicle.getDimension());
 		}
 		@Test
 		void testGetPosition() {
 			assertEquals(position, vehicle.getPosition());
+		}
+		@Test
+		void testGetFrontLabel(){
+			assertEquals(frontLabel,vehicle.getfrontLabel());
+		}
+		@Test
+		void testGetBackLabel(){
+			assertEquals(backLabel,vehicle.getbackLabel());
 		}
 		@Test
 		void testSetPosition() {
@@ -73,6 +86,26 @@ public class AppTest {
 			newPosition.add(new Pair<>(4,4));
 			vehicle.setPosition(newPosition);
 			assertEquals(newPosition, vehicle.getPosition());
+		}
+		@Test
+		void testSetPix() {
+			Pair<Integer, Integer> pix= new Pair<>(150,200);
+			vehicle.setPix(pix);
+			assertEquals(pix, vehicle.getPix());
+		}
+		
+		
+		@Test
+		void testSetBackFrontLabel() {
+			Set<Pair<Integer, Integer>> newPosition= new HashSet<>();
+			Pair<Integer,Integer> backLabel2=new Pair<>(3,4);
+			Pair<Integer,Integer> frontLabel2=new Pair<>(5,4);
+			newPosition.add(new Pair<>(3,4));
+			newPosition.add(new Pair<>(4,4));
+			newPosition.add(new Pair<>(5,4));
+			vehicle.setPosition(newPosition);
+			assertEquals(frontLabel2, vehicle.getfrontLabel());
+			assertEquals(backLabel2, vehicle.getbackLabel());
 		}
 
 	}

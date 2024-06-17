@@ -113,7 +113,7 @@ public class EndGameView {
         JLabel info = new JLabel("<html><div style='text-align: center;'>You have completed all the levels in the game '" + game.getName() + "'</div></html>");
         info.setFont(infoFont);
         info.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        info.setPreferredSize(new Dimension(400, 70));  // Set preferred size to ensure it fits
+        info.setPreferredSize(new Dimension(400, 90));  // Set preferred size to ensure it fits
 
         JLabel pointsWL = new JLabel(game.getGamePoints().toString());
         pointsWL.setFont(levelPointsFont);

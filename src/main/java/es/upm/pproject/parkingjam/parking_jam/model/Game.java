@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
@@ -278,42 +279,49 @@ public class Game {
 				sizeX = Integer.parseInt(tamX);
 				sizeY = Integer.parseInt(tamY);
 			}
+
+			Deque<Map<Character, Set<Pair<Integer, Integer>>>> vph= new ArrayDeque<>();
+			HashMap<Character, Set<Pair<Integer,Integer>> > posAux = new HashMap<>();
+			Character[][] board = new Character[sizeX][sizeY];
 			for(int x=0; x<nBoards;x++)
 			{
-				Character[][] board = new Character[sizeX][sizeY];
+				board = new Character[sizeX][sizeY];
+				posAux = new HashMap<>();
 
 				for(int j =0 ; j< sizeY &&((linea = br.readLine()) != null);j++)
 				{
 					char[] lineaChar=linea.toCharArray();
 					for ( int i=0 ; i<sizeX ; i++)
 					{
-						board[i][j]= lineaChar[i];
-						if(!levelUncomplete.getCars().containsKey(lineaChar[i])) {
-							Set<Pair<Integer,Integer>> positions = new HashSet<>();
-							Pair<Integer, Integer> p = new Pair<>(j,i);
-							positions.add(p);
-							if(lineaChar[i]=='*') {
-								levelUncomplete.getCars().put(lineaChar[i], new Vehicle(lineaChar[i], true, null, positions));
+						Character c = lineaChar[i];
+						if(c==' ') board[i][j]=null;
+						else board[i][j]= c;
+						if(c!='+' && c!=' ' && c!='@') {
+							if(!posAux.containsKey(c)) {
+								Set<Pair<Integer,Integer>> positions = new HashSet<>();
+								Pair<Integer, Integer> p = new Pair<>(i,j);
+								positions.add(p);
+								posAux.put(c,positions);
+							} else {
+								Set<Pair<Integer,Integer>> positions = posAux.get(lineaChar[i]);
+								positions.add(new Pair<Integer, Integer>(i,j));
+								posAux.put(c,positions);
 							}
-							else {
-								levelUncomplete.getCars().put(lineaChar[i], new Vehicle(lineaChar[i], false, null, positions));
-							}
-						} else {
-							Vehicle car = levelUncomplete.getCars().get(lineaChar[i]);
-							Set<Pair<Integer,Integer>> positions = car.getPosition();
-							positions.add(new Pair<Integer, Integer>(j,i));
-							car.setPosition(positions);
 						}
 					}
 				}
 				boardHistory.add(board);
+				vph.add(posAux);
 			}
 			if(levelUncomplete!=null) {
 				Deque<Character[][]> bh = new ArrayDeque<>();
-				for(int i=boardHistory.size() -1; i> -1; i--) {
-					bh.add(boardHistory.get(i));
+				for(int i=0; i<boardHistory.size();i++) {
+					bh.addLast(boardHistory.get(i));
 				}
 				levelUncomplete.setBoardHistory(bh);
+				levelUncomplete.setVehiclePositionHistory(vph);
+				levelUncomplete.setInitialBoard(board);
+				levelUncomplete.setInitialVehiclePositions(posAux);
 			}
 		} catch (IOException e) {
 			// Manejo de posibles excepciones
@@ -322,31 +330,6 @@ public class Game {
 		return levelUncomplete;
 
 	}
-
-	/*  public static void main (String[] args) throws FileNotFoundException, IOException
-        {
-            Game g =new Game("Rachilin3");
-
-            Level lv1 = new Level(1);
-            lv1.setLevelPoints(39);
-            Level lv2 = new Level(2);
-            lv2.setLevelPoints(456);
-            Level lv3 = new Level(3);
-            lv3.setLevelPoints(43);
-
-
-            g.setLevel(1, lv1);
-            //g.setLevel(2, lv2);
-            //g.setLevel(3,lv3);
-            g.guardarGame(new Level(1));
-
-
-            //Level lv1 = new Level(1);
-
-            //g.guardarGame(1, lv1);
-            g.cargarGame("Rachilin3");
-            System.out.println(g.getGamePoints());
-        }*/
 
 }
 

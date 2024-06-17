@@ -245,27 +245,5 @@ public class SavedGamesView {
 		return new ImageIcon(resizedImg);
 	}
 	
-	
-	
-	
-	
-	/*
-	public static void main(String[] args) {
-		ArrayList<String> sg = new ArrayList<>();
-		sg.add("p1");
-		sg.add("aaa");
-		sg.add("p1");
-		sg.add("aaa");
-		sg.add("aaa");
-		
-		JFrame f = new JFrame();
-		f.setTitle("Parking Game");
-		f.setSize(700, 700);
-		f.setLocationRelativeTo(null);
-		f.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		f.setResizable(false);
-		
-		SavedGamesView sgv = new SavedGamesView(f, sg);
-	}
-	*/
+
 }

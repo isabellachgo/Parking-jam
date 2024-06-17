@@ -73,24 +73,24 @@ public class view {
 	private Image cocheVerdeHorizontalImage;
 	private Image cocheNaranjaVerticalImage;
 	private Image cocheNaranjaHorizontalImage;
-	
-	
-	
-	
+
+
+
+
 	private Image camionAmarilloVerticalImage;
 	private Image camionAmarilloHorizontalImage;
 	private Image camionGrisVerticalImage;
 	private Image camionGrisHorizontalImage;
 	private Image camionVerdeVerticalImage;
 	private Image camionVerdeHorizontalImage;
-	
+
 	private Image salida_arribaImage;
 	private Image salida_abajoImage;
 	private Image salida_derechaImage;
 	private Image salida_izquierdaImage;
 	private JFrame frame;
 	private Font menuFont;
-	
+
 
 	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller, int GamePoints) {
 		this.frame = fm;
@@ -107,7 +107,7 @@ public class view {
 		mapCoordenadas=cambioCoodenadas(posiciones);
 		initUI();
 		frame.setVisible(true);
-		
+
 	}
 
 	private Map <Character,Pair<Integer,Integer>> cambioCoodenadas (Map <Character,Pair<Integer,Integer>> mapPosiciones){
@@ -161,7 +161,7 @@ public class view {
 		ImageIcon camionGrisVertictal = new ImageIcon(getClass().getResource("/images/camion_gris_vertical.png"));
 		ImageIcon camionVerdeHorizontal = new ImageIcon(getClass().getResource("/images/camion_verde_horizontal.png"));
 		ImageIcon camionVerdeVertictal = new ImageIcon(getClass().getResource("/images/camion_verde_vertical.png"));
-		
+
 		ImageIcon salidaArriba = new ImageIcon(getClass().getResource("/images/salida_arriba.png"));
 		ImageIcon salidaAbajo = new ImageIcon(getClass().getResource("/images/salida_abajo.png"));
 		ImageIcon salidaDerecha = new ImageIcon(getClass().getResource("/images/salida_derecha.png"));
@@ -187,7 +187,7 @@ public class view {
 		camionVerdeHorizontalImage = camionVerdeHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH);
 		camionGrisVerticalImage = camionGrisVertictal.getImage().getScaledInstance(67, 200, Image.SCALE_SMOOTH); 
 		camionGrisHorizontalImage = camionGrisHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH);
-		
+
 		salida_arribaImage=salidaArriba.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH);
 		salida_abajoImage=salidaAbajo.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH); 
 		salida_derechaImage=salidaDerecha.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH); 
@@ -199,7 +199,7 @@ public class view {
 		// Dimensiones:
 		Dimension buttonSize = new Dimension(40,40);
 		Dimension buttonSize2 = new Dimension(195,40);
-		
+
 		// Colores:
 		Color buttonColor = new Color(65,130,4); 
 		Color winPColor = new Color(180,220,110);
@@ -295,7 +295,7 @@ public class view {
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		menuPanel.setPopupSize(207,190);
 		menuPanel.setBounds(50, 87, 207, 190);
-		
+
 		JButton gamesB= new JButton("games menu");
 		gamesB.setPreferredSize(buttonSize2);
 		gamesB.setIcon(homeMIcon);
@@ -307,7 +307,7 @@ public class view {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("games button pressed");
-				
+
 				frame.getContentPane().removeAll();
 				controller.gamesMenuButton();
 			}
@@ -323,7 +323,7 @@ public class view {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("levels button pressed");
-				
+
 				frame.getContentPane().removeAll();
 				controller.levelMenuButon();
 			}
@@ -339,7 +339,7 @@ public class view {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("save button pressed");
-				
+
 				controller.saveGame();
 			}
 		});
@@ -403,7 +403,7 @@ public class view {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("undo button pressed");
-				
+
 				Pair <Pair<Character,Integer>,Pair<Integer,Integer>> newPos = controller.undo();
 				if(!newPos.getKey().getKey().equals(' '))
 				{
@@ -458,7 +458,7 @@ public class view {
 
 		JLayeredPane layeredP = new JLayeredPane();
 		layeredP.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
-		
+
 		JPanel shadowPanel = new JPanel();
 		shadowPanel.setBounds(0, 1, 700, 600);
 		shadowPanel.setBackground(new Color(61,64,61, 70));		
@@ -467,7 +467,7 @@ public class view {
 		winPanel.setLayout(new BoxLayout(winPanel, BoxLayout.Y_AXIS));
 		winPanel.setBackground(winPColor);
 		winPanel.setBounds(225, 100, 250, 200);
-		
+
 		BevelBorder b = new BevelBorder(BevelBorder.RAISED, borderWinPColor, shadeWinPColor); 
 		winPanel.setBorder(b);
 
@@ -487,7 +487,7 @@ public class view {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("levels button pressed");
-				
+
 				frame.getContentPane().removeAll();
 				controller.levelMenuButon();
 			}
@@ -502,7 +502,7 @@ public class view {
 				System.out.println("restart button pressed");
 				frame.getContentPane().removeAll();
 				controller.restart();
-			
+
 			}
 		});
 
@@ -513,7 +513,7 @@ public class view {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("next level button pressed");
-				
+
 				frame.getContentPane().removeAll();
 				try {
 					int r = controller.nextLevel();
@@ -581,12 +581,12 @@ public class view {
 					if(newPos!=null)
 					{
 						if(newInfo.getValue().getValue())mapPosiciones.remove(carSelect);
-						
+
 						else mapPosiciones.put(carSelect, newPos);
 						mapCoordenadas= cambioCoodenadas(mapPosiciones);
 						levelPointsValue.setText(newInfo.getValue().getKey().toString());
 						gamePanel.repaint();
-						
+
 						if(newInfo.getValue().getValue()) {
 							pointsWL.setText(newInfo.getValue().getKey().toString());
 							layeredP.add(shadowPanel, JLayeredPane.PALETTE_LAYER);
@@ -693,31 +693,29 @@ public class view {
 		} else if( esRojo && esVertical){
 			vehiculoPintar=cocheRojoVerticalImage;
 		} else if (tamano == 2 && esVertical) {
-			if(caracter == 'f' || caracter =='b'  )vehiculoPintar = cocheAzulVerticalImage;
-			else if(caracter=='d' || caracter =='c' )vehiculoPintar = cocheAmarilloVerticalImage;
-			else if(caracter=='i'  || caracter=='c')vehiculoPintar = cocheBlancoVerticalImage;
+			if(caracter == 'f' || caracter =='c'  )vehiculoPintar = cocheAzulVerticalImage;
+			else if(caracter=='d' || caracter =='b' )vehiculoPintar = cocheAmarilloVerticalImage;
+			else if(caracter=='i'  )vehiculoPintar = cocheBlancoVerticalImage;
 			else if(caracter=='h' || caracter=='a') vehiculoPintar = cocheNaranjaVerticalImage;
 			else vehiculoPintar = cocheVerdeVerticalImage;
 		} else if (tamano == 2 && !esVertical) {
-			vehiculoPintar = cocheAzulHorizontalImage;
-		} else if (tamano == 3 && esVertical) {
-	
 			if(caracter == 'b' || caracter =='c'  )vehiculoPintar = cocheAzulHorizontalImage;
 			else if( caracter =='a' || caracter =='g')vehiculoPintar = cocheAmarilloHorizontalImage;
 			else if(caracter=='f' || caracter =='h')vehiculoPintar = cocheBlancoHorizontalImage;
 			else if(caracter=='d' ||caracter=='i' )vehiculoPintar = cocheNaranjaHorizontalImage;
 			else  vehiculoPintar = cocheVerdeHorizontalImage;
-		} else if (tamano == 3 && esVertical) {		
+		}
+		else if (tamano == 3 && esVertical) {		
 			if(caracter == 'f' || caracter =='b'  || caracter=='h')vehiculoPintar = camionAmarilloVerticalImage;
 			else if(caracter=='d' || caracter =='c'  || caracter=='g')vehiculoPintar = camionGrisVerticalImage;
 			else vehiculoPintar = camionVerdeVerticalImage;
 
 		} else if (tamano == 3 && !esVertical) {
-			
+
 			if(caracter == 'f' || caracter =='b'  || caracter=='h')vehiculoPintar = camionAmarilloHorizontalImage;
 			else if(caracter=='d' || caracter =='c'  || caracter=='g')vehiculoPintar = camionGrisHorizontalImage;
 			else vehiculoPintar = camionVerdeHorizontalImage;
-			
+
 		}
 
 		if (vehiculoPintar != null) {
@@ -756,15 +754,15 @@ public class view {
 		peText.setForeground(Color.red);
 		peText.setText("Sorry, this level's file is corrupt, play the next level.");
 		errorP.add(peText, BorderLayout.CENTER);
-		
+
 		JDialog dialog = new JOptionPane(errorP, JOptionPane.INFORMATION_MESSAGE).createDialog(frame, "Corrupt level");
 		dialog.setLocationRelativeTo(frame);
 		dialog.setVisible(true);
 		Object res = ((JOptionPane) dialog.getContentPane().getComponent(0)).getValue();
-		
+
 		if(res!=null && res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
 			System.out.println("Ok new game button pressed");
-			
+
 			frame.getContentPane().removeAll();
 			try {
 				if(n==4) controller.endGame();
@@ -774,5 +772,5 @@ public class view {
 			}
 		} 
 	}
-	
+
 }

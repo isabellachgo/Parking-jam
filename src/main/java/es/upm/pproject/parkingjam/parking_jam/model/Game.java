@@ -139,10 +139,12 @@ public class Game {
 			if(level!=null) bw.write(level.getNLevel() + " , " + level.getLevelPoint());
 
 			System.out.println("El archivo se ha creado y se ha escrito correctamente en: " + rutaFichero);
+			LOGGER.info("The file has been created and its been witten corectly in " + rutaFichero);
 
 		} catch (IOException e) {
 			// Manejo de posibles excepciones
 			System.err.println("Se produjo un error al escribir en el archivo: " + e.getMessage());
+			LOGGER.error("There has been an error writting in the file", e);
 		}
 
 		if ( level!=null)
@@ -171,10 +173,12 @@ public class Game {
 				}
 
 				System.out.println("El archivo se ha creado y se ha escrito correctamente en: " + rutaFichero);
+				LOGGER.info("The file has been created and its been witten corectly in " + rutaFichero);
 
 			} catch (IOException e) {
 				// Manejo de posibles excepciones
 				System.err.println("Se produjo un error al escribir en el archivo: " + e.getMessage());
+				LOGGER.error("There has been an error writting in the file", e);
 			}
 
 			rutaFichero= rutaDirectorio+ File.separator+ "HistoryBoards.txt";
@@ -205,10 +209,13 @@ public class Game {
 					}
 				}
 				System.out.println("El archivo se ha creado y se ha escrito correctamente en: " + rutaFichero);
+				LOGGER.info("The file has been created and its been witten corectly in " + rutaFichero);
+
 
 			} catch (IOException e) {
 				// Manejo de posibles excepciones
 				System.err.println("Se produjo un error al escribir en el archivo: " + e.getMessage());
+				LOGGER.error("There has been an error writting in the file", e);
 			}
 
 		}
@@ -262,6 +269,7 @@ public class Game {
 				}
 				else {
 					System.err.println("Línea mal formateada: " + linea);
+					LOGGER.info("There is an error in the file, the line format is not correct");
 				}
 
 			}
@@ -269,6 +277,7 @@ public class Game {
 		} catch (IOException e) {
 			// Manejo de posibles excepciones
 			System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
+			LOGGER.error("There has been an error reading the file", e);
 		}
 
 
@@ -346,7 +355,9 @@ public class Game {
 		} catch (IOException e) {
 			// Manejo de posibles excepciones
 			System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
+			LOGGER.error("There has been an error reading the file", e);
 		}
+		LOGGER.info("The game has been loaded correctly");
 		return levelUncomplete;
 
 	}

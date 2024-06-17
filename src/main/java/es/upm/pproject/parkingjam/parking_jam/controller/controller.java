@@ -398,10 +398,22 @@ public class controller {
 		LevelsMenuView lmv = new LevelsMenuView(f, g, this);
 	}
 
-	public void nextLevel() throws FileNotFoundException, IOException {
+	public int nextLevel() throws FileNotFoundException, IOException {
 		
-		if(lvlAct<4) showLevel(lvlAct + 1);
-		else endGame();
+		if(lvlAct<4) {
+			int n =lvlAct + 1;
+			int r = showLevel(n);
+			if(r!=0) {
+				g.setOkLevel(n, false);
+				g.setUltimoLevelPassed(n);
+				return n;
+			}
+			else return 0;
+		}
+		else {
+			endGame();
+			return 0;
+		}
 	}
 
 	public Pair<Pair<Character, Integer>, Pair<Integer, Integer>> undo() {

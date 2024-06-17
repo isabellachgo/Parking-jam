@@ -27,9 +27,11 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
@@ -87,6 +89,7 @@ public class view {
 	private Image salida_derechaImage;
 	private Image salida_izquierdaImage;
 	private JFrame frame;
+	private Font menuFont;
 	
 
 	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller, int GamePoints) {
@@ -222,7 +225,7 @@ public class view {
 		} catch (FontFormatException | IOException e1) {
 			e1.printStackTrace();
 		}
-		Font menuFont = null;
+		menuFont = null;
 		try {
 			menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(16f);
 		} catch (FontFormatException | IOException e1) {
@@ -513,7 +516,10 @@ public class view {
 				
 				frame.getContentPane().removeAll();
 				try {
-					controller.nextLevel();
+					int r = controller.nextLevel();
+					if(r!=0) {
+						corruptLevel(r);
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -741,4 +747,32 @@ public class view {
 		return new ImageIcon(bufferedImage);
 	}
 
+	private void corruptLevel(Integer n) {
+		JPanel errorP = new JPanel();
+		errorP.setLayout(new BorderLayout());
+		JLabel peText = new JLabel();
+		peText.setFont(menuFont);
+		peText.setOpaque(true);
+		peText.setForeground(Color.red);
+		peText.setText("Sorry, this level's file is corrupt, play the next level.");
+		errorP.add(peText, BorderLayout.CENTER);
+		
+		JDialog dialog = new JOptionPane(errorP, JOptionPane.INFORMATION_MESSAGE).createDialog(frame, "Corrupt level");
+		dialog.setLocationRelativeTo(frame);
+		dialog.setVisible(true);
+		Object res = ((JOptionPane) dialog.getContentPane().getComponent(0)).getValue();
+		
+		if(res!=null && res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
+			System.out.println("Ok new game button pressed");
+			
+			frame.getContentPane().removeAll();
+			try {
+				if(n==4) controller.endGame();
+				else if(controller.showLevel(n+1) == 1) corruptLevel(n+1);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} 
+	}
+	
 }

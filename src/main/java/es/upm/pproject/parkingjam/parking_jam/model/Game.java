@@ -30,6 +30,7 @@ public class Game {
 	private HashMap <Integer,Integer> listaPoints;
 	private Level l;
 	private Map<Integer, Boolean> okLevels;
+	
 	public Game( String name)
 	{
 		gameName=name;
@@ -51,10 +52,8 @@ public class Game {
 		return gamePoints;
 	}
 
-	public Integer getLevelPoints(int id)
-	{
-		if(listaPoints.containsKey(id))
-			return listaPoints.get(id);
+	public Integer getLevelPoints(int id) {
+		if(listaPoints.containsKey(id))	return listaPoints.get(id);
 		else return null;
 	}
 
@@ -90,8 +89,8 @@ public class Game {
 	public void setLevel( int numero , Level level)
 	{
 		listaLevels.put(numero, level);
-		//actualizarGamePoints(numero, level.getLevelPoint());
 	}
+		
 	public Level getLastLevel() {
 		return l;
 	}

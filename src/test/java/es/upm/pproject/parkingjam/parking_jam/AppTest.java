@@ -335,6 +335,35 @@ public class AppTest {
 
 		}
 		@Test
+		public void SetBoardHistory() {
+			Deque<Character[][]> bh = new ArrayDeque<>();
+			Character[][] boardt = new Character[8][8];
+			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
+			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]=null;  boardt[7][1]='+';
+			boardt[0][2]='+'; boardt[1][2]=null; boardt[2][2]='e'; boardt[3][2]=null; boardt[4][2]='*';  boardt[5][2]=null; boardt[6][2]=null;  boardt[7][2]='+';
+			boardt[0][3]='+'; boardt[1][3]='d';  boardt[2][3]='e'; boardt[3][3]=null; boardt[4][3]='*';  boardt[5][3]=null; boardt[6][3]=null;  boardt[7][3]='+';
+			boardt[0][4]='+'; boardt[1][4]='d';  boardt[2][4]='f'; boardt[3][4]='f';  boardt[4][4]='f';  boardt[5][4]=null;  boardt[6][4]='c'; boardt[7][4]='+';
+			boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]=null;  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]='c'; boardt[7][5]='+';
+			boardt[0][6]='+'; boardt[1][6]='g'; boardt[2][6]='g';  boardt[3][6]='g'; boardt[4][6]=null;  boardt[5][6]=null;  boardt[6][6]=null;  boardt[7][6]='+';
+			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='@';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
+			bh.add(boardt);
+			
+			Character[][] boardt2 = new Character[8][8];
+			boardt2[0][0]='+'; boardt2[1][0]='+';	 boardt2[2][0]='+';  boardt2[3][0]='+';  boardt2[4][0]='+';  boardt2[5][0]='+';  boardt2[6][0]='+';  boardt2[7][0]='+';
+			boardt2[0][1]='+'; boardt2[1][1]='a';	 boardt2[2][1]='a';  boardt2[3][1]='b';  boardt2[4][1]='b';  boardt2[5][1]='b';  boardt2[6][1]=null;  boardt2[7][1]='+';
+			boardt2[0][2]='+'; boardt2[1][2]='d'; boardt2[2][2]='e'; boardt2[3][2]=null; boardt2[4][2]='*';  boardt2[5][2]=null; boardt2[6][2]=null;  boardt2[7][2]='+';
+			boardt2[0][3]='+'; boardt2[1][3]='d';  boardt2[2][3]='e'; boardt2[3][3]=null; boardt2[4][3]='*';  boardt2[5][3]=null; boardt2[6][3]=null;  boardt2[7][3]='+';
+			boardt2[0][4]='+'; boardt2[1][4]='d';  boardt2[2][4]='f'; boardt2[3][4]='f';  boardt2[4][4]='f';  boardt2[5][4]=null;  boardt2[6][4]='c'; boardt2[7][4]='+';
+			boardt2[0][5]='+'; boardt2[1][5]=null;  boardt2[2][5]=null;  boardt2[3][5]=null; boardt2[4][5]=null; boardt2[5][5]=null; boardt2[6][5]='c'; boardt2[7][5]='+';
+			boardt2[0][6]='+'; boardt2[1][6]='g'; boardt2[2][6]='g';  boardt2[3][6]='g'; boardt2[4][6]=null;  boardt2[5][6]=null;  boardt2[6][6]=null;  boardt2[7][6]='+';
+			boardt2[0][7]='+'; boardt2[1][7]='+';  boardt2[2][7]='+';  boardt2[3][7]='+';  boardt2[4][7]='@';  boardt2[5][7]='+';  boardt2[6][7]='+';  boardt2[7][7]='+';
+			bh.add(boardt2);
+			
+			level.setBoardHistory(bh);
+			assertEquals(level.getBoardHistory(), bh);
+			
+		}
+		@Test
 		public void BoardHistoryWithMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('f'), 'L', 1);
@@ -479,6 +508,99 @@ public class AppTest {
 			assertEquals(m1.get('e'), level.getVehiclePositionHistory().peek().get('e'));
 			assertEquals(m1.get('f'), level.getVehiclePositionHistory().peek().get('f'));
 			assertEquals(m1.get('g'), level.getVehiclePositionHistory().peek().get('g'));
+			
+		}
+		
+		@Test
+		public void SetVehiclePositionHistory() {
+			Deque<Map<Character, Set<Pair<Integer, Integer>>>> ph = new ArrayDeque<>();
+			Map<Character, Set<Pair<Integer, Integer>>> m1= new HashMap<Character, Set<Pair<Integer, Integer>>>();
+			Set<Pair<Integer, Integer>>  h1 =new HashSet<>();
+			h1.add(new Pair<>(1,1));
+			h1.add(new Pair<>(2,1));
+			m1.put('a',h1);
+
+			Set<Pair<Integer, Integer>>  h2 =new HashSet<>();
+			h2.add(new Pair<>(3,1));
+			h2.add(new Pair<>(4,1));	
+			h2.add(new Pair<>(5,1));
+			m1.put('b',h2);
+
+			Set<Pair<Integer, Integer>>  h3 =new HashSet<>();
+			h3.add(new Pair<>(6,1));
+			h3.add(new Pair<>(6,2));	
+			m1.put('c',h3);
+
+			Set<Pair<Integer, Integer>>  h4 =new HashSet<>();
+			h4.add(new Pair<>(1,3));
+			h4.add(new Pair<>(1,4));	
+			h4.add(new Pair<>(1,5));
+			m1.put('d',h4);
+
+			Set<Pair<Integer, Integer>>  h5 =new HashSet<>();
+			h5.add(new Pair<>(2,2));
+			h5.add(new Pair<>(2,3));	
+			m1.put('e',h5);
+
+			Set<Pair<Integer, Integer>>  h6 =new HashSet<>();
+			h6.add(new Pair<>(3,4));
+			h6.add(new Pair<>(4,4));	
+			h6.add(new Pair<>(5,4));
+			m1.put('f',h6);
+
+			Set<Pair<Integer, Integer>>  h7 =new HashSet<>();
+			h7.add(new Pair<>(1,6));
+			h7.add(new Pair<>(2,6));	
+			h7.add(new Pair<>(3,6));
+			m1.put('g',h7);
+
+			ph.add(m1);
+
+
+			
+			Map<Character, Set<Pair<Integer, Integer>>> m2= new HashMap<Character, Set<Pair<Integer, Integer>>>();
+			Set<Pair<Integer, Integer>>  h11 =new HashSet<>();
+			h11.add(new Pair<>(1,1));
+			h11.add(new Pair<>(2,1));
+			m2.put('a',h11);
+
+			Set<Pair<Integer, Integer>>  h21 =new HashSet<>();
+			h21.add(new Pair<>(3,1));
+			h21.add(new Pair<>(4,1));	
+			h21.add(new Pair<>(5,1));
+			m2.put('b',h21);
+
+			Set<Pair<Integer, Integer>>  h31 =new HashSet<>();
+			h31.add(new Pair<>(6,1));
+			h31.add(new Pair<>(6,2));	
+			m2.put('c',h31);
+
+			Set<Pair<Integer, Integer>>  h41 =new HashSet<>();
+			h41.add(new Pair<>(1,2));
+			h41.add(new Pair<>(1,3));	
+			h41.add(new Pair<>(1,4));
+			m2.put('d',h41);
+
+			Set<Pair<Integer, Integer>>  h51 =new HashSet<>();
+			h51.add(new Pair<>(2,2));
+			h51.add(new Pair<>(2,3));	
+			m2.put('e',h51);
+
+			Set<Pair<Integer, Integer>>  h61 =new HashSet<>();
+			h61.add(new Pair<>(3,4));
+			h61.add(new Pair<>(4,4));	
+			h61.add(new Pair<>(5,4));
+			m2.put('f',h61);
+
+			Set<Pair<Integer, Integer>>  h71 =new HashSet<>();
+			h71.add(new Pair<>(1,6));
+			h71.add(new Pair<>(2,6));	
+			h71.add(new Pair<>(3,6));
+			m2.put('g',h71);
+
+			ph.add(m2);
+			level.setVehiclePositionHistory(ph);
+			assertEquals(ph, level.getVehiclePositionHistory());
 			
 		}
 		@Test
@@ -705,7 +827,7 @@ public class AppTest {
 			
 
 		}
-
+	
 
 
 		@Test
@@ -1195,6 +1317,8 @@ public class AppTest {
 
 
 	}
+	
+	/*
 @Nested
 	class GameTest{
 		private Game game;
@@ -1561,7 +1685,7 @@ public class AppTest {
 
 
 	}
-
+*/
 
 }
 

@@ -63,8 +63,25 @@ public class view {
 	private Image parkingImage;
 	private Image cocheAzulVerticalImage;
 	private Image cocheAzulHorizontalImage;
-	private Image camionVerticalImage;
-	private Image camionHorizontalImage;
+	private Image cocheAmarilloVerticalImage;
+	private Image cocheAmarilloHorizontalImage;
+	private Image cocheBlancoVerticalImage;
+	private Image cocheBlancoHorizontalImage;
+	private Image cocheVerdeVerticalImage;
+	private Image cocheVerdeHorizontalImage;
+	private Image cocheNaranjaVerticalImage;
+	private Image cocheNaranjaHorizontalImage;
+	
+	
+	
+	
+	private Image camionAmarilloVerticalImage;
+	private Image camionAmarilloHorizontalImage;
+	private Image camionGrisVerticalImage;
+	private Image camionGrisHorizontalImage;
+	private Image camionVerdeVerticalImage;
+	private Image camionVerdeHorizontalImage;
+	
 	private Image salida_arribaImage;
 	private Image salida_abajoImage;
 	private Image salida_derechaImage;
@@ -127,8 +144,21 @@ public class view {
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking2.jpg"));
 		ImageIcon cocheAzulHorizontal = new ImageIcon(getClass().getResource("/images/coche_azul_horizontal.png"));
 		ImageIcon cocheAzulVertical = new ImageIcon(getClass().getResource("/images/coche_azul_vertical.png"));
-		ImageIcon camionHorizontal = new ImageIcon(getClass().getResource("/images/camion_horizontal.png"));
-		ImageIcon camionVertictal = new ImageIcon(getClass().getResource("/images/camion_vertical.png"));
+		ImageIcon cocheVerdeHorizontal = new ImageIcon(getClass().getResource("/images/coche_verde_horizontal.png"));
+		ImageIcon cocheVerdeVertical = new ImageIcon(getClass().getResource("/images/coche_verde_vertical.png"));
+		ImageIcon cocheAmarilloHorizontal = new ImageIcon(getClass().getResource("/images/coche_amarillo_horizontal.png"));
+		ImageIcon cocheAmarilloVertical = new ImageIcon(getClass().getResource("/images/coche_amarillo_vertical.png"));
+		ImageIcon cocheBlancoHorizontal = new ImageIcon(getClass().getResource("/images/coche_blanco_horizontal.png"));
+		ImageIcon cocheBlancoVertical = new ImageIcon(getClass().getResource("/images/coche_blanco_vertical.png"));
+		ImageIcon cocheNaranjaHorizontal = new ImageIcon(getClass().getResource("/images/coche_naranja_horizontal.png"));
+		ImageIcon cocheNaranjaVertical = new ImageIcon(getClass().getResource("/images/coche_naranja_vertical.png"));
+		ImageIcon camionAmarilloHorizontal = new ImageIcon(getClass().getResource("/images/camion_amarillo_horizontal.png"));
+		ImageIcon camionAmarilloVertictal = new ImageIcon(getClass().getResource("/images/camion_amarillo_vertical.png"));
+		ImageIcon camionGrisHorizontal = new ImageIcon(getClass().getResource("/images/camion_gris_horizontal.png"));
+		ImageIcon camionGrisVertictal = new ImageIcon(getClass().getResource("/images/camion_gris_vertical.png"));
+		ImageIcon camionVerdeHorizontal = new ImageIcon(getClass().getResource("/images/camion_verde_horizontal.png"));
+		ImageIcon camionVerdeVertictal = new ImageIcon(getClass().getResource("/images/camion_verde_vertical.png"));
+		
 		ImageIcon salidaArriba = new ImageIcon(getClass().getResource("/images/salida_arriba.png"));
 		ImageIcon salidaAbajo = new ImageIcon(getClass().getResource("/images/salida_abajo.png"));
 		ImageIcon salidaDerecha = new ImageIcon(getClass().getResource("/images/salida_derecha.png"));
@@ -140,8 +170,21 @@ public class view {
 		parkingImage= parkingIcon.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH);
 		cocheAzulVerticalImage = cocheAzulVertical.getImage().getScaledInstance(67, 133, Image.SCALE_SMOOTH); 
 		cocheAzulHorizontalImage = cocheAzulHorizontal.getImage().getScaledInstance(133, 67, Image.SCALE_SMOOTH); 
-		camionVerticalImage = camionVertictal.getImage().getScaledInstance(67, 200, Image.SCALE_SMOOTH); 
-		camionHorizontalImage = camionHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH); 
+		cocheVerdeVerticalImage = cocheVerdeVertical.getImage().getScaledInstance(67, 133, Image.SCALE_SMOOTH); 
+		cocheVerdeHorizontalImage = cocheVerdeHorizontal.getImage().getScaledInstance(133, 67, Image.SCALE_SMOOTH); 
+		cocheAmarilloVerticalImage = cocheAmarilloVertical.getImage().getScaledInstance(67, 133, Image.SCALE_SMOOTH); 
+		cocheAmarilloHorizontalImage = cocheAmarilloHorizontal.getImage().getScaledInstance(133, 67, Image.SCALE_SMOOTH); 
+		cocheBlancoVerticalImage = cocheBlancoVertical.getImage().getScaledInstance(67, 133, Image.SCALE_SMOOTH); 
+		cocheBlancoHorizontalImage = cocheBlancoHorizontal.getImage().getScaledInstance(133, 67, Image.SCALE_SMOOTH); 
+		cocheNaranjaVerticalImage = cocheNaranjaVertical.getImage().getScaledInstance(67, 133, Image.SCALE_SMOOTH); 
+		cocheNaranjaHorizontalImage = cocheNaranjaHorizontal.getImage().getScaledInstance(133, 67, Image.SCALE_SMOOTH); 
+		camionAmarilloVerticalImage = camionAmarilloVertictal.getImage().getScaledInstance(67, 200, Image.SCALE_SMOOTH); 
+		camionAmarilloHorizontalImage = camionAmarilloHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH);
+		camionVerdeVerticalImage = camionVerdeVertictal.getImage().getScaledInstance(67, 200, Image.SCALE_SMOOTH); 
+		camionVerdeHorizontalImage = camionVerdeHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH);
+		camionGrisVerticalImage = camionGrisVertictal.getImage().getScaledInstance(67, 200, Image.SCALE_SMOOTH); 
+		camionGrisHorizontalImage = camionGrisHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH);
+		
 		salida_arribaImage=salidaArriba.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH);
 		salida_abajoImage=salidaAbajo.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH); 
 		salida_derechaImage=salidaDerecha.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH); 
@@ -218,7 +261,7 @@ public class view {
 					if(caracter.equals('@')) esSalida=true;
 					Pair <Boolean,Integer> dimension = conseguirPosicion(caracter);
 					Pair <Integer,Integer> posicion= mapCoordenadas.get(caracter);
-					pintarVehiculo(esRojo,esSalida,dimension.getValue(),dimension.getKey(),posicion.getKey(),posicion.getValue(),g,this);
+					pintarVehiculo(caracter,esRojo,esSalida,dimension.getValue(),dimension.getKey(),posicion.getKey(),posicion.getValue(),g,this);
 				}
 
 
@@ -613,7 +656,7 @@ public class view {
 		}
 		return sol;
 	}
-	public void pintarVehiculo(boolean esRojo,boolean esSalida, int tamano, boolean esVertical, int   posX, int posY, Graphics g, Component context) {
+	public void pintarVehiculo(char caracter,boolean esRojo,boolean esSalida, int tamano, boolean esVertical, int   posX, int posY, Graphics g, Component context) {
 		Image vehiculoPintar = null; // Asegúrate de que esté inicializada a null
 		int x=posX;
 		int y=posY;
@@ -644,14 +687,31 @@ public class view {
 		} else if( esRojo && esVertical){
 			vehiculoPintar=cocheRojoVerticalImage;
 		} else if (tamano == 2 && esVertical) {
-			vehiculoPintar = cocheAzulVerticalImage;
+			if(caracter == 'f' || caracter =='b'  )vehiculoPintar = cocheAzulVerticalImage;
+			else if(caracter=='d' || caracter =='c' )vehiculoPintar = cocheAmarilloVerticalImage;
+			else if(caracter=='i'  || caracter=='c')vehiculoPintar = cocheBlancoVerticalImage;
+			else if(caracter=='h' || caracter=='a') vehiculoPintar = cocheNaranjaVerticalImage;
+			else vehiculoPintar = cocheVerdeVerticalImage;
 		} else if (tamano == 2 && !esVertical) {
 			vehiculoPintar = cocheAzulHorizontalImage;
 		} else if (tamano == 3 && esVertical) {
-		
-			vehiculoPintar = camionVerticalImage;
+	
+			if(caracter == 'b' || caracter =='c'  )vehiculoPintar = cocheAzulHorizontalImage;
+			else if( caracter =='a' || caracter =='g')vehiculoPintar = cocheAmarilloHorizontalImage;
+			else if(caracter=='f' || caracter =='h')vehiculoPintar = cocheBlancoHorizontalImage;
+			else if(caracter=='d' ||caracter=='i' )vehiculoPintar = cocheNaranjaHorizontalImage;
+			else  vehiculoPintar = cocheVerdeHorizontalImage;
+		} else if (tamano == 3 && esVertical) {		
+			if(caracter == 'f' || caracter =='b'  || caracter=='h')vehiculoPintar = camionAmarilloVerticalImage;
+			else if(caracter=='d' || caracter =='c'  || caracter=='g')vehiculoPintar = camionGrisVerticalImage;
+			else vehiculoPintar = camionVerdeVerticalImage;
+
 		} else if (tamano == 3 && !esVertical) {
-			vehiculoPintar = camionHorizontalImage;
+			
+			if(caracter == 'f' || caracter =='b'  || caracter=='h')vehiculoPintar = camionAmarilloHorizontalImage;
+			else if(caracter=='d' || caracter =='c'  || caracter=='g')vehiculoPintar = camionGrisHorizontalImage;
+			else vehiculoPintar = camionVerdeHorizontalImage;
+			
 		}
 
 		if (vehiculoPintar != null) {

@@ -11,6 +11,8 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 
+import org.apache.log4j.Logger;
+
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.GamesList;
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
@@ -25,6 +27,7 @@ import es.upm.pproject.parkingjam.parking_jam.view.view;
 import javafx.util.Pair;
 
 public class controller {
+	private static final Logger LOGGER = Logger.getLogger(controller.class);
 	JFrame f;
 	Game g;
 	Menu m;
@@ -34,7 +37,6 @@ public class controller {
 	Pair<Integer, Integer> click;
 	Vehicle vehicleClicked;
 	int punt;
-	//Set<Pair<Integer, Integer>> casillaBuff;
 	int cellSize;
 	Pair<Integer, Integer> actLabel;
 	Pair<Integer, Integer> prevLabel;
@@ -52,17 +54,10 @@ public class controller {
 		f.setLocationRelativeTo(null);
 		f.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		f.setResizable(false);
-
 		punt = 0;
-
-		//cargar partidas guardadas
 		gl = new GamesList();
 		gl.loadList();
 
-		//casillaBuff = new HashSet<Pair<Integer, Integer>>();
-
-
-		//g = new Game("Lucas"); // TODO en menu de partidas
 		StartView sv= new StartView(f,this);
 
 	}
@@ -86,6 +81,7 @@ public class controller {
 		}
 		mapPositions.put('@', lvl.getExit());
 		v = new view(f, mapPositions, lvl, this, g.getGamePoints());
+		LOGGER.info(" The view of the level " + n + " has been initializated");
 		return 0;
 	}
 
@@ -151,7 +147,7 @@ public class controller {
 								&&(conflLabelB==null||(newLabel.getValue()-vehicleClicked.getDimension().getValue())>conflLabelB.getValue())){					
 							if (!newLabel.equals(actLabel)) {
 								this.prevLabel = new Pair(newLabel.getKey(),newLabel.getValue()-1);Integer a=(punt/cellSize);
-								this.actLabel = newLabel;//System.out.println("Bajo "+newLabel.toString()+" "+conflLabelB.toString());
+								this.actLabel = newLabel;
 								//if(conflLabelF!=null)
 								System.out.println("bajo "+actLabel.toString()+" "+prevLabel.toString() /*+" conf "+ conflLabelF.toString()*/);
 							}
@@ -288,9 +284,6 @@ public class controller {
 	}
 
 	public Pair<Pair<Integer, Integer>, Pair<Integer, Boolean>> drop(Pair<Integer, Integer> posF) {
-		//		if (click.equals(convertToGrid(posF.getKey(), posF.getValue())))
-		//			return vehicleClicked.getBack();
-		// boolean res;
 		if (vehicleClicked == null)
 			return null;
 		Pair<Pair<Integer, Integer>, Pair<Integer, Boolean>> mv;
@@ -299,7 +292,6 @@ public class controller {
 
 			punt2 = Math.abs(punt);
 			if (punt2 % cellSize > cellSize / 2||actLabel.equals(lvl.getExit())) {
-				// if(click.equals(actLabel))return vehicleClicked.getBack();
 				if (punt>0&&avanza) {
 					moveVehicle(vehicleClicked.getfrontLabel(), actLabel);
 					System.out.println("1 "+punt2%cellSize + " "+actLabel.toString());
@@ -321,7 +313,6 @@ public class controller {
 
 
 			} else {
-				// if(click.equals(prevLabel))return vehicleClicked.getBack();
 				if (punt>0&&avanza) {
 					moveVehicle(vehicleClicked.getfrontLabel(), prevLabel);
 					System.out.println("5 "+punt2%cellSize + " "+prevLabel.toString());
@@ -355,10 +346,8 @@ public class controller {
 			g.setUltimoLevelPassed(lastLevel);
 			estado=null;
 			if(g.getLastLevel()!=null&&g.getLastLevel().getNLevel().equals(lvlAct))g.setLastLevel(null);
-			//lvl=null;
 		}
 		vehicleClicked.setPix(v.devuelveCoordenadas(vehicleClicked.getId()));
-		//casillaBuff.clear();
 		this.vehicleClicked = null;
 		punt = 0;
 		actLabel = null;
@@ -389,17 +378,17 @@ public class controller {
 			}
 		} else
 			return false;// en cualquier otro caso el coche no se ha movido
-
+		LOGGER.info("A vehicle was moved from a position to another");
 		return lvl.move(vehicleClicked, direction, distance);
 	}
 
 	public void levelMenuButon() {
 		estado=null;
+		LOGGER.info("The Menu Level view has been initializated");
 		LevelsMenuView lmv = new LevelsMenuView(f, g, this);
 	}
 
 	public int nextLevel() throws FileNotFoundException, IOException {
-		
 		if(lvlAct<4) {
 			int n =lvlAct + 1;
 			int r = showLevel(n);
@@ -411,6 +400,7 @@ public class controller {
 			else return 0;
 		}
 		else {
+			LOGGER.info("End Game view has been initializated, because there isnt more level in the game");
 			endGame();
 			return 0;
 		}
@@ -424,6 +414,7 @@ public class controller {
 		}
 		Pair<Pair<Character, Integer>, Pair<Integer, Integer>> res = new Pair<Pair<Character, Integer>, Pair<Integer, Integer>>(
 				new Pair<Character, Integer>(c, lvl.getLevelPoint()), lvl.getCars().get(c).getbackLabel());
+		LOGGER.info("An undo of the vehicle with id: " +c+" has been done");
 		return res;
 	}
 
@@ -431,7 +422,9 @@ public class controller {
 		lvl.reset();
 		try {
 			showLevel(lvlAct);
+			LOGGER.info("The level has been restarted");
 		} catch (IOException e) {
+			LOGGER.error("The level could not be restarted", e);
 			e.printStackTrace();
 		}
 	}
@@ -441,14 +434,18 @@ public class controller {
 			try {
 				g.guardarGame(null);
 				gl.addGame(g.getName());
+				LOGGER.info("The game has been saved correctly");
 			} catch (IOException e) {
+				LOGGER.error("The game could not be saved", e);
 				e.printStackTrace();
 			}
 		} else if(estado!=null) { //level a medias
 			try {
 				g.guardarGame(lvl);
 				gl.addGame(g.getName());
+				LOGGER.info("The game has been saved correctly");
 			} catch (IOException e) {
+				LOGGER.error("The game could not be saved", e);
 				e.printStackTrace();
 			}
 		}
@@ -467,14 +464,17 @@ public class controller {
 			m.addGame(game);
 			GamesMenuView gmv = new GamesMenuView(f, m, this);
 			r=0;
+			LOGGER.info("The game has been open correctly");
 		} else {
 			SavedGamesView sgv = new SavedGamesView(f, gl.getList(), this);
+			LOGGER.info("The game could not be save");
 		}
 		return r;
 	}
 
 	public void openSavedGames() {
 		SavedGamesView sgv = new SavedGamesView(f, gl.getList(), this);
+		LOGGER.info("The games saved  has been opened correctly");
 	}
 
 	public int newGame(String name) {
@@ -490,24 +490,29 @@ public class controller {
 			r=0;
 		}
 		GamesMenuView gmv = new GamesMenuView(f, m, this);
+		LOGGER.info("A new game has been created correctly");
 		return r;
 	}
 
 	public void openGame(Game game) {
 		this.g=game;
 		LevelsMenuView lmv = new LevelsMenuView(f, game, this);
+		LOGGER.info("The game has been opened correctly");
 	}
 
 	public void gamesMenuButton() {
 		estado=null;
 		GamesMenuView gmv = new GamesMenuView(f,m,this);
+		LOGGER.info("The game Menu has been opened");
 	}
 	public void gamesMenu(Menu menu) {
 		this.m=menu;
 		GamesMenuView gm = new GamesMenuView(f,m,this);
+		LOGGER.info("The game Menu has been opened");
 	}
 	public void endGame() {
 		EndGameView ev= new EndGameView(f,m,g,this);
+		LOGGER.info("The En game view has been opened");
 	}
 
 	public static void main(String[] args) {

@@ -12,6 +12,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.apache.log4j.Logger;
+
+import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+
 import java.util.Set;
 
 import javafx.util.Pair;
@@ -30,6 +35,7 @@ public class Level  {
 	private Deque<Character[][]> boardHistory;
 	private Deque<Map<Character, Set<Pair<Integer, Integer>>>> vehiclePositionHistory;
 	private Integer nLevel;
+	private static final Logger LOGGER = Logger.getLogger(Level.class);
 
 	public Level (Integer n_level) throws FileNotFoundException, IOException{
 		bReader = new BoardReader(n_level);
@@ -138,6 +144,7 @@ public class Level  {
 	}
 
 	public boolean move (Vehicle car, char direction, int distance ) {
+		
 		boolean moved=true;
 		if(distance ==0) return false;
 
@@ -147,9 +154,13 @@ public class Level  {
 			levelPoints++;
 			boardHistory.push(this.board);
 			vehiclePositionHistory.push(cloneCarPositions());
+			LOGGER.info("The vehicle with id " + car.getId() + " moved correctly " + distance + " steps to the " + direction);
 
 		}
-		else moved=false;
+		else {
+			moved=false;
+			LOGGER.info("The vehicle with id " + car.getId() + " moved correctly could not move ");
+		}
 
 		return moved;
 	}
@@ -187,7 +198,10 @@ public class Level  {
 			// Adds the new position to the set of positions
 			newPosition.add(new Pair<Integer,Integer>(newX, newY));
 		}
-		if(!CheckMovement(car, direction,currentPosition,newPosition) )return null;
+		if(!CheckMovement(car, direction,currentPosition,newPosition) ) {
+			LOGGER.info("The board could not be updated to the new position");
+			return null;
+		}
 
 		// clones the board
 		Character[][] updatedBoard = cloneBoard();
@@ -209,6 +223,7 @@ public class Level  {
 			positionNew.add(p);
 		}
 		car.setPosition(positionNew);
+		LOGGER.info("The board has been updated succesfully");
 		return updatedBoard;
 	}
 
@@ -231,6 +246,7 @@ public class Level  {
 			}
 
 			if (!Goal && board[newX][newY] != null &&  !currentPosition.contains(position) ) {
+				LOGGER.info("The movement is not valid because the position is occupied");
 				return false;
 			}
 
@@ -238,21 +254,25 @@ public class Level  {
 			switch (direction) {
 			case 'U': 
 				if (car.getDimension().getKey() != 1) { // An horizontal vehicle cannot move up
+					LOGGER.info("The movement is not valid because the position is occupied");
 					return false;
 				}
 				break;
 			case 'D': 
 				if (car.getDimension().getKey() != 1) { /// An horizontal vehicle cannot move down
+					LOGGER.info("The movement is not valid because the position is occupied");
 					return false;
 				}
 				break;
 			case 'L': 
 				if (car.getDimension().getValue() != 1) { // A vertical vehicle cannot move to the left
+					LOGGER.info("The movement is not valid because the position is occupied");
 					return false;
 				}
 				break;
 			case 'R': 
 				if (car.getDimension().getValue() != 1) { // A vertical vehicle cannot move to the right
+					LOGGER.info("The movement is not valid because the position is occupied");
 					return false;
 				}
 				break;
@@ -260,19 +280,20 @@ public class Level  {
 				return false;
 			}
 		}
-
+		LOGGER.info("The movement is valid");
 		return true;
 	}
 
 
-
-	public Character[][] cloneBoard() {
+	// clones this.board into a new board 
+	private Character[][] cloneBoard() {
 		Character[][] cloneBoard= new Character[dimensionX][dimensionY];
 		for(int i=0; i<dimensionX; i++) {
 			System.arraycopy(board[i], 0, cloneBoard[i], 0, dimensionY);
 		}
 		return cloneBoard;
 	}
+	// clones cars positions
 	private Map<Character, Set<Pair<Integer, Integer>>> cloneCarPositions() {
 		Map<Character, Set<Pair<Integer, Integer>>> clone = new HashMap<>();
 		for (Map.Entry<Character, Vehicle> entry : cars.entrySet()) {
@@ -280,7 +301,7 @@ public class Level  {
 		}
 		return clone;
 	}
-
+	// restores the cars position to 'positions'
 	private void restoreCarPositions(Map<Character, Set<Pair<Integer, Integer>>> positions) {
 		for (Map.Entry<Character, Set<Pair<Integer, Integer>>> entry : positions.entrySet()) {
 			cars.get(entry.getKey()).setPosition(entry.getValue());
@@ -300,6 +321,7 @@ public class Level  {
 			System.out.println("");
 		}
 	}
+	// checks if a position is empy in the board
 	public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
 		boolean result = false;
 		Integer boxX= box.getKey();
@@ -307,7 +329,10 @@ public class Level  {
 
 		if(board[boxX][boxY]== null) result=true;
 		else {
-			if(car.getRedCar() && board[boxX][boxY]=='@')result =true;
+			if(car.getRedCar() && board[boxX][boxY]=='@') {
+				result =true;
+				LOGGER.info("The position is valid");
+			}
 			else {
 				Set<Pair<Integer, Integer>> position =car.getPosition();
 				Iterator <Pair<Integer, Integer>>it = position.iterator();
@@ -315,12 +340,17 @@ public class Level  {
 					Pair<Integer, Integer> pos = it.next();
 					Integer newX = pos.getKey();
 					Integer newY = pos.getValue();
-					if(newX.equals(boxX) && newY.equals(boxY)) result=true;
+					if(newX.equals(boxX) && newY.equals(boxY)) {
+						LOGGER.info("The position is valid");
+						result=true;
+					}
 				}	
 			}
 		}
+		
 		return result;
 	}
+	// resets the level into its original state
 	public void reset() {
 		levelPoints=0;
 		this.board=initialBoard;
@@ -331,8 +361,10 @@ public class Level  {
 			newCars.put(vh.getKey(),car);
 		}
 		this.cars=newCars;
+		LOGGER.info("The level has been reset to its original state");
 	}
-	public Character findChangedVehicle(Map<Character, Set<Pair<Integer, Integer>>> oldState, Map<Character, Set<Pair<Integer, Integer>>> newState) {
+	// finds what vehicle has moved comparing it with each previous position
+	private Character findChangedVehicle(Map<Character, Set<Pair<Integer, Integer>>> oldState, Map<Character, Set<Pair<Integer, Integer>>> newState) {
 		for (Character vehicleId : oldState.keySet()) {
 			Set<Pair<Integer, Integer>> oldPosition = oldState.get(vehicleId);
 			Set<Pair<Integer, Integer>> newPosition = newState.get(vehicleId);
@@ -342,6 +374,7 @@ public class Level  {
 		}
 		return ' '; 
 	}
+	// resets the level into its previous state
 	public Character undo() {
 		if(!boardHistory.isEmpty() && !vehiclePositionHistory.isEmpty()) {
 
@@ -352,11 +385,14 @@ public class Level  {
 					this.board = boardHistory.peek();
 					restoreCarPositions(vehiclePositionHistory.peek());
 					levelPoints--;
+					LOGGER.info("The level has been set to its previous state");
 					return findChangedVehicle(vv,vehiclePositionHistory.peek()) ;
 				}
 			}
 		}
+		LOGGER.info("The undo could not be completed");
 		return ' ';
+		
 	}
 
 }

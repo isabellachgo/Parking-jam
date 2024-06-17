@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
+
 import javafx.util.Pair;
 
 import java.io.File;
@@ -30,6 +32,7 @@ public class Game {
 	private HashMap <Integer,Integer> listaPoints;
 	private Level l;
 	private Map<Integer, Boolean> okLevels;
+	private static final Logger LOGGER = Logger.getLogger(Game.class);
 	public Game( String name)
 	{
 		gameName=name;
@@ -64,7 +67,7 @@ public class Game {
 		gamePoints=0;
 		for (HashMap.Entry<Integer, Integer> entry : listaPoints.entrySet())             
 			gamePoints += entry.getValue();   
-
+		LOGGER.info("The game: " + id + "has been updated with " + points+ " points");
 	}
 
 	public  String getName()

@@ -68,7 +68,7 @@ public class controller {
 	}
 
 	public int showLevel(int n) throws FileNotFoundException, IOException {
-		if(g.getLastLevel()!=null) lvl=g.getLastLevel();
+		if(g.getLastLevel()!=null&&g.getLastLevel().getNLevel()==n) lvl=g.getLastLevel();
 		else lvl = new Level(n);
 		if(lvl.getBoard()==null) {
 			LevelsMenuView lmv = new LevelsMenuView(f,g,this);
@@ -354,6 +354,7 @@ public class controller {
 			lastLevel = Math.max(lastLevel, lvlAct);
 			g.setUltimoLevelPassed(lastLevel);
 			estado=null;
+			if(g.getLastLevel()!=null&&g.getLastLevel().getNLevel().equals(lvlAct))g.setLastLevel(null);
 			//lvl=null;
 		}
 		vehicleClicked.setPix(v.devuelveCoordenadas(vehicleClicked.getId()));

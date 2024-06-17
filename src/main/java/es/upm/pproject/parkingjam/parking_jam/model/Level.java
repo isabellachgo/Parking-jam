@@ -29,9 +29,11 @@ public class Level  {
 	private Map<Character, Set<Pair<Integer, Integer>>> initialVehiclePositions;
 	private Deque<Character[][]> boardHistory;
 	private Deque<Map<Character, Set<Pair<Integer, Integer>>>> vehiclePositionHistory;
+	private Integer nLevel;
 
 	public Level (Integer n_level) throws FileNotFoundException, IOException{
 		bReader = new BoardReader(n_level);
+		nLevel=n_level;
 		dimensionX = bReader.getDimensionX();
 		dimensionY = bReader.getDimensionY();
 		title = bReader.getTitle();
@@ -77,7 +79,12 @@ public class Level  {
 		this.levelPoints= 0;
 
 	}
-
+	public Integer getNLevel() {
+		return nLevel;
+	}
+	public void setNLevel(Integer n) {
+		nLevel=n;
+	}
 	public String getTitle() {
 		return title;
 	}

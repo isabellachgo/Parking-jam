@@ -133,7 +133,7 @@ public class Game {
 				bw.newLine();  // Salto de línea
 			}
 
-			if(level!=null) bw.write(level.getTitle() + " , " + level.getLevelPoint());
+			if(level!=null) bw.write(level.getNLevel() + " , " + level.getLevelPoint());
 
 			System.out.println("El archivo se ha creado y se ha escrito correctamente en: " + rutaFichero);
 
@@ -248,10 +248,13 @@ public class Game {
 					String[] partes2 = linea.split(" , ");
 					if (partes2.length == 2) {
 						String Points = partes2[1].trim();
+						String NLevel= partes2[0].trim();
 						int levelPoints= Integer.parseInt(Points);
 						String filepath = "src/main/gamesSaved/" + name + "/level.txt";
 						levelUncomplete=new Level(filepath);
 						levelUncomplete.setLevelPoints(levelPoints);
+						levelUncomplete.setNLevel(Integer.parseInt(NLevel));
+
 					}
 				}
 				else {

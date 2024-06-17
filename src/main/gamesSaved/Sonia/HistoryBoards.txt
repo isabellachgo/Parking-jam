@@ -1,0 +1,162 @@
+20
+8 8
+++++++++
++bbbce +
++a  ce +
++a**   @
++fff  d+
++  ghhd+
++iigjjd+
+++++++++
+++++++++
++bbbced+
++a  ced+
++a**  d@
++fff   +
++  ghh +
++iigjj +
+++++++++
+++++++++
++bbbced+
++a  ced+
++a**  d@
++fff   +
++  ghh +
++iig jj+
+++++++++
+++++++++
++bbbced+
++a  ced+
++a**  d@
++fff   +
++  g hh+
++iig jj+
+++++++++
+++++++++
++bbb ed+
++a   ed+
++a**  d@
++fff   +
++  gchh+
++iigcjj+
+++++++++
+++++++++
++bbb ed+
++a   ed+
++a**  d@
++  fff +
++  gchh+
++iigcjj+
+++++++++
+++++++++
++bbb ed+
++    ed+
++ **  d@
++a fff +
++a gchh+
++iigcjj+
+++++++++
+++++++++
++ bbbed+
++    ed+
++ **  d@
++a fff +
++a gchh+
++iigcjj+
+++++++++
+++++++++
++abbbed+
++a   ed+
++ **  d@
++  fff +
++  gchh+
++iigcjj+
+++++++++
+++++++++
++abbbed+
++a   ed+
++ **  d@
++fff   +
++  gchh+
++iigcjj+
+++++++++
+++++++++
++abbbed+
++a   ed+
++**   d@
++fff   +
++  gchh+
++iigcjj+
+++++++++
+++++++++
++abbbed+
++a   ed+
++** c d@
++fffc  +
++  g hh+
++iig jj+
+++++++++
+++++++++
++abbbed+
++a   ed+
++** c d@
++fffc  +
++  g hh+
++iigjj +
+++++++++
+++++++++
++abbbed+
++a   ed+
++** c d@
++fffc  +
++  ghh +
++iigjj +
+++++++++
+++++++++
++abbbe +
++a   e +
++** c  @
++fffc d+
++  ghhd+
++iigjjd+
+++++++++
+++++++++
++abbb  +
++a     +
++** ce @
++fffced+
++  ghhd+
++iigjjd+
+++++++++
+++++++++
++a  bbb+
++a     +
++** ce @
++fffced+
++  ghhd+
++iigjjd+
+++++++++
+++++++++
++a  bbb+
++a  c  +
++** ce @
++fff ed+
++  ghhd+
++iigjjd+
+++++++++
+++++++++
++a  bbb+
++a  c d+
++** ced@
++fff ed+
++  ghh +
++iigjj +
+++++++++
+++++++++
++a  bbb+
++a  c d+
++** ced@
++fff ed+
++  g hh+
++iigjj +
+++++++++

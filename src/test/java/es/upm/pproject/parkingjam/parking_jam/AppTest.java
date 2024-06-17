@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -111,6 +113,7 @@ public class AppTest {
 			}
 		}
 
+
 		@Nested
 		class correctFormat_BoardReaderTest{
 			BoardReader br;
@@ -182,9 +185,11 @@ public class AppTest {
 			}
 		}
 	}
+
+
+
 	@Nested
 	class LevelTest{
-
 		private Level level;
 
 		@BeforeEach
@@ -347,7 +352,7 @@ public class AppTest {
 			boardt[0][6]='+'; boardt[1][6]='g'; boardt[2][6]='g';  boardt[3][6]='g'; boardt[4][6]=null;  boardt[5][6]=null;  boardt[6][6]=null;  boardt[7][6]='+';
 			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='@';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
 			bh.add(boardt);
-			
+
 			Character[][] boardt2 = new Character[8][8];
 			boardt2[0][0]='+'; boardt2[1][0]='+';	 boardt2[2][0]='+';  boardt2[3][0]='+';  boardt2[4][0]='+';  boardt2[5][0]='+';  boardt2[6][0]='+';  boardt2[7][0]='+';
 			boardt2[0][1]='+'; boardt2[1][1]='a';	 boardt2[2][1]='a';  boardt2[3][1]='b';  boardt2[4][1]='b';  boardt2[5][1]='b';  boardt2[6][1]=null;  boardt2[7][1]='+';
@@ -358,10 +363,10 @@ public class AppTest {
 			boardt2[0][6]='+'; boardt2[1][6]='g'; boardt2[2][6]='g';  boardt2[3][6]='g'; boardt2[4][6]=null;  boardt2[5][6]=null;  boardt2[6][6]=null;  boardt2[7][6]='+';
 			boardt2[0][7]='+'; boardt2[1][7]='+';  boardt2[2][7]='+';  boardt2[3][7]='+';  boardt2[4][7]='@';  boardt2[5][7]='+';  boardt2[6][7]='+';  boardt2[7][7]='+';
 			bh.add(boardt2);
-			
+
 			level.setBoardHistory(bh);
 			assertEquals(level.getBoardHistory(), bh);
-			
+
 		}
 		@Test
 		public void BoardHistoryWithMov() {
@@ -433,7 +438,7 @@ public class AppTest {
 			level.move(level.getCars().get('f'), 'L', 2);
 			level.move(level.getCars().get('*'), 'D', 4);
 			level.reset();
-			
+
 			Character[][] boardt = new Character[8][8];
 			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
@@ -443,7 +448,7 @@ public class AppTest {
 			boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]='e';  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]=null; boardt[7][5]='+';
 			boardt[0][6]='+'; boardt[1][6]=null; boardt[2][6]='e';  boardt[3][6]=null; boardt[4][6]='g';  boardt[5][6]='g';  boardt[6][6]='g';  boardt[7][6]='+';
 			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='@';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
-			
+
 			Character[][]  ob= level.getBoard();
 
 			for(int i =0; i<8; i++) {
@@ -508,9 +513,9 @@ public class AppTest {
 			assertEquals(m1.get('e'), level.getVehiclePositionHistory().peek().get('e'));
 			assertEquals(m1.get('f'), level.getVehiclePositionHistory().peek().get('f'));
 			assertEquals(m1.get('g'), level.getVehiclePositionHistory().peek().get('g'));
-			
+
 		}
-		
+
 		@Test
 		public void SetVehiclePositionHistory() {
 			Deque<Map<Character, Set<Pair<Integer, Integer>>>> ph = new ArrayDeque<>();
@@ -557,7 +562,7 @@ public class AppTest {
 			ph.add(m1);
 
 
-			
+
 			Map<Character, Set<Pair<Integer, Integer>>> m2= new HashMap<Character, Set<Pair<Integer, Integer>>>();
 			Set<Pair<Integer, Integer>>  h11 =new HashSet<>();
 			h11.add(new Pair<>(1,1));
@@ -601,8 +606,9 @@ public class AppTest {
 			ph.add(m2);
 			level.setVehiclePositionHistory(ph);
 			assertEquals(ph, level.getVehiclePositionHistory());
-			
+
 		}
+
 		@Test
 		public void PositionHistoryWithMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -610,8 +616,8 @@ public class AppTest {
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
 
-			
-			
+
+
 			Deque<Map<Character, Set<Pair<Integer, Integer>>>> vehiclePositionHistory = new ArrayDeque<>();
 			Map<Character, Set<Pair<Integer, Integer>>> m1= new HashMap<Character, Set<Pair<Integer, Integer>>>();
 			Set<Pair<Integer, Integer>>  h1 =new HashSet<>();
@@ -662,9 +668,9 @@ public class AppTest {
 			assertEquals(m1.get('e'), level.getVehiclePositionHistory().peek().get('e'));
 			assertEquals(m1.get('f'), level.getVehiclePositionHistory().peek().get('f'));
 			assertEquals(m1.get('g'), level.getVehiclePositionHistory().peek().get('g'));
-			
+
 		}
-		
+
 		@Test
 		public void MiddlePositionHistoryWithMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -714,16 +720,16 @@ public class AppTest {
 			m1.put('g',h7);
 			Map<Character, Set<Pair<Integer, Integer>>> serchedPosition= new HashMap<>();
 			vehiclePositionHistory.add(m1);
-            int index=0; // 0 is the original position
+			int index=0; // 0 is the original position
 			for (Map<Character, Set<Pair<Integer, Integer>>> middlePosition : level.getVehiclePositionHistory()) {
 				if(index==2) { 
-					 serchedPosition= middlePosition ;
+					serchedPosition= middlePosition ;
 					break;
 				}
-				
+
 				index++;
-				
-				
+
+
 			}
 			assertEquals(m1.get('a'), serchedPosition.get('a'));
 			assertEquals(m1.get('b'),  serchedPosition.get('b'));
@@ -732,10 +738,10 @@ public class AppTest {
 			assertEquals(m1.get('e'),  serchedPosition.get('e'));
 			assertEquals(m1.get('f'),  serchedPosition.get('f'));
 			assertEquals(m1.get('g'),  serchedPosition.get('g'));
-			
+
 		}
-		
-		
+
+
 		@Test
 		public void PositionHistoryWithUndo() {
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -744,7 +750,7 @@ public class AppTest {
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
 			level.undo();
-			
+
 
 			Deque<Map<Character, Set<Pair<Integer, Integer>>>> vehiclePositionHistory = new ArrayDeque<>();
 			Map<Character, Set<Pair<Integer, Integer>>> m1= new HashMap<Character, Set<Pair<Integer, Integer>>>();
@@ -801,7 +807,7 @@ public class AppTest {
 
 		@Test
 		public void PositionHistoryPostReset() {
-			
+
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -816,7 +822,7 @@ public class AppTest {
 			for(Entry<Character, Vehicle> vh : level.getCars().entrySet()) {
 				initialVehiclePositions.put(new Pair <>(vh.getKey(),vh.getValue()), vh.getValue().getPosition());
 			}
-			
+
 			assertEquals(initialVehiclePositions.get(new Pair<>('a', level.getCars().get('a'))), level.getCars().get('a').getPosition());
 			assertEquals(initialVehiclePositions.get(new Pair<>('b', level.getCars().get('b'))), level.getCars().get('b').getPosition());
 			assertEquals(initialVehiclePositions.get(new Pair<>('c', level.getCars().get('c'))), level.getCars().get('c').getPosition());
@@ -824,10 +830,10 @@ public class AppTest {
 			assertEquals(initialVehiclePositions.get(new Pair<>('e', level.getCars().get('e'))), level.getCars().get('e').getPosition());
 			assertEquals(initialVehiclePositions.get(new Pair<>('f', level.getCars().get('f'))), level.getCars().get('f').getPosition());
 			assertEquals(initialVehiclePositions.get(new Pair<>('g', level.getCars().get('g'))), level.getCars().get('g').getPosition());
-			
+
 
 		}
-	
+
 
 
 		@Test
@@ -842,6 +848,7 @@ public class AppTest {
 			assertTrue(level.move(level.getCars().get('*'), 'D', 4));
 
 		}
+
 		@Test
 		public void undoMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -863,8 +870,6 @@ public class AppTest {
 					assertEquals(board[i][j], boardt[i][j]);
 				}
 			}
-
-
 		}
 
 		@Test
@@ -887,6 +892,7 @@ public class AppTest {
 			assertEquals(position, level.getCars().get('e').getPosition());
 			assertEquals(position2, level.getCars().get('g').getPosition());
 		}
+
 		@Test
 		public void LevelPoints() {
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -900,6 +906,7 @@ public class AppTest {
 			assertEquals(level.getLevelPoint(), 8);
 
 		}
+
 		@Test
 		public void WinGame() {
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -930,6 +937,7 @@ public class AppTest {
 			}
 
 		}
+
 		@Test
 		public void ResetGame() {
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -956,7 +964,6 @@ public class AppTest {
 				}
 			}
 		}
-
 
 		@Test
 		public void WinGameWhitUndo() {
@@ -992,6 +999,7 @@ public class AppTest {
 
 		}
 
+		@Test
 		public void testInvalidMove2() {
 			Vehicle car2 = level.getCars().get('g');
 			boolean moved2= level.move(car2,'R',1 ); // A CAR CANNOT MOVE TOWARS A WALL
@@ -1015,9 +1023,9 @@ public class AppTest {
 			}
 
 		}
+
 		@Test
 		public void testInvalidMove3() {
-
 			Vehicle car3 = level.getCars().get('*');
 			boolean moved3= level.move(car3,'D',1 ); // A CAR CANNOT MOVE IF THERES ANOHER CAR IN THAT POSITION
 			assertFalse(moved3);
@@ -1040,9 +1048,9 @@ public class AppTest {
 			}
 
 		}
+
 		@Test
 		public void testInvalidMove4() {
-
 			Vehicle car4 = level.getCars().get('g');
 			boolean moved4= level.move(car4,'D',19); // A CAR CANNOT MOVE outside of the board
 			assertFalse(moved4);
@@ -1065,31 +1073,28 @@ public class AppTest {
 			}
 
 		}
+
 		@Test
 		public void testInvalidMoveCarPosition() {
-
 			Vehicle car4 = level.getCars().get('g');
 			Set<Pair<Integer, Integer>> positionA =car4.getPosition();
 			level.move(car4,'D',19); // A CAR CANNOT MOVE outside of the board
 			Set<Pair<Integer, Integer>> positionD =car4.getPosition();
 
-
 			assertEquals(positionA, positionD);
-
 		}
+
 		@Test
 		public void testInvalidMoveCarPosition2() {
-
 			Vehicle car3 = level.getCars().get('*');
 			Set<Pair<Integer, Integer>> positionA =car3.getPosition();
 			level.move(car3,'D',1 ); // A CAR CANNOT MOVE IF THERES ANOHER CAR IN THAT POSITION
 			Set<Pair<Integer, Integer>> positionD =car3.getPosition();
 			assertEquals(positionA, positionD);
-
 		}
+
 		@Test
 		public void testInvalidMoveCarPosition3() {
-
 			Vehicle car2 = level.getCars().get('g');
 			Set<Pair<Integer, Integer>> positionA =car2.getPosition();
 			level.move(car2,'R',1 ); // A CAR CANNOT MOVE TOWARS A WALL
@@ -1099,7 +1104,6 @@ public class AppTest {
 
 		@Test
 		public void testValidMoveCarPosition() {
-
 			Vehicle car = level.getCars().get('e');
 
 			Set<Pair<Integer, Integer>> positionA =new HashSet();
@@ -1167,6 +1171,7 @@ public class AppTest {
 				}
 			}
 		}
+
 		@Test
 		public void MoreUndosThanMovements() {
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -1185,9 +1190,10 @@ public class AppTest {
 			level.undo();
 			level.undo();
 			assertEquals('e',level.undo());
-		
+
 			assertEquals(' ',level.undo());
 		}
+
 		@Test
 		public void IntialStatus() {
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -1223,9 +1229,9 @@ public class AppTest {
 					assertEquals(board[i][j], boardt[i][j]);
 				}
 			}
-			
+
 		}
-		
+
 		@Test
 		public void UndoAlTheWay_PositionStatus() {
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -1261,7 +1267,6 @@ public class AppTest {
 			vehiclesPosition3.add(par22);
 
 			assertEquals(vehiclesPosition3, level.getCars().get('c').getPosition());
-
 		}
 
 		@Test
@@ -1290,7 +1295,6 @@ public class AppTest {
 			vehiclesPosition2.add(par5);
 			assertEquals(vehiclesPosition2, level.getCars().get('g').getPosition());
 
-
 			Set<Pair<Integer, Integer>> vehiclesPosition4 = new HashSet<>();
 			Pair<Integer, Integer> par41= new Pair<>(3,1);
 			Pair<Integer, Integer> par42= new Pair<>(4,1);
@@ -1300,26 +1304,17 @@ public class AppTest {
 			vehiclesPosition4.add(par43);
 			assertEquals(vehiclesPosition4, level.getCars().get('b').getPosition());
 
-
 			Set<Pair<Integer, Integer>> vehiclesPosition3 = new HashSet<>();
 			Pair<Integer, Integer> par21= new Pair<>(6,1);
 			Pair<Integer, Integer> par22= new Pair<>(6,2);
 			vehiclesPosition3.add(par21);
 			vehiclesPosition3.add(par22);
 			assertEquals(vehiclesPosition3, level.getCars().get('c').getPosition());
-
-
-
 		}
-
-
-
-
-
 	}
-	
-	/*
-@Nested
+
+
+	@Nested
 	class GameTest{
 		private Game game;
 
@@ -1329,8 +1324,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void getGamePointsTest()
-		{
+		public void getGamePointsTest() {
 			assertEquals(0,game.getGamePoints());
 			game.actualizarGamePoints(1, 100);
 			assertEquals(100, game.getGamePoints());
@@ -1338,85 +1332,99 @@ public class AppTest {
 			assertEquals(130, game.getGamePoints());
 			game.actualizarGamePoints(1, 50);
 			assertEquals(80, game.getGamePoints());
-
 		}
+
 		@Test
-		public void getLevelPointsTest()
-		{
+		public void getLevelPointsTest() {
 			game.actualizarGamePoints(1, 100);
 			assertEquals(100, game.getLevelPoints(1));
 		}
+
 		@Test
-		public void getNameTest()
-		{
+		public void getNameTest() {
 			assertEquals("Paco", game.getName());
 		}
+
 		@Test
-		public void getUltimoLevelPassedTest()
-		{
+		public void getUltimoLevelPassedTest() {
 			game.setUltimoLevelPassed(3);
 			assertEquals(3, game.getUltimoLevelPassed());
 		}
+
 		@Test
-		public void getLevelTest()
-		{
+		public void getLevelTest(){
 			Level level=null;
 			try {
 				level = new Level (1);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			game.setLevel(1, level);
 			assertEquals(level, game.getLevel(1));
 		}
+
 		@Test
-		public void setLevelTest()
-		{
+		public void setLevelTest() {
 			Level level=null;
 			try {
 				level = new Level (1);
 				level.setLevelPoints(50);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			game.setLevel(1, level);
 			assertEquals(level, game.getLevel(1));
+		}
+		
+		@Test
+		public void actualizarGamePointsTest() {
+			Level level=null;
+			try {
+				level = new Level (1);
+				level.setLevelPoints(50);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			game.setLevel(1, level);
+			game.actualizarGamePoints(1, level.getLevelPoint());
 			assertEquals(50, game.getLevelPoints(1));
 		}
+		
+
 		@Test
-		public void guardarGameSinLevelPointsTest()
+		public void guardarLevelsPointsWithoutPassedLevelsTest()
 		{
 			try {
 				game.guardarGame(null);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			String rutaDirectorioBase = System.getProperty("user.dir");
-       		String rutaFicheroPoints = rutaDirectorioBase + File.separator + "src" + File.separator + "main" + File.separator + "gamesSaved" + File.separator + "Paco" + File.separator + "gamePoints.txt";
-			 File ficheroPoints = new File(rutaFicheroPoints);
+			String rutaFicheroPoints = rutaDirectorioBase + File.separator + "src" + File.separator + "main" + File.separator + "gamesSaved" + File.separator + "Paco" + File.separator + "gamePoints.txt";
+			File ficheroPoints = new File(rutaFicheroPoints);
 
 			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
-			try (FileReader fr = new FileReader(ficheroPoints);
-				BufferedReader br = new BufferedReader(fr)) {
+			try (FileReader fr = new FileReader(ficheroPoints);	BufferedReader br = new BufferedReader(fr)) {
 				String linea = br.readLine();
 				assertEquals(null, linea);
-				
+
 			}catch (IOException e) {
 				// Manejo de posibles excepciones
 				System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
 			}
 		}
+
 		@Test
-		public void guardarGameSinLevelTest()
+		public void pointsFile_guardarGameWithoutUnfinishedLevelTest()
 		{
 			Level level1=null;
 			Level level2=null;
@@ -1424,44 +1432,40 @@ public class AppTest {
 				level1 = new Level(1);
 				level2= new Level(2);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			level1.setLevelPoints(10);
 			level2.setLevelPoints(20);
 			try {
-				game.guardarGame(null);
 				game.setLevel(1, level1);
 				game.setLevel(2, level2);
+				game.guardarGame(null);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			String rutaDirectorioBase = System.getProperty("user.dir");
-       		String rutaFicheroPoints = rutaDirectorioBase + File.separator + "src" + File.separator + "main" + File.separator + "gamesSaved" + File.separator + "Paco" + File.separator + "gamePoints.txt";
-			 File ficheroPoints = new File(rutaFicheroPoints);
+			String rutaFicheroPoints = rutaDirectorioBase + File.separator + "src" + File.separator + "main" + File.separator + "gamesSaved" + File.separator + "Paco" + File.separator + "gamePoints.txt";
+			File ficheroPoints = new File(rutaFicheroPoints);
 
 			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
-			try (FileReader fr = new FileReader(ficheroPoints);
-				BufferedReader br = new BufferedReader(fr)) {
+			try (FileReader fr = new FileReader(ficheroPoints);	BufferedReader br = new BufferedReader(fr)) {
 				String linea = br.readLine();
-				assertEquals("1 : 10", linea);
+				assertEquals("1 : 10", linea); 
 				String linea2 = br.readLine();
-				assertEquals("2 : 20", linea2);
+				assertEquals("2 : 20", linea2); //-------------------------
 				String linea3 = br.readLine();
 				assertEquals(null, linea3);
-				
 			}catch (IOException e) {
 				// Manejo de posibles excepciones
 				System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
 			}
 		}
+
 		@Test
-		public void guardarGameConLevelTest()
+		public void pointsFile_guardarGameWithUnfinishedLevelTest()
 		{
 			Level level1=null;
 			Level level2=null;
@@ -1471,47 +1475,73 @@ public class AppTest {
 				level2= new Level(2);
 				level3= new Level(3);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			level1.setLevelPoints(10);
 			level2.setLevelPoints(20);
 			try {
-				game.guardarGame(null);
 				game.setLevel(1, level1);
 				game.setLevel(2, level2);
+				game.guardarGame(null);				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			String rutaDirectorioBase = System.getProperty("user.dir");
-       		String rutaFicheroPoints = rutaDirectorioBase + File.separator + "src" + File.separator + "main" + File.separator + "gamesSaved" + File.separator + "Paco" + File.separator + "gamePoints.txt";
-			 File ficheroPoints = new File(rutaFicheroPoints);
+			String rutaFicheroPoints = rutaDirectorioBase + File.separator + "src" + File.separator + "main" + File.separator + "gamesSaved" + File.separator + "Paco" + File.separator + "gamePoints.txt";
+			File ficheroPoints = new File(rutaFicheroPoints);
 
 			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
-			try (FileReader fr = new FileReader(ficheroPoints);
-				BufferedReader br = new BufferedReader(fr)) {
+			try (FileReader fr = new FileReader(ficheroPoints); BufferedReader br = new BufferedReader(fr)) {
 				String linea = br.readLine();
+				System.out.println("------------------- linea puntos level 1: "+linea);
 				assertEquals("1 : 10", linea);
 				String linea2 = br.readLine();
-				assertEquals("2 : 20", linea2);
+				System.out.println("------------------- linea puntos level 2: "+linea2);
+				assertEquals("2 : 20", linea2);   //--------------------------
 				String linea3 = br.readLine();
-				assertEquals(null, linea3);
-				
+				System.out.println("------------------- linea puntos level 3: "+linea3);
+				assertEquals(null, linea3);   //WHAAAAT-------------------------------------
 			}catch (IOException e) {
 				// Manejo de posibles excepciones
 				System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
 			}
-			String rutaFicheroTablero = rutaDirectorioBase + File.separator + "src" + File.separator + "main" + File.separator + "gamesSaved" + File.separator + "Paco" + File.separator + level3.getTitle()+".txt";
-			 File ficheroTablero = new File(rutaFicheroTablero);
+		}
+		
+		@Test
+		public void unfinishedLevelFile_guardarGameWithUnfinishedLevelTest() {
+			Level level1=null;
+			Level level2=null;
+			Level level3=null;
+			try {
+				level1 = new Level(1);
+				level2= new Level(2);
+				level3= new Level(3);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			level1.setLevelPoints(10);
+			level2.setLevelPoints(20);
+			try {
+				game.setLevel(1, level1);
+				game.setLevel(2, level2);
+				game.guardarGame(null);				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			String rutaDirectorioBase = System.getProperty("user.dir");			
+			String rutaFicheroTablero = rutaDirectorioBase + File.separator + "src" + File.separator + "main" + File.separator + "gamesSaved" + File.separator + "Paco" + File.separator + "level.txt";
+			File ficheroTablero = new File(rutaFicheroTablero);
 
 			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
-			try (FileReader fr = new FileReader(ficheroTablero);
-				BufferedReader br = new BufferedReader(fr)) {
+			try (FileReader fr = new FileReader(ficheroTablero); BufferedReader br = new BufferedReader(fr)) {
 				String linea = br.readLine();
 				assertEquals("Third level", linea);
 				linea = br.readLine();
@@ -1525,8 +1555,6 @@ public class AppTest {
 				linea = br.readLine();
 				assertEquals("+dddc  +", linea);
 				linea = br.readLine();
-				assertEquals("+dddc  +", linea);
-				linea = br.readLine();
 				assertEquals("@  e**f+", linea);
 				linea = br.readLine();
 				assertEquals("+  e  f+", linea);
@@ -1536,51 +1564,54 @@ public class AppTest {
 				assertEquals("++++++++", linea);
 				linea = br.readLine();
 				assertEquals(null, linea);
-				
+
 			}catch (IOException e) {
 				// Manejo de posibles excepciones
 				System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
 			}
 		}
+
 		@Test
-		public void cargarGameSinLevelTest()
-		{
+		public void cargarGameWithoutUnfinishedLevelTest(){
 			Game gameTest= new Game("");
 			Level level1=null;
 			Level level2=null;
+			
 			try {
 				level2= new Level(2);
 				level1=new Level(1);
 				level1.setLevelPoints(20);
 				level2.setLevelPoints(50);
-
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			try {
 				game.setLevel(1, level1);
 				game.setLevel(2, level2);
 				game.guardarGame(null);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			Pair <Deque<Character[][]>,Level> pair= gameTest.cargarGame("Paco");
-			assertEquals(20, gameTest.getLevelPoints(1) );
-			assertEquals(50, gameTest.getLevelPoints(2));
-			assertEquals(70, game.getGamePoints());
-			assertEquals(level1, gameTest.getLevel(1));
+			Level unfinishedLevel = gameTest.cargarGame("Paco");
+			
+			assertEquals(null, unfinishedLevel);
+			assertEquals(level1, gameTest.getLevel(1)); //----------
 			assertEquals(level2, gameTest.getLevel(2));
-			assertEquals(null, pair.getKey());
-			assertEquals(null, pair.getValue());
+			
+			assertEquals(70, game.getGamePoints());
+			
+			System.out.println("PUUNTOS LEVEL 1: "+gameTest.getLevelPoints(1));
+			System.out.println("PUUNTOS LEVEL 2: "+gameTest.getLevelPoints(2));
+			assertEquals(20, gameTest.getLevelPoints(1) );
+			assertEquals(50, gameTest.getLevelPoints(2)); //---------------
 		}
+
 		@Test
-		public void cargarGameConLevelTest()
+		public void cargarGameWithUnfinishedLevelTest()
 		{
 			Game gameTest= new Game("");
 			Level level1=null;
@@ -1593,12 +1624,9 @@ public class AppTest {
 				level1.setLevelPoints(20);
 				level2.setLevelPoints(50);
 				level3.setLevelPoints(30);
-
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
@@ -1606,31 +1634,52 @@ public class AppTest {
 				game.setLevel(2, level2);
 				game.guardarGame(level3);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			Pair <Deque<Character[][]>,Level> pair= gameTest.cargarGame("Paco");
+			Level unfinishedLevel= gameTest.cargarGame("Paco");
 			assertEquals(20, gameTest.getLevelPoints(1) );
-			assertEquals(50, gameTest.getLevelPoints(2));
+			assertEquals(50, gameTest.getLevelPoints(2));  //------------------------------
 			assertEquals(70, game.getGamePoints());
+			
 			assertEquals(level1, gameTest.getLevel(1));
 			assertEquals(level2, gameTest.getLevel(2));
-			assertEquals(level3.getBoardHistory(), pair.getKey());
-			assertEquals(level3, pair.getValue());
+			
+			assertEquals(level3.getBoardHistory(), unfinishedLevel.getBoardHistory());
+			assertEquals(level3, unfinishedLevel);
 		}
-
-
 	}
-@Nested
-	class GameListTest{
 
+
+
+	@Nested
+	class GameListTest{
 		private GamesList gamesList;
+		String rutaFicheroListaGames=System.getProperty("user.dir")+"/src/main/gamesSaved/GamesList.txt"; 
+		File ficheroListaGames = new File(rutaFicheroListaGames);
 
 		@BeforeEach
 		public void Ini() throws FileNotFoundException,IOException {
 			gamesList = new GamesList();
 		}
+
+		@AfterEach
+		public void deleteSavedGamesFile() {
+			// delete content from the saved games file
+			try {
+				FileWriter fw = new FileWriter(ficheroListaGames);
+				fw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Test
+		public void loadVoidListTest() {
+			ArrayList <String> list= gamesList.loadList();
+			assertTrue(list.isEmpty());
+		}
+
 		@Test
 		public void addGameTest()
 		{
@@ -1640,12 +1689,9 @@ public class AppTest {
 			assertTrue(lista.contains("Paco"));
 			assertTrue(lista.contains("Antonio"));
 			assertTrue(lista.size()==2);
-			String rutaFicheroListaGames=System.getProperty("user.dir")+"/src/main/gamesSaved/GamesList.txt"; 
-			File ficheroListaGames = new File(rutaFicheroListaGames);
-
+			
 			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
-			try (FileReader fr = new FileReader(ficheroListaGames);
-				BufferedReader br = new BufferedReader(fr)) {
+			try (FileReader fr = new FileReader(ficheroListaGames);	BufferedReader br = new BufferedReader(fr)) {
 				String linea = br.readLine();
 				assertEquals("Paco", linea);
 				linea = br.readLine();
@@ -1653,39 +1699,30 @@ public class AppTest {
 				linea = br.readLine();
 				assertEquals(null, linea);
 			}catch (IOException e) {
-			// Manejo de posibles excepciones
-			System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
+				// Manejo de posibles excepciones
+				System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
 			}
 		}
+
 		@Test
-		public void addGameVacioTest()
-		{
+		public void savedGamesListVoidTest() {
 			ArrayList<String> lista = gamesList.getList();
 			assertTrue(lista.isEmpty());
 		}
+
 		@Test 
-		public void loadListTest()
-		{
+		public void loadListAfterAddTest() {
 			gamesList.addGame("Paco");
 			gamesList.addGame("Roberto");
 			gamesList.addGame("Sandra");
 			ArrayList<String> list= gamesList.loadList();
 			assertEquals(3, list.size());
-			assertEquals("Paco", list.get(1));
-			assertEquals("Roberto", list.get(2));
-			assertEquals("Sandra", list.get(3));
-			
+			assertEquals("Paco", list.get(0));
+			assertEquals("Roberto", list.get(1));
+			assertEquals("Sandra", list.get(2));	
 		}
-		@Test
-		public void loadListVaciaTest()
-		{
-			ArrayList <String> list= gamesList.loadList();
-			assertTrue(list.isEmpty());
-		}
-
 
 	}
-*/
 
 }
 

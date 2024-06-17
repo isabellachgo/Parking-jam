@@ -4,8 +4,10 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import javafx.util.Pair;
@@ -286,6 +288,22 @@ public class Game {
 					for ( int i=0 ; i<sizeX ; i++)
 					{
 						board[i][j]= lineaChar[i];
+						if(!levelUncomplete.getCars().containsKey(lineaChar[i])) {
+							Set<Pair<Integer,Integer>> positions = new HashSet<>();
+							Pair<Integer, Integer> p = new Pair<>(j,i);
+							positions.add(p);
+							if(lineaChar[i]=='*') {
+								levelUncomplete.getCars().put(lineaChar[i], new Vehicle(lineaChar[i], true, null, positions));
+							}
+							else {
+								levelUncomplete.getCars().put(lineaChar[i], new Vehicle(lineaChar[i], false, null, positions));
+							}
+						} else {
+							Vehicle car = levelUncomplete.getCars().get(lineaChar[i]);
+							Set<Pair<Integer,Integer>> positions = car.getPosition();
+							positions.add(new Pair<Integer, Integer>(j,i));
+							car.setPosition(positions);
+						}
 					}
 				}
 				boardHistory.add(board);

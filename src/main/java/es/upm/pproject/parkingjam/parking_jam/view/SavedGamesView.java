@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,12 +19,15 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
@@ -66,6 +70,12 @@ public class SavedGamesView {
 		Font textFont = null;
 		try {
 			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(16f);
+		} catch (FontFormatException | IOException e1) {
+			e1.printStackTrace();
+		}
+		Font menuFont = null;
+		try {
+			menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(16f);
 		} catch (FontFormatException | IOException e1) {
 			e1.printStackTrace();
 		}
@@ -115,6 +125,20 @@ public class SavedGamesView {
 			}
 		});
 		
+		JTextArea textArea = new JTextArea("There is alredy a game with the same name, it is not possible to load a game with the same name as another existing one.");
+	    textArea.setWrapStyleWord(true);
+	    textArea.setLineWrap(true);
+	    textArea.setOpaque(false);
+	    textArea.setEditable(false);
+	    textArea.setFocusable(false);
+	    textArea.setForeground(Color.red);
+	    textArea.setBackground(UIManager.getColor("Label.background"));
+	    textArea.setFont(textFont);
+	    textArea.setMargin(new Insets(10, 10, 10, 10));
+
+	    JPanel panelErrorNewg = new JPanel(new BorderLayout());
+	    panelErrorNewg.add(textArea, BorderLayout.CENTER);
+		
 		ArrayList<JButton> buttons = new ArrayList<>();
 		for(String g : savedGames) {
 			JButton b = new JButton(" "+g);
@@ -128,8 +152,14 @@ public class SavedGamesView {
 				public void actionPerformed(ActionEvent e) {
 					System.out.println(g+" game button pressed");
 					frame.getContentPane().removeAll();
-					// llamar controller: añadir game al menu (y abrir game???)
-					cont.openSavedGame(g);
+					if(cont.openSavedGame(g) == 1) {
+						JDialog existingGame = new JDialog(frame, "Existing Game", true);
+						existingGame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						existingGame.setSize(new Dimension(300,150));
+					    existingGame.add(panelErrorNewg);	
+						existingGame.setLocationRelativeTo(frame);
+						existingGame.setVisible(true);
+					}
 				}
 			});
 			

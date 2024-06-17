@@ -397,7 +397,8 @@ public class controller {
 	}
 
 	public void nextLevel() throws FileNotFoundException, IOException {
-		if(lvlAct<4)	showLevel(lvlAct + 1);
+		
+		if(lvlAct<4) showLevel(lvlAct + 1);
 		else endGame();
 	}
 
@@ -438,13 +439,24 @@ public class controller {
 			}
 		}
 	}
-	public void openSavedGame(String name) {
-
-		Game game= new Game(name);
-		Level lv=game.cargarGame(name);
-		game.setLastLevel(lv);
-		m.addGame(game);
-		GamesMenuView gmv = new GamesMenuView(f, m, this);
+	public int openSavedGame(String name) {
+		int r = 1;
+		boolean exist=false;
+		Iterator<Game> it = m.getGames().iterator();
+		while(!exist && it.hasNext()) {
+			if(it.next().getName().equals(name)) exist=true;
+		}		
+		if(!exist) {
+			Game game= new Game(name);
+			Level lv=game.cargarGame(name);
+			game.setLastLevel(lv);
+			m.addGame(game);
+			GamesMenuView gmv = new GamesMenuView(f, m, this);
+			r=0;
+		} else {
+			SavedGamesView sgv = new SavedGamesView(f, gl.getList(), this);
+		}
+		return r;
 	}
 
 	public void openSavedGames() {

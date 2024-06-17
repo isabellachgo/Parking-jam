@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -25,8 +26,10 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
@@ -134,7 +137,21 @@ public class GamesMenuView {
 		
 		panelGameName.add(pgnText, BorderLayout.NORTH);
 		panelGameName.add(pgnInput, BorderLayout.CENTER);
-				
+		
+		JTextArea textArea = new JTextArea("There is alredy a game with the same name, please change the name of the new game.");
+	    textArea.setWrapStyleWord(true);
+	    textArea.setLineWrap(true);
+	    textArea.setOpaque(false);
+	    textArea.setEditable(false);
+	    textArea.setFocusable(false);
+	    textArea.setForeground(Color.red);
+	    textArea.setBackground(UIManager.getColor("Label.background"));
+	    textArea.setFont(menuFont);
+	    textArea.setMargin(new Insets(10, 10, 10, 10));
+
+	    JPanel panelErrorNewg = new JPanel(new BorderLayout());
+	    panelErrorNewg.add(textArea, BorderLayout.CENTER);
+		
 		JButton addGameB = new JButton("New game");
 		addGameB.setPreferredSize(gameButtonSize);
 		addGameB.setIcon(addIcon);
@@ -159,14 +176,8 @@ public class GamesMenuView {
 						if(cont.newGame(input) == 1) {
 							JDialog existingGame = new JDialog(frame, "Existing Game", true);
 							existingGame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-							existingGame.setSize(new Dimension(400,200));
-							JLabel errorM = new JLabel("There is alredy a game with the same name, please change the name of the new game.");
-							errorM.setForeground(Color.red);
-							JPanel errorP = new JPanel();
-							errorP.setLayout(new BoxLayout(errorP, BoxLayout.Y_AXIS));
-							errorP.add(errorM);
-							existingGame.add(errorP);
-							existingGame.pack();
+							existingGame.setSize(new Dimension(300,150));
+						    existingGame.add(panelErrorNewg);	
 							existingGame.setLocationRelativeTo(frame);
 							existingGame.setVisible(true);
 						}

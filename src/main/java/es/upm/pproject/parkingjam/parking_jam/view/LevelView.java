@@ -8,8 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -46,8 +44,6 @@ public class LevelView {
 	private Level level;
 	private char carSelect;
 	private Controller controller;
-	private Graphics grafic;
-	private Component comp;
 	private int dimensionMapaX;
 	private int dimensionMapaY;
 	private int tamanoCeldaX;
@@ -76,23 +72,22 @@ public class LevelView {
 	private Image camionGrisHorizontalImage;
 	private Image camionVerdeVerticalImage;
 	private Image camionVerdeHorizontalImage;
-	private Image salida_arribaImage;
-	private Image salida_abajoImage;
-	private Image salida_derechaImage;
-	private Image salida_izquierdaImage;
+	private Image salidaArribaImage;
+	private Image salidaAbajoImage;
+	private Image salidaDerechaImage;
+	private Image salidaIzquierdaImage;
 	private JFrame frame;
 
 
-	public LevelView(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,Controller controller, int GamePoints) {
+	public LevelView(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,Controller controller, int gamePoints) {
 		this.frame = fm;
 		this.mapVehiculo = level.getCars();
 		this.mapPosiciones=posiciones;
 		this.dimensionMapaX=level.getDimensionX();
 		this.dimensionMapaY=level.getDimensionY();
-		this.gamePoints=GamePoints;
+		this.gamePoints=gamePoints;
 		tamanoCeldaX=Math.round((float)(400+(dimensionMapaX/2.0))/(dimensionMapaX-2));
 		tamanoCeldaY=Math.round((float)(400+(dimensionMapaY/2.0))/(dimensionMapaY-2)) ;
-		System.out.println("tamaño celda " +tamanoCeldaX);
 		this.level=level;
 		this.controller=controller;
 		mapCoordenadas=cambioCoodenadas(posiciones);
@@ -102,7 +97,7 @@ public class LevelView {
 	}
 
 	private Map <Character,Pair<Integer,Integer>> cambioCoodenadas (Map <Character,Pair<Integer,Integer>> mapPosiciones){
-		Map <Character,Pair<Integer,Integer>> sol = new HashMap<Character,Pair<Integer,Integer>>();
+		Map <Character,Pair<Integer,Integer>> sol = new HashMap<>();
 		Iterator <Character> it = mapPosiciones.keySet().iterator();
 		int x;
 		int y;
@@ -131,7 +126,7 @@ public class LevelView {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		frame.add(panel);
-		
+
 
 		// Imagenes:
 		ImageIcon cocheRojoHorizontal = new ImageIcon(getClass().getResource("/images/coche_rojo_horizontal.png"));
@@ -186,10 +181,10 @@ public class LevelView {
 		camionGrisHorizontalImage = camionGrisHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH);
 		camionMarronVerticalImage = camionMarronVertictal.getImage().getScaledInstance(67, 200, Image.SCALE_SMOOTH); 
 		camionMarronHorizontalImage = camionMarronHorizontal.getImage().getScaledInstance(200, 67, Image.SCALE_SMOOTH);
-		salida_arribaImage=salidaArriba.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH);
-		salida_abajoImage=salidaAbajo.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH); 
-		salida_derechaImage=salidaDerecha.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH); 
-		salida_izquierdaImage=salidaIzquierda.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH);
+		salidaArribaImage=salidaArriba.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH);
+		salidaAbajoImage=salidaAbajo.getImage().getScaledInstance(67     , 50, Image.SCALE_SMOOTH); 
+		salidaDerechaImage=salidaDerecha.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH); 
+		salidaIzquierdaImage=salidaIzquierda.getImage().getScaledInstance(50     , 67, Image.SCALE_SMOOTH);
 		Image arbolImg1 = arbol.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		Image arbolImg2 = arbol.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 		Image plantaImg1 = planta.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -211,9 +206,7 @@ public class LevelView {
 		ImageIcon starIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/yellowstar.png")),30,30);
 		ImageIcon starIcon2 = Factory.rotateIcon(starIcon, 180);
 		ImageIcon closeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
-		ImageIcon addMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/add.png")),30,30);
 		ImageIcon saveMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
-		ImageIcon loadMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 		ImageIcon levelsMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/levelsMenu.png")),30,30);
 		ImageIcon nextIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/next.png")),30,30);
 		ImageIcon homeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
@@ -224,8 +217,6 @@ public class LevelView {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				grafic=g;
-				comp=this;
 				g.drawImage(parkingImage,100,0 , this);
 				Iterator <Character> it = mapCoordenadas.keySet().iterator();
 				while (it.hasNext()) {
@@ -249,7 +240,7 @@ public class LevelView {
 				g.drawImage(plantaImg1, 600, 370, this);
 				g.drawImage(plantaImg1, 15, 280, this);
 				g.drawImage(plantaImg1, 630, 450, this);
-				
+
 			}
 
 		};
@@ -276,14 +267,10 @@ public class LevelView {
 		gamesB.setForeground(Color.white);
 		gamesB.setFont(Factory.menuFont);
 		gamesB.setHorizontalAlignment(SwingConstants.LEFT);
-		gamesB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("games button pressed");
+		gamesB.addActionListener(e -> {
+			frame.getContentPane().removeAll();
+			controller.gamesMenuButton();
 
-				frame.getContentPane().removeAll();
-				controller.gamesMenuButton();
-			}
 		});
 		JButton levelsB= new JButton("levels menu");
 		levelsB.setPreferredSize(buttonSize2);
@@ -292,14 +279,9 @@ public class LevelView {
 		levelsB.setForeground(Color.white);
 		levelsB.setFont(Factory.menuFont);
 		levelsB.setHorizontalAlignment(SwingConstants.LEFT);
-		levelsB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("levels button pressed");
-
-				frame.getContentPane().removeAll();
-				controller.levelMenuButon();
-			}
+		levelsB.addActionListener(e -> {
+			frame.getContentPane().removeAll();
+			controller.levelMenuButon();
 		});
 		JButton saveB = new JButton("save game");
 		saveB.setPreferredSize(buttonSize2);
@@ -308,14 +290,9 @@ public class LevelView {
 		saveB.setForeground(Color.white);
 		saveB.setFont(Factory.menuFont);
 		saveB.setHorizontalAlignment(SwingConstants.LEFT);
-		saveB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("save button pressed");
-
-				controller.saveGame();
-			}
-		});
+		saveB.addActionListener(e -> 
+		controller.saveGame()
+				);
 		JButton closeB = new JButton("close Parking Jam");
 		closeB.setPreferredSize(buttonSize2);
 		closeB.setIcon(closeMIcon);
@@ -323,13 +300,9 @@ public class LevelView {
 		closeB.setForeground(Color.white);
 		closeB.setFont(Factory.menuFont);
 		closeB.setHorizontalAlignment(SwingConstants.LEFT);
-		closeB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("close button pressed");
-				frame.dispose();
-			}
-		});
+		closeB.addActionListener(e -> 
+		frame.dispose()
+				);
 
 		menuPanel.add(gamesB);
 		menuPanel.add(levelsB);
@@ -339,31 +312,21 @@ public class LevelView {
 		JButton menuB = new JButton(menuIcon);
 		menuB.setPreferredSize(buttonSize);
 		menuB.setBackground(buttonColor);
-		menuB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("menu button pressed ");
-
-				if(!menuPanel.isVisible()) {
-					menuPanel.show(frame, 50,87);
-					menuPanel.setVisible(true);
-				} else {
-					menuPanel.setVisible(false);
-				}
+		menuB.addActionListener(e -> {
+			if(!menuPanel.isVisible()) {
+				menuPanel.show(frame, 50,87);
+				menuPanel.setVisible(true);
+			} else {
+				menuPanel.setVisible(false);
 			}
 		});
 
 		JButton restartB = new JButton(restartIcon);
 		restartB.setPreferredSize(buttonSize);
 		restartB.setBackground(buttonColor);
-		restartB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("restart button pressed");
-				frame.getContentPane().removeAll();
-				controller.restart();
-			}
-
+		restartB.addActionListener(e -> {
+			frame.getContentPane().removeAll();
+			controller.restart();
 		});
 		JLabel levelPointsValue= new JLabel(level.getLevelPoint().toString());
 		if(Factory.levelPointsFont2!=null){ levelPointsValue.setFont(Factory.levelPointsFont2); }
@@ -372,20 +335,15 @@ public class LevelView {
 		JButton undoB = new JButton(undoIcon);
 		undoB.setPreferredSize(buttonSize);
 		undoB.setBackground(buttonColor);
-		undoB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Pair <Pair<Character,Integer>,Pair<Integer,Integer>> newPos = controller.undo();
-				if(!newPos.getKey().getKey().equals(' '))
-				{
-					mapPosiciones.put(newPos.getKey().getKey(), newPos.getValue());
-					mapCoordenadas= cambioCoodenadas(mapPosiciones);
-					levelPointsValue.setText(newPos.getKey().getValue().toString());
-					gamePanel.repaint();
-				}
-				else System.out.println(" no hay mas movimientos que deshacer");
-			}
-
+		undoB.addActionListener(e -> {
+			Pair <Pair<Character,Integer>,Pair<Integer,Integer>> newPos = controller.undo();
+			if(!newPos.getKey().getKey().equals(' '))
+			{
+				mapPosiciones.put(newPos.getKey().getKey(), newPos.getValue());
+				mapCoordenadas= cambioCoodenadas(mapPosiciones);
+				levelPointsValue.setText(newPos.getKey().getValue().toString());
+				gamePanel.repaint();
+			}	
 		});
 
 		JLabel gamePointsLabel = new JLabel("Game Points: "); 
@@ -409,7 +367,7 @@ public class LevelView {
 		headerPanel.add(row1);
 
 		JPanel row2 = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
-		JLabel title = new JLabel(level.getTitle()); //debe recibir el title del nivel del controller
+		JLabel title = new JLabel(level.getTitle()); 
 		if(Factory.titleFont2!=null){ title.setFont(Factory.titleFont2); }
 		else {title.setFont(new Font("Serif",Font.PLAIN,40)); }
 		row2.add(title);
@@ -444,9 +402,9 @@ public class LevelView {
 
 		JLabel winL = new JLabel("VICTORY");
 		winL.setFont(Factory.titleFont2);
-		
 
-		JLabel pointsWL = new JLabel("0000"); //TODO : valor a partir de game
+
+		JLabel pointsWL = new JLabel("0000");
 		pointsWL.setFont(Factory.levelPointsFont2);
 
 		JLabel star1W = new JLabel(starIcon);
@@ -455,46 +413,31 @@ public class LevelView {
 		JButton levelsWB = new JButton(levelsMIcon);
 		levelsWB.setBackground(buttonColor);
 		levelsWB.setPreferredSize(buttonSize);
-		levelsWB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("levels button pressed");
-
-				frame.getContentPane().removeAll();
-				controller.levelMenuButon();
-			}
+		levelsWB.addActionListener(e -> {
+			frame.getContentPane().removeAll();
+			controller.levelMenuButon();
 		});
 
 		JButton restartWB = new JButton(restartIcon);
 		restartWB.setBackground(buttonColor);
 		restartWB.setPreferredSize(buttonSize);
-		restartWB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("restart button pressed");
-				frame.getContentPane().removeAll();
-				controller.restart();
-
-			}
+		restartWB.addActionListener(e ->{
+			frame.getContentPane().removeAll();
+			controller.restart();
 		});
 
 		JButton nextWB = new JButton(nextIcon);
 		nextWB.setBackground(buttonColor);
 		nextWB.setPreferredSize(buttonSize);
-		nextWB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("next level button pressed");
-
-				frame.getContentPane().removeAll();
-				try {
-					int r = controller.nextLevel();
-					if(r!=0) {
-						Factory.corruptLevel(r, frame, null, controller, null, false);
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
+		nextWB.addActionListener(e ->{
+			frame.getContentPane().removeAll();
+			try {
+				int r = controller.nextLevel();
+				if(r!=0) {
+					Factory.corruptLevel(r, frame, null, controller, null, false);
 				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
 			}
 		});
 
@@ -521,7 +464,7 @@ public class LevelView {
 		winPanel.add(row1W);
 		winPanel.add(row2W);
 		winPanel.add(row3W);
-		
+
 
 		panel.add(layeredP, BorderLayout.CENTER);
 		gamePanel.addMouseListener(new MouseAdapter() {
@@ -532,24 +475,19 @@ public class LevelView {
 					int clickX = e.getX();
 					int clickY=e.getY();
 
-					int x = ((clickX-150)/tamanoCeldaX) ; //400 pixeles de ancho y largo el gris del parking
+					int x = ((clickX-150)/tamanoCeldaX) ; 
 					int y = ((clickY-50)/tamanoCeldaY);
-
-					System.out.println("Pressed at (" + x + ", " + y + ")");
 				}
-				carSelect = controller.click(new Pair<Integer,Integer>(e.getX(),e.getY()));
-				System.out.println("id pinchado: "+carSelect);
-				System.out.println("coordenadas pinchadas: "+e.getX()+" , " +e.getY());
+				carSelect = controller.click(new Pair<>(e.getX(),e.getY()));
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				//drop
 				if(carSelect!=' ')
 				{
-					Pair<Integer,Integer> newPos = new Pair<Integer,Integer>(null, null); // pair < par<int,int>,int>
-					Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>> newInfo = new Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>>(null, null); 
-					System.out.println("Mouse Soltado at: " + e.getX() + ", " + e.getY());
-					newInfo = controller.drop(new Pair<Integer,Integer>(e.getX(), e.getY()));
+					Pair<Integer,Integer> newPos = new Pair<>(null, null); // pair < par<int,int>,int>
+					Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>> newInfo = new Pair<>(null, null); 
+					newInfo = controller.drop(new Pair<>(e.getX(), e.getY()));
 					newPos = newInfo.getKey();
 					if(newPos!=null)
 					{
@@ -561,19 +499,18 @@ public class LevelView {
 						gamePanel.repaint();
 
 						if(newInfo.getValue().getValue()) {
-							
+
 							pointsWL.setText(newInfo.getValue().getKey().toString());
 							layeredP.add(shadowPanel, JLayeredPane.PALETTE_LAYER);
 							layeredP.revalidate();
 							layeredP.repaint();
 							layeredP.add(winPanel, JLayeredPane.MODAL_LAYER);
-						
+
 							layeredP.revalidate();
 							layeredP.repaint();
 							Factory.playSound("src/main/resources/sounds/winLevel.wav");
-							System.out.println("VICTORIA");
-							
-							
+
+
 						}
 
 					}
@@ -586,11 +523,11 @@ public class LevelView {
 		gamePanel.addMouseMotionListener(new MouseAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				System.out.println("Mouse Dragged to: " + e.getX() + ", " + e.getY());
+				
 				if(carSelect!=' ')
 				{
-					Pair <Integer,Integer>desp=new Pair<Integer,Integer>(null, null);
-					desp = controller.hold(new Pair<Integer,Integer>(e.getX(), e.getY()));
+					Pair <Integer,Integer>desp= new Pair<>(null, null);
+					desp = controller.hold(new Pair<>(e.getX(), e.getY()));
 
 					if(desp.getKey()!=0)
 					{
@@ -619,7 +556,7 @@ public class LevelView {
 		Pair<Boolean,Integer> sol=null;
 		if(car.equals('@'))
 		{
-			Pair<Boolean,Integer> par= new Pair<Boolean,Integer>(false, 1);
+			Pair<Boolean,Integer> par= new Pair<>(false, 1);
 			sol=par;
 		}
 		else{
@@ -629,12 +566,12 @@ public class LevelView {
 
 			if(x==1) 
 			{
-				Pair<Boolean,Integer> par= new Pair<Boolean,Integer>(true, y);
+				Pair<Boolean,Integer> par= new Pair<>(true, y);
 				sol=par;
 			}
 			else if(y==1) 
 			{
-				Pair<Boolean,Integer> par= new Pair<Boolean,Integer>(false, x);
+				Pair<Boolean,Integer> par= new Pair<>(false, x);
 				sol=par;
 			}
 		}
@@ -647,22 +584,22 @@ public class LevelView {
 		if(esSalida){
 			if(posX==100)
 			{
-				vehiculoPintar=salida_izquierdaImage;
+				vehiculoPintar=salidaIzquierdaImage;
 
 			}
 			if(posX>=550)
 			{
-				vehiculoPintar=salida_derechaImage;
+				vehiculoPintar=salidaDerechaImage;
 				x=550;
 			}
 			if(posY==0)
 			{
-				vehiculoPintar=salida_arribaImage;
+				vehiculoPintar=salidaArribaImage;
 
 			}
 			if(posY>=450)
 			{
-				vehiculoPintar=salida_abajoImage;
+				vehiculoPintar=salidaAbajoImage;
 				y=450;
 			}
 		}

@@ -4,9 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -19,7 +18,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import javafx.util.Pair;
@@ -29,9 +30,9 @@ public class SavedGamesView {
 
 	private JFrame frame;
 	private Controller cont;
-	private ArrayList<String> savedGames;
+	private List<String> savedGames;
 
-	public SavedGamesView(JFrame f, ArrayList<String> savedGames, Controller cont)	{
+	public SavedGamesView(JFrame f, List<String> savedGames, Controller cont)	{
 		this.frame= f;
 		this.savedGames = savedGames;
 		this.cont= cont;
@@ -45,7 +46,7 @@ public class SavedGamesView {
 		Integer listH = (savedGames.size()+1)*80 + (savedGames.size())*10;
 		Integer pictureH = listH +60;
 		Integer gamesH = pictureH +80;
-		Integer scrollH = gamesH + 40;
+	
 
 		// Dimensiones:
 		Dimension gameButtonSize = new Dimension(420, 80);
@@ -59,7 +60,6 @@ public class SavedGamesView {
 		// Iconos:
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
 		ImageIcon carIcon = Factory.resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
-		ImageIcon loadIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 		ImageIcon backIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/back.png")),30,30);
 
 		// Elementos:
@@ -78,12 +78,10 @@ public class SavedGamesView {
 		
 		JButton goBackB = new JButton(); 
 		Factory.setFormatButton(goBackB, null, buttonSize, backIcon, new Pair<>(null, buttonColor), null, null);
-		goBackB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		goBackB.addActionListener(e-> {	
 				frame.getContentPane().removeAll();
 				cont.gamesMenuButton();
-			}
+			
 		});
 		
 		JTextArea textArea = Factory.genTextArea("There is alredy a game with the same name, it is not possible to load a game with the same name as another existing one.");
@@ -95,19 +93,16 @@ public class SavedGamesView {
 		for(String g : savedGames) {
 			JButton b = new JButton(" "+g);
 			Factory.setFormatButton(b, null, gameButtonSize, carIcon, new Pair<>(null, gameBColor), Factory.buttonFont, SwingConstants.LEFT);
-			b.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
+			b.addActionListener(e-> {
 					frame.getContentPane().removeAll();
 					if(cont.openSavedGame(g) == 1) {
 						JDialog existingGame = new JDialog(frame, "Existing Game", true);
-						existingGame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						existingGame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 						existingGame.setSize(new Dimension(300,150));
 					    existingGame.add(panelErrorNewg);	
 						existingGame.setLocationRelativeTo(frame);
 						existingGame.setVisible(true);
 					}
-				}
 			});
 			
 			buttons.add(b);
@@ -168,8 +163,8 @@ public class SavedGamesView {
 		JScrollPane panelScroll = new JScrollPane(panelCenter);
 		panelScroll.setBackground(bg);
 		panelScroll.setBounds(0,0,700,550);
-		panelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		panelScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		panelScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panelScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		panel.add(panelNorth, BorderLayout.NORTH);
 		panel.add(panelScroll, BorderLayout.CENTER);

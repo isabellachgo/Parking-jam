@@ -36,6 +36,8 @@ public class Game {
 	private HashMap <Integer,Integer> listaPoints;
 	private Level l;
 	private Map<Integer, Boolean> okLevels;
+	private static final String ERROR_MESSAGE_WRITE = "There has been an error writing in the file";
+	private static final String ERROR_MESSAGE_READ = "There has been an error writing in the file";
 
 	private static final Logger LOGGER = Logger.getLogger(Game.class);
 
@@ -119,7 +121,9 @@ public class Game {
 		String rutaDirectorio=rutaFichero+"/src/main/gamesSaved/"+ gameName ;
 
 		File directorio = new File(rutaDirectorio);
-		directorio.mkdirs();
+		if (!directorio.mkdirs()) {
+			LOGGER.error("Failed to create directories: " + directorio.getAbsolutePath());
+		}
 
 		// Crear una instancia de File con la ruta especificada
 		rutaFichero= rutaDirectorio+ File.separator+ "gamePoints.txt";
@@ -140,18 +144,19 @@ public class Game {
 
 			if(level!=null) bw.write(level.getNLevel() + " , " + level.getLevelPoint());
 
-			LOGGER.info("The file has been created and its been witten corectly in " + rutaFichero);
+			LOGGER.info("The file has been created and its been witten correctly in " + rutaFichero);
 
 		} catch (IOException e) {
 			// Manejo de posibles excepciones
-			LOGGER.error("There has been an error writting in the file", e);
+			LOGGER.error(ERROR_MESSAGE_WRITE, e);
 		}
 
 		if ( level!=null)
 		{
 			rutaFichero= rutaDirectorio+ File.separator+ "level.txt";
 			File ficheroTablero = new File(rutaFichero);
-			System.out.println(rutaFichero);
+			
+
 			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 			try (FileWriter fw = new FileWriter(ficheroTablero);
 					BufferedWriter bw = new BufferedWriter(fw)) {
@@ -172,30 +177,29 @@ public class Game {
 					bw.newLine();
 				}
 
-				System.out.println("El archivo se ha creado y se ha escrito correctamente en: " + rutaFichero);
+				
 				LOGGER.info("The file has been created and its been witten corectly in " + rutaFichero);
 
 			} catch (IOException e) {
 				// Manejo de posibles excepciones
-				System.err.println("Se produjo un error al escribir en el archivo: " + e.getMessage());
-				LOGGER.error("There has been an error writting in the file", e);
+				
+				LOGGER.error(ERROR_MESSAGE_WRITE, e);
 			}
 
 			rutaFichero= rutaDirectorio+ File.separator+ "HistoryBoards.txt";
 			File ficheroTablerosHistoricos = new File(rutaFichero);
-			System.out.println(rutaFichero);
+		
 			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 			try (FileWriter fw = new FileWriter(ficheroTablerosHistoricos);
 					BufferedWriter bw = new BufferedWriter(fw)) {
 
 				// Escribir en el fichero
 				bw.write(Integer.toString(level.getBoardHistory().size()) );
-				System.out.println(level.getBoardHistory().size());
 				bw.newLine();
 				bw.write(level.getDimensionX()+" "+level.getDimensionY());
 				bw.newLine();
 
-				while (level.getBoardHistory().size()>0) {
+				while (!level.getBoardHistory().isEmpty()) {
 
 					Character [][] board = level.getBoardHistory().pop();
 					for ( int i = 0 ; i<level.getDimensionY(); i++)
@@ -208,14 +212,12 @@ public class Game {
 						bw.newLine();
 					}
 				}
-				System.out.println("El archivo se ha creado y se ha escrito correctamente en: " + rutaFichero);
 				LOGGER.info("The file has been created and its been witten corectly in " + rutaFichero);
 
 
 			} catch (IOException e) {
 				// Manejo de posibles excepciones
-				System.err.println("Se produjo un error al escribir en el archivo: " + e.getMessage());
-				LOGGER.error("There has been an error writting in the file", e);
+				LOGGER.error(ERROR_MESSAGE_WRITE, e);
 			}
 
 		}
@@ -241,14 +243,11 @@ public class Game {
 			while ((linea = br.readLine()) != null) {
 				// Dividir la línea en dos partes usando ":" como separador
 				String[] partes = linea.split(" : ");
-				System.out.println("aaaa " +partes.length + ":"+ partes[0]);
 				if (partes.length == 2) {
 					String antesDeDosPuntos = partes[0].trim();
 					String despuesDeDosPuntos = partes[1].trim();
 
 					// Imprimir las partes
-					System.out.println("id = " + antesDeDosPuntos);
-					System.out.println("points = " + despuesDeDosPuntos);
 					int id = Integer.parseInt(antesDeDosPuntos) ;
 					int points = Integer.parseInt(despuesDeDosPuntos);
                     Level level = new Level(id);
@@ -260,18 +259,17 @@ public class Game {
 				else if(partes.length==1) {
 					String[] partes2 = linea.split(" , ");
 					if (partes2.length == 2) {
-						String Points = partes2[1].trim();
-						String NLevel= partes2[0].trim();
-						int levelPoints= Integer.parseInt(Points);
+						String points = partes2[1].trim();
+						String nLevel= partes2[0].trim();
+						int levelPoints= Integer.parseInt(points);
 						String filepath = "src/main/gamesSaved/" + name + "/level.txt";
 						levelUncomplete=new Level(filepath);
 						levelUncomplete.setLevelPoints(levelPoints);
-						levelUncomplete.setNLevel(Integer.parseInt(NLevel));
+						levelUncomplete.setNLevel(Integer.parseInt(nLevel));
 
 					}
 				}
 				else {
-					System.err.println("Línea mal formateada: " + linea);
 					LOGGER.info("There is an error in the file, the line format is not correct");
 				}
 
@@ -279,8 +277,7 @@ public class Game {
 
 		} catch (IOException e) {
 			// Manejo de posibles excepciones
-			System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
-			LOGGER.error("There has been an error reading the file", e);
+			LOGGER.error(ERROR_MESSAGE_READ, e);
 		}
 
 
@@ -298,7 +295,6 @@ public class Game {
 
 
 			if ((linea = br.readLine()) != null) nBoards= Integer.parseInt(linea);
-			System.out.println("-------"+nBoards);
 			if ((linea = br.readLine()) != null)
 			{
 				String tamX=null;
@@ -338,7 +334,7 @@ public class Game {
 								posAux.put(c,positions);
 							} else {
 								Set<Pair<Integer,Integer>> positions = posAux.get(lineaChar[i]);
-								positions.add(new Pair<Integer, Integer>(i,j));
+								positions.add(new Pair<>(i,j));
 								posAux.put(c,positions);
 							}
 						}
@@ -359,8 +355,7 @@ public class Game {
 			}
 		} catch (IOException e) {
 			// Manejo de posibles excepciones
-			System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
-			LOGGER.error("There has been an error reading the file", e);
+			LOGGER.error(ERROR_MESSAGE_READ, e);
 		}
 		LOGGER.info("The game has been loaded correctly");
 		return levelUncomplete;

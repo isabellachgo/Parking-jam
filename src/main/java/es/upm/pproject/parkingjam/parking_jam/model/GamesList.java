@@ -6,12 +6,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
 
 public class GamesList {
 
 	private ArrayList <String> listGames ;
-
+	private static final String USER_DIR = "user.dir";
+	private static final Logger LOGGER = Logger.getLogger(GamesList.class);
 	public GamesList(){
 		if(listGames==null) listGames = new ArrayList<>();
 	}
@@ -21,7 +26,6 @@ public class GamesList {
 		boolean res = false;
 		if(!listGames.contains(game))
 		{
-			res = true;
 			res= listGames.add(game);
 			saveGames();
 		}
@@ -33,15 +37,15 @@ public class GamesList {
 		if(!listGames.contains(game))return false;
 		boolean res=listGames.remove(game);
 		saveGames();
-		String rutaDirectorio = System.getProperty("user.dir")+"/src/main/gamesSaved/"+ game;
+		String rutaDirectorio = System.getProperty(USER_DIR)+"/src/main/gamesSaved/"+ game;
 		File directorio = new File(rutaDirectorio);
 
 		// Eliminar el contenido del directorio y luego el directorio
 		if (directorio.exists()) {
 			removeDirectory(directorio);
-			System.out.println("El directorio y su contenido se han eliminado correctamente: " + rutaDirectorio);
+			LOGGER.info("Folder and its content had been removed correctly: "+ rutaDirectorio);
 		} else {
-			System.err.println("El directorio no existe: " + rutaDirectorio);
+			LOGGER.error("The folder does not exist:" +rutaDirectorio);
 		}
 		return res;
 
@@ -54,7 +58,7 @@ public class GamesList {
 	public ArrayList<String> loadList() // llamar siempre al iniciar el programa
 	{
 		ArrayList<String> list=new ArrayList<>();
-		String rutaFicheroListaGames=System.getProperty("user.dir")+"/src/main/gamesSaved/GamesList.txt";
+		String rutaFicheroListaGames=System.getProperty(USER_DIR)+"/src/main/gamesSaved/GamesList.txt";
 		File fichero = new File(rutaFicheroListaGames);
 
 		try (FileReader fr = new FileReader(fichero); BufferedReader br = new BufferedReader(fr)) {
@@ -66,7 +70,7 @@ public class GamesList {
 
 		}catch (IOException e) {
 			// Manejo de posibles excepciones
-			System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
+			LOGGER.error("Error reading the file: "+ e.getMessage());
 		}
 
 		return list;
@@ -75,9 +79,9 @@ public class GamesList {
 	private void saveGames()
 	{
 
-		String rutaFicheroListaGames=System.getProperty("user.dir")+"/src/main/gamesSaved/GamesList.txt";
+		String rutaFicheroListaGames=System.getProperty(USER_DIR)+"/src/main/gamesSaved/GamesList.txt";
 		File fichero = new File(rutaFicheroListaGames);
-		System.out.println(rutaFicheroListaGames);
+
 		// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 		try (FileWriter fw = new FileWriter(fichero);
 				BufferedWriter bw = new BufferedWriter(fw)) {
@@ -89,7 +93,7 @@ public class GamesList {
 
 		}catch (IOException e) {
 			// Manejo de posibles excepciones
-			System.err.println("Se produjo un error al escribir en el archivo: " + e.getMessage());
+			LOGGER.error("Error writing on the file: "+ e.getMessage());
 		}
 	}
 
@@ -104,16 +108,22 @@ public class GamesList {
 					removeDirectory(archivo);
 				} else {
 					// Eliminar archivo
-					if (!archivo.delete()) {
-						System.err.println("No se pudo eliminar el archivo: " + archivo.getAbsolutePath());
+					Path archivoPath= archivo.toPath();
+					try {
+						Files.delete(archivoPath);
+					} catch (IOException e) {
+						LOGGER.error("Can not remove the file: "+ e.getMessage());
 					}
 				}
 			}
 		}
 
 		// Finalmente, eliminar el directorio en sí
-		if (!directorio.delete()) {
-			System.err.println("No se pudo eliminar el directorio: " + directorio.getAbsolutePath());
+		Path directorioPath= directorio.toPath();
+		try {
+			Files.delete(directorioPath);
+		} catch (IOException e) {
+			LOGGER.error("Can not remove the file: "+ e.getMessage());
 		}
 	}
 

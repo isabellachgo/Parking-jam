@@ -286,6 +286,7 @@ public class Controller {
 			return null;
 		Pair<Pair<Integer, Integer>, Pair<Integer, Boolean>> mv;
 		int punt2 = punt;
+		
 		if (actLabel != null && prevLabel != null) {
 
 			punt2 = Math.abs(punt);
@@ -334,7 +335,7 @@ public class Controller {
 		Pair<Integer, Boolean> res = new Pair<>(lvl.getLevelPoint(),
 				vehicleClicked.getPosition().contains(lvl.getExit()));
 		mv = new Pair<>(vehicleClicked.getbackLabel(), res);
-		if (res.getValue()) {
+		if (res.getValue().booleanValue()) {
 			if (g.getLevelPoints(lvlAct) == null || g.getLevelPoints(lvlAct) >= lvl.getLevelPoint()) {
 				g.actualizarGamePoints(lvlAct, lvl.getLevelPoint());
 			}
@@ -437,7 +438,7 @@ public class Controller {
 				LOGGER.error("The game could not be saved", e);
 				e.printStackTrace();
 			}
-		} else if(estado!=null) { //level a medias
+		} else  { //level a medias
 			try {
 				g.guardarGame(lvl);
 				gl.addGame(g.getName());

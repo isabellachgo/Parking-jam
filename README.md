@@ -1,34 +1,82 @@
-# parking-jam
+# **Parking Jam**
+
+In this project, a video game called parking-jam has been developed. This video game consists of getting a red car to get out of a parking lot in which it is trapped by other vehicles.
 
 ## Table of Contents
 
-* [Introduccion](#introduccion)
-* [Organización del proyecto](#organización-del-proyecto)
-* [Cómo Jugar](#cómo-jugar)
-* [Autores](#autores)
+* [Introduction](#introduction)
+	* [Download project](#download-project)
+	* [Run tests](#run-tests)
+* [Project organization](#project-organization)
+* [How to use](#how-to-use)
+	* [Play](#play)
+	* [Save and load games](#save-and-load-games)
+* [Authors](#authors)
 
-## Introduccion
+## Introduction ##
+### Download project ###
+#### Prerequisites ####
+- [Java JDK](<https://www.oracle.com/java/technologies/javase-downloads.html>) (versión 8 o superior)
+- [Maven](<https://maven.apache.org/install.html>) (versión 3.6.0 o superior)
 
-En este proyecto se ha desarrollado un videojuego llamado parking-jam. La este videojuego consiste en conseguir que un coche de color rojo consiga salir de un parking en el que se encuentra atrapado.
+#### Instructions ####
+1. Clone the git repsitory:  `git clone https://costa.ls.fi.upm.es/gitlab/210241/parking-jam.git`
 
-## Organización del proyecto
+### Run tests ###
+1. Go to the root directory of the repository inyour terminal
+2. Create the project build `mvn clean install`
+3. Run test:  `mvn test`
 
-El proyecto esta divivido en varias carpetas que derivan de una carpeta inicial 'src':
+## Project organization ##
 
-- Dentro de la carpeta 'src' se encuentra la carpeta 'main', que contiene otras carpetas que contienen toda la funcionalidad del videojuego, y otra carpeta 'test' que contiene todos los tests con los que hemos probado que todo el videojuego funcione correctamente.
+This project implements the model-controller-view pattern. This separation of concerns allows for more organized and modular code.
 
-- Dentro de la carpeta 'main' en 'src' hay 3 subcarpetas, la primera llamada 'gamesSaved' donde se guardaran los archivos .txt que toda la informacion de cada partida que haya sido guardada por un jugador en el videojuego para posteriormente poder ser cargada. La segunda carpeta llamada 'java' contiene otras tres carpetas con toda la implementacion y funcionalidad del videojuego. Y la tercera llamada 'resources' que contiene todos los archivos externos utilizados para el desarrollo del videojuego, como las imagenes de los objetos usados en la interfaz o el estado inicial de los niveles del juego. 
+The Model represents the data and business logic, encapsulating the application's information and rules for manipulating that information. In this project contains the next classes:
+- `Menu`, which represents the initial menu of the game.
+- `Game` that represents a game with its different levels.
+- `GameList` represents the list of the saved games.
+- `Level` is the class that represents a level.
+- `BoardReader` is the class in charge of processing the level files and check that they comply with the valid format.
+- `Vehicle` represents the different vehicles in a level, including the red car.
 
-- La carpeta 'java' (dentro de src/main) se divide en 3 subcarpetas que contienen la funcionalidad del videojuego, como el proyecto está desarrollado siguiendo la arquitectura MVC, estas 3 subcarpetas separan las funcionalidades 'model', 'view' y 'controller', en la carpeta 'model' se encuentran todas las clases .java que con toda la base lógica del proyecto, la carpeta 'view' contiene todas las clases .java con las interfaces que verá el jugador y con las que interactuará para jugar al juego, y la carpeta 'controller' contiene una clase .java es la que se encarga de recibir la informacion sobre las interacciones que el jugador realiza con las interfaces y utiliza los métodos y clases de la carpeta 'model' para que el sistema reaccione correctamente a las interacciones del jugador.
+The View is the presentation layer, responsible for displaying the data to the user and providing a means for user interaction. Contains: 
+- `StartView` show the initial view.
+- `GamesMenuView` represents the menu which show the open games.
+- `SavedGamesView` it will be shown the saved games which could be loaded.
+- `LevelsMenuView` represents the menu which show the levels and theirs status in a game.
+- `view` that show a level to play it.
+- `EndGameView` it will appear when you finish all the levels of a game.
 
-## Cómo Jugar
+Finally, the Controller acts as an intermediary between the Model and the View, processing user input from the View, updating the Model accordingly, and then updating the View to reflect any changes in the Model. This one contains only one class `controller`, with all the necessary methods. 
 
-- Para jugar deberá situarse en el directorio raíz del repositorio. Posteriormente, deberá compilar el proyecto mediante el comando `mvn clean compile`, y finalmente ejecutarlo con el comando `mvn exec:java`.
-- Al inicio tendrá que crear una nueva partida y al crearla ya podrá acceder a los niveles del juego, que irá desbloqueando cada vez que logres terminar uno. Una vez logre pasarse un nivel podrá volver a intentarlo para buscar obtener una mejor puntuación. En todo momento podrá volver al menu de niveles, al de partidas, cerrar el juego o guardar partida haciendo click en los botones del menu desplegable.
-- Para guardar partida solo tendrá que hacer click en el boton 'save game' del menu desplegable, y cuando quiera cargar la partida guardada, en el menu de partidas, al hacer click en el boton load game, se le mostrarán las partidas guardadas y podrá elegir la partida que guardó para continuar jugando donde lo dejó.
+These three folders are contained in `src/main/java/`. Additionally, the project has the folders: 
+- `src/main/resources` that contains the icons, images, text fonts and level files for building the game.
+- `src/main/gamesSaved` where the .txt files with the information of the saved games will be stored.
+- `src/test/java` which contains the tests.
 
-## Autores
 
+## How to use
+To play you must be in the root directory of the repository. Subsequently, you must compile the project using the `mvn clean compile` command, and finally run it with the `mvn exec:java` command that will open a new window with the game initial view.
+
+Here is the view of the first leve:
+<div style="text-align: center;">
+  ![parking-jam](src/main/resources/images/parkingJam.png)
+</div>
+
+### Play
+At the beginning you will have to create a new game and when you create it you will be able to access the levels of the game, which will be unlocked each time you manage to finish one. 
+
+Once you pass a level you can try again to get a better score. At any time you can return to the level menu, the games menu, close the game or save the game by clicking on the buttons in the drop-down menu.
+
+### Save and load games
+To save the game you will only have to click on the 'save game' button in the drop-down menu, and when you want to load the saved game, in the games menu, when you click on the load game button, the saved games will be shown and you will be able to Choose the game you saved to continue playing where you left off.
+
+When you save a game, a folder will be created in the directory indicated above. This will have the name of the saved game and will contain three files:
+- one with the points of the past levels and the last unfinished one if there is one 
+- another with the movement history of the unfinished level if there is one 
+- and a last one with the status of the level unfinished if there is one, which will have the format of a level file
+
+## Authors
 - Sonia Gallego Trapero
 - Lucas Coronel Naranjo
 - Isabella Chaves Gómez

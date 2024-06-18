@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.sound.sampled.AudioInputStream;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -131,6 +132,7 @@ public class view {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		frame.add(panel);
+		
 
 		// Imagenes:
 		ImageIcon cocheRojoHorizontal = new ImageIcon(getClass().getResource("/images/coche_rojo_horizontal.png"));
@@ -248,6 +250,7 @@ public class view {
 				g.drawImage(plantaImg1, 600, 370, this);
 				g.drawImage(plantaImg1, 15, 280, this);
 				g.drawImage(plantaImg1, 630, 450, this);
+				
 			}
 
 		};
@@ -442,6 +445,7 @@ public class view {
 
 		JLabel winL = new JLabel("VICTORY");
 		winL.setFont(Factory.titleFont2);
+		
 
 		JLabel pointsWL = new JLabel("0000"); //TODO : valor a partir de game
 		pointsWL.setFont(Factory.levelPointsFont2);
@@ -518,6 +522,7 @@ public class view {
 		winPanel.add(row1W);
 		winPanel.add(row2W);
 		winPanel.add(row3W);
+		
 
 		panel.add(layeredP, BorderLayout.CENTER);
 		gamePanel.addMouseListener(new MouseAdapter() {
@@ -557,14 +562,19 @@ public class view {
 						gamePanel.repaint();
 
 						if(newInfo.getValue().getValue()) {
+							
 							pointsWL.setText(newInfo.getValue().getKey().toString());
 							layeredP.add(shadowPanel, JLayeredPane.PALETTE_LAYER);
 							layeredP.revalidate();
 							layeredP.repaint();
 							layeredP.add(winPanel, JLayeredPane.MODAL_LAYER);
+						
 							layeredP.revalidate();
 							layeredP.repaint();
+							Factory.playSound("src/main/resources/sounds/winLevel.wav");
 							System.out.println("VICTORIA");
+							
+							
 						}
 
 					}

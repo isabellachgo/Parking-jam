@@ -88,6 +88,7 @@ public class StartView {
 
         startButton.addActionListener(e -> {
             frame.getContentPane().removeAll();
+            Factory.playSound("src/main/resources/sounds/gameStart.wav");
             cont.gamesMenu(menu);
         });
 

@@ -144,6 +144,7 @@ public class EndGameView {
 
         panel.add(panelCenter, BorderLayout.CENTER);
         frame.add(panel);
+        Factory.playSound("src/main/resources/sounds/winGame.wav");
     }
 
     

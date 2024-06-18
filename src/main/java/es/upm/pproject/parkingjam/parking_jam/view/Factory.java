@@ -12,8 +12,14 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -31,19 +37,22 @@ public class Factory {
 	// Colors:
 	static Color levelBColor = new Color(39,193,245);
 	static Color lockedLevelBColor = new Color(80,155,180);
-	
+
 	// Fonts:
 	static Font menuFont= genFont("src/main/resources/fonts/menuText.ttf", 16f);
 	static Font titleFont = genFont("src/main/resources/fonts/titlefont.ttf", 45f);
-    static Font buttonFont = genFont("src/main/resources/fonts/menuText.ttf", 30f);
-    static Font titleFont2 = genFont("src/main/resources/fonts/titlefont.ttf", 35f);
-    static Font gamePointsFont = genFont("src/main/resources/fonts/pointsfont.ttf", 23f);
-    static Font levelFont = genFont("src/main/resources/fonts/titlefont.ttf", 27f);
-    static Font levelPointsFont =genFont("src/main/resources/fonts/pointsfont.ttf", 50f);
-    static Font infoFont = genFont("src/main/resources/fonts/pointsfont.ttf", 27f);
+	static Font buttonFont = genFont("src/main/resources/fonts/menuText.ttf", 30f);
+	static Font titleFont2 = genFont("src/main/resources/fonts/titlefont.ttf", 35f);
+	static Font gamePointsFont = genFont("src/main/resources/fonts/pointsfont.ttf", 23f);
+	static Font levelFont = genFont("src/main/resources/fonts/titlefont.ttf", 27f);
+	static Font levelPointsFont =genFont("src/main/resources/fonts/pointsfont.ttf", 50f);
+	static Font infoFont = genFont("src/main/resources/fonts/pointsfont.ttf", 27f);
 	static Font levelPointsFont2 = genFont("src/main/resources/fonts/pointsfont.ttf", 27f);
 	static Font newGameFont = genFont("src/main/resources/fonts/menuText.ttf", 23f);
-	
+	//Sounds
+  static Clip clip;
+
+
 	private static Font genFont(String path, float size) {
 		Font font = null;
 		try {
@@ -53,7 +62,7 @@ public class Factory {
 		}
 		return font;
 	}
-	
+
 
 	public static void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Color foreg, Color backg, Font font, Integer sc) {
 		if(t!=null) b.setText(t);
@@ -117,8 +126,8 @@ public class Factory {
 			}
 		} 
 	}
-	
-	
+
+
 	public static void levelsStatus(JButton b, Game game) {
 		int last = game.getUltimoLevelPassed() + 1;
 		if(Integer.parseInt(b.getText()) <= last 
@@ -130,19 +139,43 @@ public class Factory {
 			b.setEnabled(false);
 		}
 	}
-	
+
 	public static JTextArea genTextArea(String text) {
 		JTextArea ta = new JTextArea(text);
-	    ta.setWrapStyleWord(true);
-	    ta.setLineWrap(true);
-	    ta.setOpaque(false);
-	    ta.setEditable(false);
-	    ta.setFocusable(false);
-	    ta.setForeground(Color.red);
-	    ta.setBackground(UIManager.getColor("Label.background"));
-	    ta.setFont(Factory.menuFont);
-	    ta.setMargin(new Insets(10, 10, 10, 10));
-	    
-	    return ta;
+		ta.setWrapStyleWord(true);
+		ta.setLineWrap(true);
+		ta.setOpaque(false);
+		ta.setEditable(false);
+		ta.setFocusable(false);
+		ta.setForeground(Color.red);
+		ta.setBackground(UIManager.getColor("Label.background"));
+		ta.setFont(Factory.menuFont);
+		ta.setMargin(new Insets(10, 10, 10, 10));
+
+		return ta;
 	}
+	public static void playSound(String soundFile) { 
+		File soundPath = new File(soundFile); 
+		if(clip!=null) {
+			clip.close();
+			clip.drain();
+			clip.stop();
+		}
+		if (!soundPath.exists()) { 
+			return; 
+		} 
+		try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundPath)) { 
+			clip = AudioSystem.getClip(); 
+			clip.open(audioInputStream); 
+			clip.start(); } 
+		catch (UnsupportedAudioFileException e) { 
+			e.printStackTrace(); 
+		} 
+		catch (LineUnavailableException e) { 
+			e.printStackTrace(); } 
+		catch (IOException e) { 
+			e.printStackTrace(); } } 
+
+
+
 }

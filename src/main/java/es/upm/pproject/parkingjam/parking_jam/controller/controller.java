@@ -19,6 +19,7 @@ import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
 import es.upm.pproject.parkingjam.parking_jam.view.EndGameView;
+import es.upm.pproject.parkingjam.parking_jam.view.Factory;
 import es.upm.pproject.parkingjam.parking_jam.view.GamesMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.SavedGamesView;
@@ -81,6 +82,7 @@ public class controller {
 		}
 		mapPositions.put('@', lvl.getExit());
 		v = new view(f, mapPositions, lvl, this, g.getGamePoints());
+	
 		LOGGER.info(" The view of the level " + n + " has been initializated");
 		return 0;
 	}

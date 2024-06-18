@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
+import javafx.util.Pair;
 
 
 public class SavedGamesView {
@@ -75,8 +76,8 @@ public class SavedGamesView {
 		noGamesTextL.setFont(Factory.menuFont);
 		noGamesTextL.setForeground(Color.white);
 		
-		JButton goBackB = new JButton();
-		Factory.setFormatButton(goBackB, null, buttonSize, backIcon, null, buttonColor, null, null);
+		JButton goBackB = new JButton(); 
+		Factory.setFormatButton(goBackB, null, buttonSize, backIcon, new Pair<>(null, buttonColor), null, null);
 		goBackB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -93,7 +94,7 @@ public class SavedGamesView {
 		ArrayList<JButton> buttons = new ArrayList<>();
 		for(String g : savedGames) {
 			JButton b = new JButton(" "+g);
-			Factory.setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, Factory.buttonFont, SwingConstants.LEFT);
+			Factory.setFormatButton(b, null, gameButtonSize, carIcon, new Pair<>(null, gameBColor), Factory.buttonFont, SwingConstants.LEFT);
 			b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {

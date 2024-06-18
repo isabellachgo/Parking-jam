@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -25,6 +26,7 @@ import javax.swing.SwingConstants;
 import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.Menu;
+import javafx.util.Pair;
 
 public class GamesMenuView {
 
@@ -65,7 +67,7 @@ public class GamesMenuView {
 				
 		// Elementos:
 		JButton loadGameB = new JButton("Load game");
-		Factory.setFormatButton(loadGameB, null, buttonSize2, loadIcon, Color.white, buttonColor, Factory.menuFont, SwingConstants.CENTER);
+		Factory.setFormatButton(loadGameB, null, buttonSize2, loadIcon, new Pair<>(Color.white, buttonColor), Factory.menuFont, SwingConstants.CENTER);
 		loadGameB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -98,7 +100,7 @@ public class GamesMenuView {
 	    panelErrorNewg.add(textArea, BorderLayout.CENTER);
 		
 		JButton addGameB = new JButton("New game");
-		Factory.setFormatButton(addGameB, null, gameButtonSize, addIcon, null, gameBColor, Factory.buttonFont, SwingConstants.LEFT);
+		Factory.setFormatButton(addGameB, null, gameButtonSize, addIcon, new Pair<>(null, gameBColor), Factory.buttonFont, SwingConstants.LEFT);
 		addGameB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
@@ -125,10 +127,10 @@ public class GamesMenuView {
 		});
 		
 		ArrayList<JButton> buttons = new ArrayList<>();
-		ArrayList<Game> games = menu.getGames();
+		List<Game> games = menu.getGames();
 		for(Game g : games) {
 			JButton b = new JButton(" "+g.getName());
-			Factory.setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, Factory.buttonFont, SwingConstants.LEFT);
+			Factory.setFormatButton(b, null, gameButtonSize, carIcon, new Pair<>(null, gameBColor), Factory.buttonFont, SwingConstants.LEFT);
 			b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {

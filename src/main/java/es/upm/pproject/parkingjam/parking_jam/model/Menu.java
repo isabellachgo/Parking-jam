@@ -1,6 +1,7 @@
 package es.upm.pproject.parkingjam.parking_jam.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Menu {
 	ArrayList<Game> games;
@@ -9,7 +10,7 @@ public class Menu {
 		games= new ArrayList<>();
 	}
 	
-	public ArrayList<Game> getGames() {
+	public List<Game> getGames() {
 		return games;
 	}
 	

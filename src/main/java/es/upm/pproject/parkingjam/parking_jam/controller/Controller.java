@@ -509,7 +509,7 @@ public class Controller {
 		LOGGER.info("The game Menu has been opened");
 	}
 	public void endGame() {
-		new EndGameView(f,m,g,this);
+		new EndGameView(f,g,this);
 		LOGGER.info("The En game view has been opened");
 	}
 

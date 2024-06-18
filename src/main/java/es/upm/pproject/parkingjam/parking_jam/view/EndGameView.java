@@ -9,16 +9,15 @@ import javax.swing.*;
 import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.Menu;
+import javafx.util.Pair;
 
 public class EndGameView {
     private JFrame frame;
-    private Menu menu;
     private Game game;
     private Controller cont;
 
-    public EndGameView(JFrame frame, Menu menu, Game g, Controller cont) {
+    public EndGameView(JFrame frame, Game g, Controller cont) {
         this.frame = frame;
-        this.menu = menu;
         this.cont = cont;
         this.game = g;
         initEG();
@@ -32,11 +31,9 @@ public class EndGameView {
         // Colores:
         Color bg = new Color(180, 220, 110);
         Color buttonColor = new Color(39, 193, 245); // Azul
-        Color buttonActionColor = new Color(100, 170, 200);
         Color winPColor = new Color(180,220,110);
 
         // Iconos:
-        ImageIcon levelsMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/levelsMenu.png")), 30, 30);
         ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/finalParking.png"));
         ImageIcon starIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/yellowstar.png")), 50, 50);
         ImageIcon starIcon2 = Factory.rotateIcon(starIcon, 180);
@@ -78,16 +75,16 @@ public class EndGameView {
        
         JLabel winL = new JLabel("Congratulations!");
         winL.setFont(Factory.titleFont);
-        winL.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        winL.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel info = new JLabel("<html><div style='text-align: center;'>You have completed all the levels in the game '" + game.getName() + "'</div></html>");
         info.setFont(Factory.infoFont);
-        info.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        info.setAlignmentX(Component.CENTER_ALIGNMENT);
         info.setPreferredSize(new Dimension(400, 90));  // Set preferred size to ensure it fits
 
         JLabel pointsWL = new JLabel(game.getGamePoints().toString());
         pointsWL.setFont(Factory.levelPointsFont);
-        pointsWL.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        pointsWL.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel star1W = new JLabel(starIcon);
         JLabel star2W = new JLabel(starIcon2);
@@ -101,8 +98,8 @@ public class EndGameView {
         buttonpanel.setBackground(winPColor);
 
         JButton gamesB = new JButton(homeMIcon);
-        Factory.setFormatButton(gamesB, null, buttonSize, null, null, buttonColor, null, null);       
-        gamesB.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        Factory.setFormatButton(gamesB, null, buttonSize, null, new Pair<>(null, buttonColor), null, null);       
+        gamesB.setAlignmentX(Component.CENTER_ALIGNMENT);
         gamesB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,8 +109,8 @@ public class EndGameView {
         });
 
         JButton closeB = new JButton(closeMIcon);
-        Factory.setFormatButton(closeB, null, buttonSize, null, null, buttonColor, null, null);
-        closeB.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        Factory.setFormatButton(closeB, null, buttonSize, null, new Pair<>(null, buttonColor), null, null);
+        closeB.setAlignmentX(Component.CENTER_ALIGNMENT);
         closeB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -121,7 +118,7 @@ public class EndGameView {
             }
         });
         JButton saveB = new JButton(saveMIcon);
-        Factory.setFormatButton(saveB, null, buttonSize, null, Color.white, buttonColor, null, SwingConstants.LEFT);
+        Factory.setFormatButton(saveB, null, buttonSize, null, new Pair<>(Color.white, buttonColor), null, SwingConstants.LEFT);
 		saveB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {				

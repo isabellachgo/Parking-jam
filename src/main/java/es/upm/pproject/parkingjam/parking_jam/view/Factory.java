@@ -14,7 +14,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -33,6 +33,7 @@ import javax.swing.UIManager;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
+import javafx.util.Pair;
 
 public class Factory {
 	// Colors:
@@ -40,20 +41,28 @@ public class Factory {
 	static Color lockedLevelBColor = new Color(80,155,180);
 
 	// Fonts:
-	static Font menuFont= genFont("src/main/resources/fonts/menuText.ttf", 16f);
-	static Font titleFont = genFont("src/main/resources/fonts/titlefont.ttf", 45f);
-	static Font buttonFont = genFont("src/main/resources/fonts/menuText.ttf", 30f);
-	static Font titleFont2 = genFont("src/main/resources/fonts/titlefont.ttf", 35f);
-	static Font gamePointsFont = genFont("src/main/resources/fonts/pointsfont.ttf", 23f);
-	static Font levelFont = genFont("src/main/resources/fonts/titlefont.ttf", 27f);
-	static Font levelPointsFont =genFont("src/main/resources/fonts/pointsfont.ttf", 50f);
-	static Font infoFont = genFont("src/main/resources/fonts/pointsfont.ttf", 27f);
-	static Font levelPointsFont2 = genFont("src/main/resources/fonts/pointsfont.ttf", 27f);
-	static Font newGameFont = genFont("src/main/resources/fonts/menuText.ttf", 23f);
-	
+	private static String menuTextPath = "src/main/resources/fonts/menuText.ttf";
+	private static String titleFontPath = "src/main/resources/fonts/titlefont.ttf";
+	private static String pointsFontPath = "src/main/resources/fonts/pointsfont.ttf";
+	static Font menuFont= genFont(menuTextPath, 16f);
+	static Font titleFont = genFont(titleFontPath, 45f);
+	static Font buttonFont = genFont(menuTextPath, 30f);
+	static Font titleFont2 = genFont(titleFontPath, 35f);
+	static Font gamePointsFont = genFont(pointsFontPath, 23f);
+	static Font levelFont = genFont(titleFontPath , 27f);
+	static Font levelPointsFont =genFont(pointsFontPath, 50f);
+	static Font infoFont = genFont(pointsFontPath, 27f);
+	static Font levelPointsFont2 = genFont(pointsFontPath, 27f);
+	static Font newGameFont = genFont(menuTextPath, 23f);
+
 	//Sounds
 	static Clip clip;
-	
+
+	private Factory() {
+
+	}
+
+
 	private static Font genFont(String path, float size) {
 		Font font = null;
 		try {
@@ -65,7 +74,10 @@ public class Factory {
 	}
 
 
-	public static void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Color foreg, Color backg, Font font, Integer sc) {
+	public static void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Pair<Color,Color> colors, Font font, Integer sc) {
+		Color foreg= colors.getKey();
+		Color backg= colors.getValue();
+
 		if(t!=null) b.setText(t);
 		if(size!=null) b.setPreferredSize(size);
 		if(ic!=null) b.setIcon(ic);
@@ -94,7 +106,7 @@ public class Factory {
 		return new ImageIcon(bufferedImage);
 	}
 
-	public static void corruptLevel(Integer n, JFrame frame, Game game, Controller cont, ArrayList<JButton> buttons, Boolean checkStatus) {
+	public static void corruptLevel(Integer n, JFrame frame, Game game, Controller cont, List<JButton> buttons, Boolean checkStatus) {
 		JPanel errorP = new JPanel();
 		errorP.setLayout(new BorderLayout());
 		JLabel peText = new JLabel();
@@ -155,17 +167,17 @@ public class Factory {
 
 		return ta;
 	}
-	
+
 	public static JPanel genPanel(Color bg, LayoutManager l) {
 		JPanel p = new JPanel();
 		p.setBackground(bg);
 		p.setLayout(l);
 		return p;
 	}
-	
+
 	public static JPanel genPanelBg(Color bg, Integer d1, Integer d2, Integer pictd1, Integer pictd2, ImageIcon icon) {
 		Image parkingImage= icon.getImage().getScaledInstance(500, Math.max(pictd1, pictd2), Image.SCALE_SMOOTH);		
-		
+
 		JPanel panelBg = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
@@ -177,7 +189,7 @@ public class Factory {
 		panelBg.setBounds(0, 0, 700, Math.max(d1, d2) ); 
 		return panelBg;
 	}
-	
+
 	public static void playSound(String soundFile) { 
 		File soundPath = new File(soundFile); 
 		if(clip!=null) {
@@ -192,14 +204,10 @@ public class Factory {
 			clip = AudioSystem.getClip(); 
 			clip.open(audioInputStream); 
 			clip.start(); } 
-		catch (UnsupportedAudioFileException e) { 
+		catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) { 
 			e.printStackTrace(); 
 		} 
-		catch (LineUnavailableException e) { 
-			e.printStackTrace(); } 
-		catch (IOException e) { 
-			e.printStackTrace(); } } 
-
+	}
 
 
 }

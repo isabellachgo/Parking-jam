@@ -10,9 +10,7 @@ public class Vehicle {
 	Set<Pair<Integer,Integer>> position;
 	Pair<Integer,Integer> frontLabel;
 	Pair<Integer,Integer> backLabel;
-	Pair<Integer,Integer> pix;
-	//Pair<Integer,Integer> backPix;
-	
+	Pair<Integer,Integer> pix;	
 	
 	public Vehicle(Character id ,boolean redCar,Pair<Integer,Integer> dimension, Set<Pair<Integer,Integer>> position) {
 		this.redCar=redCar;

@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
+import javafx.util.Pair;
 
 public class LevelsMenuView {
 
@@ -82,7 +83,7 @@ public class LevelsMenuView {
 		menuPanel.setBounds(50, 80, 207, 145);
 
 		JButton gamesB= new JButton("games menu");
-		Factory.setFormatButton(gamesB, null, buttonSize2, homeMIcon, Color.white, buttonColor, Factory.menuFont, SwingConstants.LEFT);
+		Factory.setFormatButton(gamesB, null, buttonSize2, homeMIcon, new Pair<>(Color.white, buttonColor), Factory.menuFont, SwingConstants.LEFT);
 		gamesB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -91,7 +92,7 @@ public class LevelsMenuView {
 			}
 		});
 		JButton saveB = new JButton("save game");
-		Factory.setFormatButton(saveB, null, buttonSize2, saveMIcon, Color.white, buttonColor,  Factory.menuFont, SwingConstants.LEFT);
+		Factory.setFormatButton(saveB, null, buttonSize2, saveMIcon, new Pair<>(Color.white, buttonColor),  Factory.menuFont, SwingConstants.LEFT);
 		saveB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -99,7 +100,7 @@ public class LevelsMenuView {
 			}
 		});
 		JButton closeB = new JButton("close Parking Jam");
-		Factory.setFormatButton(closeB, null, buttonSize2, closeMIcon, Color.white, buttonColor,  Factory.menuFont, SwingConstants.LEFT);
+		Factory.setFormatButton(closeB, null, buttonSize2, closeMIcon, new Pair<>(Color.white, buttonColor),  Factory.menuFont, SwingConstants.LEFT);
 		closeB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -112,7 +113,7 @@ public class LevelsMenuView {
 		menuPanel.add(closeB);
 
 		JButton menuB = new JButton();
-		Factory.setFormatButton(menuB, null, buttonSize, menuIcon, Color.white, buttonColor, null, null);
+		Factory.setFormatButton(menuB, null, buttonSize, menuIcon, new Pair<>(Color.white, buttonColor), null, null);
 		menuB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -141,7 +142,7 @@ public class LevelsMenuView {
 		
 		ArrayList<JButton> buttons = new ArrayList<>();
 		l1B = new JButton();
-		Factory.setFormatButton(l1B, "1", levelBSize, null, null, null,  Factory.levelFont, null);
+		Factory.setFormatButton(l1B, "1", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
 		Factory.levelsStatus(l1B, game);
 		l1B.addActionListener(new ActionListener() {
 			@Override
@@ -157,7 +158,7 @@ public class LevelsMenuView {
 			}
 		});
 		l2B = new JButton();
-		Factory.setFormatButton(l2B, "2", levelBSize, null, null, null,  Factory.levelFont, null);
+		Factory.setFormatButton(l2B, "2", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
 		Factory.levelsStatus(l2B, game);
 		l2B.addActionListener(new ActionListener() {
 			@Override
@@ -173,7 +174,7 @@ public class LevelsMenuView {
 			}
 		});
 		l3B = new JButton();
-		Factory.setFormatButton(l3B, "3", levelBSize, null, null, null,  Factory.levelFont, null);
+		Factory.setFormatButton(l3B, "3", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
 		Factory.levelsStatus(l3B, game);
 		l3B.addActionListener(new ActionListener() {
 			@Override
@@ -189,7 +190,7 @@ public class LevelsMenuView {
 			}
 		});
 		l4B = new JButton();
-		Factory.setFormatButton(l4B, "4", levelBSize, null, null, null,  Factory.levelFont, null);
+		Factory.setFormatButton(l4B, "4", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
 		Factory.levelsStatus(l4B, game);
 		l4B.addActionListener(new ActionListener() {
 			@Override

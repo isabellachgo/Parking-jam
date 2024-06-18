@@ -24,7 +24,7 @@ public class Level  {
 	private Integer dimensionX;
 	private Integer dimensionY;
 	private String title;
-	private Pair<Integer,Integer> exit_position;
+	private Pair<Integer,Integer> exitPos;
 	private Map<Character,Vehicle> cars;
 	private Integer levelPoints;
 	private Character[][] initialBoard;
@@ -33,10 +33,11 @@ public class Level  {
 	private Deque<Map<Character, Set<Pair<Integer, Integer>>>> vehiclePositionHistory;
 	private Integer nLevel;
 	private static final Logger LOGGER = Logger.getLogger(Level.class);
+	private String msg = "The movement is not valid because the position is occupied";
 
-	public Level (Integer n_level) throws IOException{
-		bReader = new BoardReader(n_level);
-		nLevel=n_level;
+	public Level (Integer nl) throws IOException{
+		bReader = new BoardReader(nl);
+		nLevel=nl;
 		dimensionX = bReader.getDimensionX();
 		dimensionY = bReader.getDimensionY();
 		title = bReader.getTitle();
@@ -51,12 +52,11 @@ public class Level  {
 		title = bReader.getTitle();
 		board = bReader.getBoard();
 		buildLevel();
-
 	}
 
 	private void buildLevel() {
 		if(board!=null) {
-			exit_position = bReader.getExit();
+			exitPos = bReader.getExit();
 			cars = bReader.getCars();
 			this.vehiclePositionHistory = new ArrayDeque<>();
 			this.initialBoard= cloneBoard();
@@ -95,7 +95,7 @@ public class Level  {
 	}
 
 	public Pair<Integer,Integer> getExit(){
-		return exit_position;
+		return exitPos;
 	}
 
 	public Character[][] getBoard(){
@@ -233,7 +233,7 @@ public class Level  {
 			}
 
 			if (!Goal && board[newX][newY] != null &&  !currentPosition.contains(position) ) {
-				LOGGER.info("The movement is not valid because the position is occupied");
+				LOGGER.info(msg);
 				return false;
 			}
 
@@ -241,25 +241,25 @@ public class Level  {
 			switch (direction) {
 			case 'U': 
 				if (car.getDimension().getKey() != 1) { // An horizontal vehicle cannot move up
-					LOGGER.info("The movement is not valid because the position is occupied");
+					LOGGER.info(msg);
 					return false;
 				}
 				break;
 			case 'D': 
 				if (car.getDimension().getKey() != 1) { /// An horizontal vehicle cannot move down
-					LOGGER.info("The movement is not valid because the position is occupied");
+					LOGGER.info(msg);
 					return false;
 				}
 				break;
 			case 'L': 
 				if (car.getDimension().getValue() != 1) { // A vertical vehicle cannot move to the left
-					LOGGER.info("The movement is not valid because the position is occupied");
+					LOGGER.info(msg);
 					return false;
 				}
 				break;
 			case 'R': 
 				if (car.getDimension().getValue() != 1) { // A vertical vehicle cannot move to the right
-					LOGGER.info("The movement is not valid because the position is occupied");
+					LOGGER.info(msg);
 					return false;
 				}
 				break;

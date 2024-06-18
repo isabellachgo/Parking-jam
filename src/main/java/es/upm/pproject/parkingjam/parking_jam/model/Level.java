@@ -159,10 +159,10 @@ public class Level  {
 		Set<Pair<Integer, Integer>> newPosition = new HashSet<>();
 
 		for (Pair<Integer, Integer> position : currentPosition) {
-			Integer Y = position.getValue();
-			Integer X = position.getKey();
-			Integer newY = Y;
-			Integer newX = X;
+			Integer y = position.getValue();
+			Integer x = position.getKey();
+			Integer newY = y;
+			Integer newX = x;
 
 			// Calcules the new coordinates depending on the direction and distance
 			switch (direction) {
@@ -183,9 +183,9 @@ public class Level  {
 			}
 
 			// Adds the new position to the set of positions
-			newPosition.add(new Pair<Integer,Integer>(newX, newY));
+			newPosition.add(new Pair<>(newX, newY));
 		}
-		if(!CheckMovement(car, direction,currentPosition,newPosition) ) {
+		if(!checkMovement(car, direction,currentPosition,newPosition) ) {
 			LOGGER.info("The board could not be updated to the new position");
 			return null;
 		}
@@ -215,8 +215,8 @@ public class Level  {
 	}
 
 	// Checks if the movement is valid
-	private boolean CheckMovement(Vehicle car, char direction, Set<Pair<Integer, Integer>> currentPosition, Set<Pair<Integer, Integer>> newPosition) {
-		boolean Goal=false;
+	private boolean checkMovement(Vehicle car, char direction, Set<Pair<Integer, Integer>> currentPosition, Set<Pair<Integer, Integer>> newPosition) {
+		boolean goal=false;
 		for (Pair<Integer, Integer> position : newPosition) {
 			Integer newX = position.getKey();
 			Integer newY = position.getValue();
@@ -229,10 +229,10 @@ public class Level  {
 				if(!car.getRedCar()) {								     // a vehicle that is not the read one cannot be in the exit spot
 					return false;
 				}
-				else Goal=true;
+				else goal=true;
 			}
 
-			if (!Goal && board[newX][newY] != null &&  !currentPosition.contains(position) ) {
+			if (!goal && board[newX][newY] != null &&  !currentPosition.contains(position) ) {
 				LOGGER.info(msg);
 				return false;
 			}
@@ -295,19 +295,7 @@ public class Level  {
 		}
 	}
 
-	// prints the level title, dimensions and board
-	public void printBoard () {
-		System.out.println("title: "+ title);
-		System.out.println("size: "+ dimensionX+" "+dimensionY);
 
-		for(int i=0; i<dimensionY; i++) {
-			for(int j=0; j<dimensionX; j++) {
-				if(board[j][i]==null) System.out.print(" ");
-				else System.out.print(board[j][i]);
-			}
-			System.out.println("");
-		}
-	}
 	// checks if a position is empy in the board
 	public boolean posicionValida(Vehicle car, Pair<Integer, Integer> box) {
 		boolean result = false;
@@ -352,7 +340,8 @@ public class Level  {
 	}
 	// finds what vehicle has moved comparing it with each previous position
 	private Character findChangedVehicle(Map<Character, Set<Pair<Integer, Integer>>> oldState, Map<Character, Set<Pair<Integer, Integer>>> newState) {
-		for (Character vehicleId : oldState.keySet()) {
+		for (Map.Entry<Character, Set<Pair<Integer, Integer>>> e : oldState.entrySet()) {
+			Character vehicleId = e.getKey();
 			Set<Pair<Integer, Integer>> oldPosition = oldState.get(vehicleId);
 			Set<Pair<Integer, Integer>> newPosition = newState.get(vehicleId);
 			if (!oldPosition.equals(newPosition)) {

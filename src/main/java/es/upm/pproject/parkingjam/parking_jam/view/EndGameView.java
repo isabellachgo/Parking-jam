@@ -131,7 +131,7 @@ public class EndGameView {
         buttonpanel.setBackground(winPColor);
 
         JButton gamesB = new JButton(homeMIcon);
-        setFormatButton(gamesB, null, buttonSize, null, null, buttonColor, null, null);       
+        Factory.setFormatButton(gamesB, null, buttonSize, null, null, buttonColor, null, null);       
         gamesB.setAlignmentX(JButton.CENTER_ALIGNMENT);
         gamesB.addActionListener(new ActionListener() {
             @Override
@@ -142,7 +142,7 @@ public class EndGameView {
         });
 
         JButton closeB = new JButton(closeMIcon);
-        setFormatButton(closeB, null, buttonSize, null, null, buttonColor, null, null);
+        Factory.setFormatButton(closeB, null, buttonSize, null, null, buttonColor, null, null);
         closeB.setAlignmentX(JButton.CENTER_ALIGNMENT);
         closeB.addActionListener(new ActionListener() {
             @Override
@@ -151,7 +151,7 @@ public class EndGameView {
             }
         });
         JButton saveB = new JButton(saveMIcon);
-        setFormatButton(saveB, null, buttonSize, null, Color.white, buttonColor, null, SwingConstants.LEFT);
+        Factory.setFormatButton(saveB, null, buttonSize, null, Color.white, buttonColor, null, SwingConstants.LEFT);
 		saveB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
@@ -194,14 +194,5 @@ public class EndGameView {
 
         return new ImageIcon(bufferedImage);
     }
-    
-    private void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Color foreg, Color backg, Font font, Integer sc) {
-		if(t!=null) b.setText(t);
-		if(size!=null) b.setPreferredSize(size);
-		if(ic!=null) b.setIcon(ic);
-		if(foreg!=null) b.setForeground(foreg);
-		if(backg!=null) b.setBackground(backg);
-		if(font!=null) b.setFont(font);
-		if(sc!=null) b.setHorizontalAlignment(sc);
-	}
+ 
 }

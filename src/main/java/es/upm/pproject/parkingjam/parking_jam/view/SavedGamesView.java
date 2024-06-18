@@ -113,7 +113,7 @@ public class SavedGamesView {
 		noGamesTextL.setForeground(Color.white);
 		
 		JButton goBackB = new JButton();
-		setFormatButton(goBackB, null, buttonSize, backIcon, null, buttonColor, null, null);
+		Factory.setFormatButton(goBackB, null, buttonSize, backIcon, null, buttonColor, null, null);
 		goBackB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -139,7 +139,7 @@ public class SavedGamesView {
 		ArrayList<JButton> buttons = new ArrayList<>();
 		for(String g : savedGames) {
 			JButton b = new JButton(" "+g);
-			setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
+			Factory.setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
 			b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -236,15 +236,4 @@ public class SavedGamesView {
 		return new ImageIcon(resizedImg);
 	}
 	
-	private void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Color foreg, Color backg, Font font, Integer sc) {
-		if(t!=null) b.setText(t);
-		if(size!=null) b.setPreferredSize(size);
-		if(ic!=null) b.setIcon(ic);
-		if(foreg!=null) b.setForeground(foreg);
-		if(backg!=null) b.setBackground(backg);
-		if(font!=null) b.setFont(font);
-		if(sc!=null) b.setHorizontalAlignment(sc);
-	}
-	
-
 }

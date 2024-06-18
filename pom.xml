@@ -26,21 +26,11 @@
         <maven.jar>3.2.0</maven.jar>
         <maven.install>3.0.0-M1</maven.install>
 		
-
-		<!-- Copiado del otro poryecto
 		<sonar.language>java</sonar.language>
 		<sonar.host.url>https://costa.ls.fi.upm.es/sonar</sonar.host.url>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
-		<sonar.projectName>miniproject-210241</sonar.projectName>
-		<sonar.projectKey>es.upm.pproject.miniproject:miniproject:miniproject:210241</sonar.projectKey>
-		<jacoco.version>0.8.6</jacoco.version>
-		<sonar.scm.provider>git</sonar.scm.provider>
--->
-		<sonar.language>java</sonar.language>
-		<sonar.host.url>https://costa.ls.fi.upm.es/sonar</sonar.host.url>
-		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
-		<sonar.projectName>ParkingJam-210115</sonar.projectName>
-		<sonar.projectKey>es.upm.pproject.parkingjam:parking-jam:ParkingJam:210115</sonar.projectKey>
+		<sonar.projectName>ParkingJam-210241</sonar.projectName>
+		<sonar.projectKey>es.upm.pproject.parkingjam:parking-jam:ParkingJam:210241</sonar.projectKey>
 		 <sonar.coverage.exclusions>**/view/**,**/controller/**</sonar.coverage.exclusions>
 		<jacoco.version>0.8.6</jacoco.version>
 		<sonar.scm.provider>git</sonar.scm.provider>
@@ -184,9 +174,9 @@
        <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <includes>
+              <!--  <includes>
                     <include>**/*.txt</include>
-                </includes>
+                </includes>-->
             </resource>
         </resources> 
 

@@ -98,13 +98,12 @@ public class GamesMenuView {
 		ImageIcon carIcon = resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
 		ImageIcon loadIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 		
-		
 		// Imagenes:
 		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 430), Image.SCALE_SMOOTH);		
 		
 		// Elementos:
 		JButton loadGameB = new JButton("Load game");
-		setFormatButton(loadGameB, null, buttonSize2, loadIcon, Color.white, buttonColor, menuFont, SwingConstants.CENTER);
+		Factory.setFormatButton(loadGameB, null, buttonSize2, loadIcon, Color.white, buttonColor, menuFont, SwingConstants.CENTER);
 		loadGameB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -146,12 +145,10 @@ public class GamesMenuView {
 	    panelErrorNewg.add(textArea, BorderLayout.CENTER);
 		
 		JButton addGameB = new JButton("New game");
-		setFormatButton(addGameB, null, gameButtonSize, addIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
+		Factory.setFormatButton(addGameB, null, gameButtonSize, addIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
 		addGameB.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("new game button pressed");
-				
+			public void actionPerformed(ActionEvent e) {				
 				JDialog dialog = new JOptionPane(panelGameName, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, carIcon).createDialog(frame, "New Game");
 				dialog.setLocationRelativeTo(frame);
 				dialog.setVisible(true);
@@ -178,7 +175,7 @@ public class GamesMenuView {
 		ArrayList<Game> games = menu.getGames();
 		for(Game g : games) {
 			JButton b = new JButton(" "+g.getName());
-			setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
+			Factory.setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
 			b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -280,14 +277,6 @@ public class GamesMenuView {
 		return new ImageIcon(resizedImg);
 	}
 	
-	private void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Color foreg, Color backg, Font font, Integer sc) {
-		if(t!=null) b.setText(t);
-		if(size!=null) b.setPreferredSize(size);
-		if(ic!=null) b.setIcon(ic);
-		if(foreg!=null) b.setForeground(foreg);
-		if(backg!=null) b.setBackground(backg);
-		if(font!=null) b.setFont(font);
-		if(sc!=null) b.setHorizontalAlignment(sc);
-	}
+	
 
 }

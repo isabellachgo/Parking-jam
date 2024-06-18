@@ -72,7 +72,7 @@ public class controller {
 		
 		estado=n;
 		cellSize = (400 + (lvl.getDimensionX() / 2)) / (lvl.getDimensionX() - 2);
-		g.setLevel(n, lvl);
+		//g.setLevel(n, lvl);
 		lvlAct = n;
 		Map<Character, Vehicle> vehicles = lvl.getCars();
 		Map<Character, Pair<Integer, Integer>> mapPositions = new HashMap<>();

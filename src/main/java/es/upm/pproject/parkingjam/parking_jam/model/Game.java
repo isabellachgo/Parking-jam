@@ -111,7 +111,6 @@ public class Game {
 
 	public  void guardarGame(Level level) throws IOException
 	{
-
 		String rutaFichero = System.getProperty("user.dir");  
 		String rutaDirectorio=rutaFichero+"/src/main/gamesSaved/"+ gameName ;
 
@@ -129,7 +128,10 @@ public class Game {
 			// Escribir en el fichero
 
 			Iterator<Entry<Integer, Level>> it = listaLevels.entrySet().iterator();
-			for (int i=0; i <listaLevels.size()-1 && it.hasNext(); i++)
+			int last;
+			if(level!=null) last=listaLevels.size()-1;
+			else last=listaLevels.size();
+			for (int i=0; i <last && it.hasNext(); i++)
 			{    
 				Entry<Integer, Level> e= it.next();
 				bw.write(e.getKey()+" : " + e.getValue().getLevelPoint());

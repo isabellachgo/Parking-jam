@@ -181,14 +181,14 @@
 
 
         </plugins>
-        <resources>
+       <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.txt</include>
                 </includes>
             </resource>
-        </resources>
+        </resources> 
 
     </build>
 </project>

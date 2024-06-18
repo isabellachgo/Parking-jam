@@ -87,7 +87,6 @@ public class StartView {
         timer.start();
 
         startButton.addActionListener(e -> {
-            System.out.println("Start game button pressed");
             frame.getContentPane().removeAll();
             cont.gamesMenu(menu);
         });

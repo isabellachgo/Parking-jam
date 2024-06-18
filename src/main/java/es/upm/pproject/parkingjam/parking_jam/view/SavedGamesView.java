@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,18 +20,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
-import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 
 
 public class SavedGamesView {
 
 	private JFrame frame;
-	private controller cont;
+	private Controller cont;
 	private ArrayList<String> savedGames;
 
-	public SavedGamesView(JFrame f, ArrayList<String> savedGames, controller cont)	{
+	public SavedGamesView(JFrame f, ArrayList<String> savedGames, Controller cont)	{
 		this.frame= f;
 		this.savedGames = savedGames;
 		this.cont= cont;
@@ -64,9 +60,6 @@ public class SavedGamesView {
 		ImageIcon carIcon = Factory.resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
 		ImageIcon loadIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 		ImageIcon backIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/back.png")),30,30);
-
-		// Imagenes:
-		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 450), Image.SCALE_SMOOTH);		
 
 		// Elementos:
 		JLabel titleL = new JLabel();
@@ -120,13 +113,12 @@ public class SavedGamesView {
 		}
 
 		// Estructura:
-		JPanel panel = new JPanel();
-		panel.setBackground(bg);
-		panel.setLayout(new BorderLayout());
+		JPanel panel = Factory.genPanel(bg, new BorderLayout());
 
 		JPanel panelNorth = new JPanel();
 		panelNorth.setBackground(bg);
 		panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
+		
 		JPanel row0= new JPanel(new FlowLayout(FlowLayout.LEFT));
 		row0.setBackground(bg);
 		row0.add(Box.createHorizontalStrut(30));
@@ -147,15 +139,7 @@ public class SavedGamesView {
 		panelCenter.setPreferredSize(new Dimension(700,Math.max(gamesH, 540)));
 		panelCenter.setBounds(0,0,700, Math.max(gamesH, 540));
 
-		JPanel panelBg = new JPanel() {
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				g.drawImage(parkingImage,100, 30, this);
-			}
-		};
-		panelBg.setBackground(bg);
-		panelBg.setBounds(0, 0, 700, Math.max(gamesH, 540) ); 
+		JPanel panelBg = Factory.genPanelBg(bg, gamesH, 540, pictureH, 450, parkingIcon);
 
 		JPanel panelElem = new JPanel();
 		panelElem.setBounds(140, 70, 420, listH);

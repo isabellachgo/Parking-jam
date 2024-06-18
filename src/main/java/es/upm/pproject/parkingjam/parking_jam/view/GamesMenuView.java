@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -24,9 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
-import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 
@@ -34,9 +30,9 @@ public class GamesMenuView {
 
 	private JFrame frame ;
 	private Menu menu;
-	private controller cont;
+	private Controller cont;
 
-	public GamesMenuView(JFrame frame, Menu menu, controller cont) {
+	public GamesMenuView(JFrame frame, Menu menu, Controller cont) {
 		this.frame = frame;
 		this.menu = menu;
 		this.cont = cont;
@@ -66,10 +62,7 @@ public class GamesMenuView {
 		ImageIcon addIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/add_black.png")),40,40);
 		ImageIcon carIcon = Factory.resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
 		ImageIcon loadIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
-		
-		// Imagenes:
-		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 430), Image.SCALE_SMOOTH);		
-		
+				
 		// Elementos:
 		JButton loadGameB = new JButton("Load game");
 		Factory.setFormatButton(loadGameB, null, buttonSize2, loadIcon, Color.white, buttonColor, Factory.menuFont, SwingConstants.CENTER);
@@ -148,13 +141,12 @@ public class GamesMenuView {
 		}
 				
 		// Estructura:
-		JPanel panel = new JPanel();
-		panel.setBackground(bg);
-		panel.setLayout(new BorderLayout());
+		JPanel panel = Factory.genPanel(bg, new BorderLayout());
 		
 		JPanel panelNorth = new JPanel();
 		panelNorth.setBackground(bg);
 		panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
+		
 		JPanel row0= new JPanel(new FlowLayout(FlowLayout.LEFT));
 		row0.setBackground(bg);
 		row0.add(new JLabel(" "));
@@ -184,15 +176,7 @@ public class GamesMenuView {
 		panelGames.setPreferredSize(new Dimension(700,Math.max(gamesH, 500)));
 		panelGames.setBounds(0,0,700, Math.max(gamesH, 500));
 		
-		JPanel panelBg = new JPanel() {
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				g.drawImage(parkingImage,100, 30, this);
-			}
-		};
-		panelBg.setBackground(bg);
-		panelBg.setBounds(0, 0, 700, Math.max(gamesH, 500) ); 
+		JPanel panelBg = Factory.genPanelBg(bg, gamesH, 500, pictureH, 430, parkingIcon);
 		
 		JPanel panelElem = new JPanel();
 		panelElem.setBounds(140, 70, 420, listH);

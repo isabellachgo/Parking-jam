@@ -5,14 +5,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
@@ -30,7 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
-import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
 
 public class Factory {
@@ -49,10 +50,10 @@ public class Factory {
 	static Font infoFont = genFont("src/main/resources/fonts/pointsfont.ttf", 27f);
 	static Font levelPointsFont2 = genFont("src/main/resources/fonts/pointsfont.ttf", 27f);
 	static Font newGameFont = genFont("src/main/resources/fonts/menuText.ttf", 23f);
+	
 	//Sounds
-  static Clip clip;
-
-
+	static Clip clip;
+	
 	private static Font genFont(String path, float size) {
 		Font font = null;
 		try {
@@ -93,7 +94,7 @@ public class Factory {
 		return new ImageIcon(bufferedImage);
 	}
 
-	public static void corruptLevel(Integer n, JFrame frame, Game game, controller cont, ArrayList<JButton> buttons, Boolean checkStatus) {
+	public static void corruptLevel(Integer n, JFrame frame, Game game, Controller cont, ArrayList<JButton> buttons, Boolean checkStatus) {
 		JPanel errorP = new JPanel();
 		errorP.setLayout(new BorderLayout());
 		JLabel peText = new JLabel();
@@ -154,6 +155,29 @@ public class Factory {
 
 		return ta;
 	}
+	
+	public static JPanel genPanel(Color bg, LayoutManager l) {
+		JPanel p = new JPanel();
+		p.setBackground(bg);
+		p.setLayout(l);
+		return p;
+	}
+	
+	public static JPanel genPanelBg(Color bg, Integer d1, Integer d2, Integer pictd1, Integer pictd2, ImageIcon icon) {
+		Image parkingImage= icon.getImage().getScaledInstance(500, Math.max(pictd1, pictd2), Image.SCALE_SMOOTH);		
+		
+		JPanel panelBg = new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(parkingImage,100, 30, this);
+			}
+		};
+		panelBg.setBackground(bg);
+		panelBg.setBounds(0, 0, 700, Math.max(d1, d2) ); 
+		return panelBg;
+	}
+	
 	public static void playSound(String soundFile) { 
 		File soundPath = new File(soundFile); 
 		if(clip!=null) {

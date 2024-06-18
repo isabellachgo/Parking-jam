@@ -25,14 +25,14 @@ import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
 
 
-import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
 
 public class LevelsMenuView {
 
 	private JFrame frame;
 	private Game game;
-	private controller cont;
+	private Controller cont;
 
 	
 	
@@ -41,7 +41,7 @@ public class LevelsMenuView {
 	private JButton l3B;
 	private JButton l4B;
 
-	public LevelsMenuView(JFrame frame, Game game, controller cont) {
+	public LevelsMenuView(JFrame frame, Game game, Controller cont) {
 		this.frame = frame;
 		this.game = game;
 		this.cont = cont;
@@ -273,52 +273,6 @@ public class LevelsMenuView {
 		panel.add(panelCenter, BorderLayout.CENTER);
 		frame.add(panel);
 	}
-/*
-	private void levelsStatus(JButton b) {
-		int last = game.getUltimoLevelPassed() + 1;
-		if(Integer.parseInt(b.getText()) <= last && game.getOkLevel(Integer.parseInt(b.getText())) ) {
-			b.setBackground(levelBColor);
-			b.setEnabled(true);
-		} else {
-			b.setBackground(lockedLevelBColor);
-			b.setEnabled(false);
-		}
-	}
-	
-	private void corruptLevel(Integer n) {
-		JPanel errorP = new JPanel();
-		errorP.setLayout(new BorderLayout());
-		JLabel peText = new JLabel();
-		peText.setFont(menuFont);
-		peText.setOpaque(true);
-		peText.setForeground(Color.red);
-		peText.setText("Sorry, this level's file is corrupt, play the next level.");
-		errorP.add(peText, BorderLayout.CENTER);
-		
-		JDialog dialog = new JOptionPane(errorP, JOptionPane.INFORMATION_MESSAGE).createDialog(frame, "Corrupt level");
-		dialog.setLocationRelativeTo(frame);
-		dialog.setVisible(true);
-		Object res = ((JOptionPane) dialog.getContentPane().getComponent(0)).getValue();
 
-		game.setOkLevel(n, false);
-		game.setUltimoLevelPassed(n);
-		levelsStatus(l1B);
-		levelsStatus(l2B);
-		levelsStatus(l3B);
-		levelsStatus(l4B);
-		
-		if( res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
-			System.out.println("Ok new game button pressed");
-			
-			frame.getContentPane().removeAll();
-			try {
-				if(n==4) cont.endGame();
-				else if(cont.showLevel(n+1) == 1) corruptLevel(n+1);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} 
-	}
-	*/
 	
 }

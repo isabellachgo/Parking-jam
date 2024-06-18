@@ -3,12 +3,8 @@ package es.upm.pproject.parkingjam.parking_jam.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 
 
 import javax.swing.ImageIcon;
@@ -20,15 +16,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
-import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 
 public class StartView {
     private JFrame frame;
     private Menu menu;
-    private controller cont;
+    private Controller cont;
 
-    public StartView(JFrame frame, controller cont) {
+    public StartView(JFrame frame, Controller cont) {
         this.frame = frame;
         this.menu = new Menu();
         this.cont = cont;
@@ -37,21 +33,6 @@ public class StartView {
     }
 
     private void initSV() {
-        // Fuentes:
-       /* Font titleFont = null;
-        try {
-            titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(45f);
-        } catch (FontFormatException | IOException e1) {
-            e1.printStackTrace();
-           
-        }
-        Font buttonFont = null;
-        try {
-            buttonFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(30f);
-        } catch (FontFormatException | IOException e1) {
-            e1.printStackTrace();
-        }*/
-
         // Dimensiones:
         Dimension buttonSize = new Dimension(200, 50);
 

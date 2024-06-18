@@ -41,12 +41,24 @@ public class Level  {
 		dimensionY = bReader.getDimensionY();
 		title = bReader.getTitle();
 		board = bReader.getBoard();
+		buildLevel();
+
+	}
+	public Level (String filepath) throws  IOException{
+		bReader = new BoardReader(filepath);
+		dimensionX = bReader.getDimensionX();
+		dimensionY = bReader.getDimensionY();
+		title = bReader.getTitle();
+		board = bReader.getBoard();
+		buildLevel();
+
+	}
+
+	private void buildLevel() {
 		if(board!=null) {
 			exit_position = bReader.getExit();
 			cars = bReader.getCars();
-
 			this.vehiclePositionHistory = new ArrayDeque<>();
-
 			this.initialBoard= cloneBoard();
 			this.boardHistory = new ArrayDeque<>();
 			boardHistory.add(initialBoard);
@@ -56,32 +68,10 @@ public class Level  {
 			}	
 			vehiclePositionHistory.add(cloneCarPositions());
 		}
-		this.levelPoints= 0;
-
+		this.levelPoints=0;
 	}
-	public Level (String filepath) throws  IOException{
-		bReader = new BoardReader(filepath);
-		dimensionX = bReader.getDimensionX();
-		dimensionY = bReader.getDimensionY();
-		title = bReader.getTitle();
-		board = bReader.getBoard();
-		exit_position = bReader.getExit();
-		cars = bReader.getCars();
 
-		this.vehiclePositionHistory = new ArrayDeque<>();
 
-		this.initialBoard= cloneBoard();
-		this.boardHistory = new ArrayDeque<>();
-		boardHistory.add(initialBoard);
-		this.initialVehiclePositions = new HashMap<>();
-		for(Entry<Character, Vehicle> vh : cars.entrySet()) {
-			initialVehiclePositions.put(vh.getKey(), vh.getValue().getPosition());
-		}	
-		vehiclePositionHistory.add(cloneCarPositions());
-
-		this.levelPoints= 0;
-
-	}
 	public Integer getNLevel() {
 		return nLevel;
 	}
@@ -141,7 +131,7 @@ public class Level  {
 	}
 
 	public boolean move (Vehicle car, char direction, int distance ) {
-		
+
 		boolean moved=true;
 		if(distance ==0) return false;
 
@@ -344,7 +334,7 @@ public class Level  {
 				}	
 			}
 		}
-		
+
 		return result;
 	}
 	// resets the level into its original state
@@ -389,7 +379,7 @@ public class Level  {
 		}
 		LOGGER.info("The undo could not be completed");
 		return ' ';
-		
+
 	}
 
 }

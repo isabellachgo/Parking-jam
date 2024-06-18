@@ -32,7 +32,7 @@ import javax.swing.SwingConstants;
 
 import javax.swing.border.BevelBorder;
 
-import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
 
@@ -46,7 +46,7 @@ public class view {
 	private Map <Character,Pair<Integer,Integer>> mapCoordenadas;
 	private Level level;
 	private char carSelect;
-	private controller controller;
+	private Controller controller;
 	private Graphics grafic;
 	private Component comp;
 	private int dimensionMapaX;
@@ -84,7 +84,7 @@ public class view {
 	private JFrame frame;
 
 
-	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller, int GamePoints) {
+	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,Controller controller, int GamePoints) {
 		this.frame = fm;
 		this.mapVehiculo = level.getCars();
 		this.mapPosiciones=posiciones;
@@ -706,33 +706,5 @@ public class view {
 		}
 
 	}
-/*
-	private void corruptLevel(Integer n) {
-		JPanel errorP = new JPanel();
-		errorP.setLayout(new BorderLayout());
-		JLabel peText = new JLabel();
-		peText.setFont(menuFont);
-		peText.setOpaque(true);
-		peText.setForeground(Color.red);
-		peText.setText("Sorry, this level's file is corrupt, play the next level.");
-		errorP.add(peText, BorderLayout.CENTER);
 
-		JDialog dialog = new JOptionPane(errorP, JOptionPane.INFORMATION_MESSAGE).createDialog(frame, "Corrupt level");
-		dialog.setLocationRelativeTo(frame);
-		dialog.setVisible(true);
-		Object res = ((JOptionPane) dialog.getContentPane().getComponent(0)).getValue();
-
-		if(res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
-			System.out.println("Ok new game button pressed");
-
-			frame.getContentPane().removeAll();
-			try {
-				if(n==4) controller.endGame();
-				else if(controller.showLevel(n+1) == 1) corruptLevel(n+1);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} 
-	}
-*/
 }

@@ -17,7 +17,7 @@ public class BoardReader {
 	private String title;
 	private Integer dimX;
 	private Integer dimY;
-	private Pair<Integer,Integer> exit_p;
+	private Pair<Integer,Integer> exitp;
 	private Map<Character, Vehicle> cars;
 	private Character[][] board;
 
@@ -74,7 +74,7 @@ public class BoardReader {
 	}
 
 	public Pair<Integer,Integer> getExit(){
-		return exit_p;
+		return exitp;
 	}
 
 	public Character[][] getBoard() {
@@ -86,11 +86,11 @@ public class BoardReader {
 	// Reads the file and returns a character array whit the file board if it represents a valid level, otherwise it returns null.
 	// A map is also filled in with the cars on the board
 	private Character[][] createBoard(){
-		int n_exit=0;
+		int nExit=0;
 		String line;
 		Character c;
 		cars = new HashMap<>();
-		Character[][] board = new Character[dimX][dimY];
+		Character[][] boardAux = new Character[dimX][dimY];
 
 		for(int i=0; i<dimY; i++) {
 			try {
@@ -98,18 +98,18 @@ public class BoardReader {
 
 				for(int j=0; j<dimX; j++) {
 					c = line.charAt(j);
-					board[j][i] = c;
+					boardAux[j][i] = c;
 					switch(c) {
 					case '+':
 						break;
 
 					case '@':
-						exit_p = new Pair<Integer,Integer> (j,i);
-						n_exit++;
+						exitp = new Pair<> (j,i);
+						nExit++;
 						break;
 
 					case ' ':
-						board[j][i] = null;
+						boardAux[j][i] = null;
 						break;
 
 					default:
@@ -126,7 +126,7 @@ public class BoardReader {
 						} else {
 							Vehicle car = cars.get(c);
 							Set<Pair<Integer,Integer>> positions = car.getPosition();
-							positions.add(new Pair<Integer, Integer>(j,i));
+							positions.add(new Pair<>(j,i));
 							car.setPosition(positions);
 						}
 					}
@@ -138,18 +138,18 @@ public class BoardReader {
 		}
 
 		// check that there is an exit in valid position
-		if(n_exit != 1) return null; //error: no tiene salida o tiene más de una
-		if((exit_p.getKey()==0 && exit_p.getValue()==0)
-				|| (exit_p.getKey()==0 && exit_p.getValue()==dimY-1)
-				|| (exit_p.getKey()==dimX-1 && exit_p.getValue()==0)
-				|| (exit_p.getKey()==dimX-1 && exit_p.getValue()==dimY-1)) return null;
+		if(nExit != 1) return null; //error: no tiene salida o tiene más de una
+		if((exitp.getKey()==0 && exitp.getValue()==0)
+				|| (exitp.getKey()==0 && exitp.getValue()==dimY-1)
+				|| (exitp.getKey()==dimX-1 && exitp.getValue()==0)
+				|| (exitp.getKey()==dimX-1 && exitp.getValue()==dimY-1)) return null;
 
 		// check that there is a redcar
 		if(cars.get('*')==null || cars.get('*').getPosition().size() != 2) return null;
 
 		Iterator<Vehicle> it = cars.values().iterator();
 		while(it.hasNext()) {
-			Vehicle car = (Vehicle) it.next();
+			Vehicle car = it.next();
 
 			// check car size
 			int length = car.getPosition().size();
@@ -166,25 +166,12 @@ public class BoardReader {
 			}
 			if(aux1==null || aux2==null) return null; 
 			else {
-				if((aux1.getKey()).equals(aux2.getKey())) car.setDimension(new Pair<Integer, Integer>(1,length));
+				if((aux1.getKey()).equals(aux2.getKey())) car.setDimension(new Pair<>(1,length));
 				else car.setDimension(new Pair<>(length, 1));
 			}					
 		}
 
-		return board;
+		return boardAux;
 	}
 
-	// prints the level title, dimensions and board
-	public void printBoard () {
-		System.out.println("title: "+ title);
-		System.out.println("size: "+ dimX+" "+dimY);
-
-		for(int i=0; i<dimY; i++) {
-			for(int j=0; j<dimX; j++) {
-				if(board[j][i]==null) System.out.print(" ");
-				else System.out.print(board[j][i]);
-			}
-			System.out.println("");
-		}
-	}
 }

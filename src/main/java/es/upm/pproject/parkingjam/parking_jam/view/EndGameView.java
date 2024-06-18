@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
 import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 
@@ -14,9 +14,9 @@ public class EndGameView {
     private JFrame frame;
     private Menu menu;
     private Game game;
-    private controller cont;
+    private Controller cont;
 
-    public EndGameView(JFrame frame, Menu menu, Game g, controller cont) {
+    public EndGameView(JFrame frame, Menu menu, Game g, Controller cont) {
         this.frame = frame;
         this.menu = menu;
         this.cont = cont;

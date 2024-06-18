@@ -19,7 +19,6 @@ import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
 import es.upm.pproject.parkingjam.parking_jam.view.EndGameView;
-import es.upm.pproject.parkingjam.parking_jam.view.Factory;
 import es.upm.pproject.parkingjam.parking_jam.view.GamesMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.SavedGamesView;
@@ -27,8 +26,8 @@ import es.upm.pproject.parkingjam.parking_jam.view.StartView;
 import es.upm.pproject.parkingjam.parking_jam.view.view;
 import javafx.util.Pair;
 
-public class controller {
-	private static final Logger LOGGER = Logger.getLogger(controller.class);
+public class Controller {
+	private static final Logger LOGGER = Logger.getLogger(Controller.class);
 	JFrame f;
 	Game g;
 	Menu m;
@@ -48,7 +47,7 @@ public class controller {
 	Integer lvlAct;
 	Integer estado =null;
 
-	public controller() { 
+	public Controller() { 
 		f = new JFrame();
 		f.setTitle("Parking Game");
 		f.setSize(700, 700);
@@ -59,7 +58,7 @@ public class controller {
 		gl = new GamesList();
 		gl.loadList();
 
-		StartView sv= new StartView(f,this);
+		new StartView(f,this);
 
 	}
 
@@ -67,13 +66,12 @@ public class controller {
 		if(g.getLastLevel()!=null&&g.getLastLevel().getNLevel()==n) lvl=g.getLastLevel();
 		else lvl = new Level(n);
 		if(lvl.getBoard()==null) {
-			LevelsMenuView lmv = new LevelsMenuView(f,g,this);
+			new LevelsMenuView(f,g,this);
 			return 1;
 		}
 		
 		estado=n;
 		cellSize = (400 + (lvl.getDimensionX() / 2)) / (lvl.getDimensionX() - 2);
-		//g.setLevel(n, lvl);
 		lvlAct = n;
 		Map<Character, Vehicle> vehicles = lvl.getCars();
 		Map<Character, Pair<Integer, Integer>> mapPositions = new HashMap<>();
@@ -88,7 +86,8 @@ public class controller {
 	}
 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {
-		int row, col;
+		int row;
+		int col;
 		if (x < 150)
 			row = 0;
 		else if (x > 550)
@@ -148,7 +147,7 @@ public class controller {
 						if((conflLabelF==null||newLabel.getValue()<conflLabelF.getValue())
 								&&(conflLabelB==null||(newLabel.getValue()-vehicleClicked.getDimension().getValue())>conflLabelB.getValue())){					
 							if (!newLabel.equals(actLabel)) {
-								this.prevLabel = new Pair(newLabel.getKey(),newLabel.getValue()-1);Integer a=(punt/cellSize);
+								this.prevLabel = new Pair<>(newLabel.getKey(),newLabel.getValue()-1);
 								this.actLabel = newLabel;
 							
 							}
@@ -185,7 +184,7 @@ public class controller {
 						if((conflLabelF==null||(newLabel.getValue()+vehicleClicked.getDimension().getValue())<conflLabelF.getValue())
 								&&(conflLabelB==null||newLabel.getValue()>conflLabelB.getValue())) {				
 							if (!newLabel.equals(actLabel)) {
-								this.prevLabel = new Pair(newLabel.getKey(),newLabel.getValue()+1);
+								this.prevLabel = new Pair<>(newLabel.getKey(),newLabel.getValue()+1);
 								this.actLabel = newLabel;
 							}
 							return new Pair<>(0, vehicleClicked.getPix().getValue() + punt);
@@ -225,7 +224,7 @@ public class controller {
 						if((conflLabelF==null||newLabel.getKey()<conflLabelF.getKey())
 								&&(conflLabelB==null||(newLabel.getKey()-vehicleClicked.getDimension().getKey())>conflLabelB.getKey())){			
 							if (!newLabel.equals(actLabel)) {
-								this.prevLabel = new Pair(newLabel.getKey()-1,newLabel.getValue());
+								this.prevLabel = new Pair<>(newLabel.getKey()-1,newLabel.getValue());
 								this.actLabel = newLabel;
 							}
 							return new Pair<>(vehicleClicked.getPix().getKey() + punt, 0);
@@ -262,7 +261,7 @@ public class controller {
 						if((conflLabelF==null||(newLabel.getKey()+vehicleClicked.getDimension().getKey())<conflLabelF.getKey())
 								&&(conflLabelB==null||newLabel.getKey()>conflLabelB.getKey())) {				
 							if (!newLabel.equals(actLabel)) {
-								this.prevLabel = new Pair(newLabel.getKey()+1,newLabel.getValue());
+								this.prevLabel = new Pair<>(newLabel.getKey()+1,newLabel.getValue());
 								this.actLabel = newLabel;
 							}
 							return new Pair<>(vehicleClicked.getPix().getKey() + punt, 0);
@@ -384,7 +383,7 @@ public class controller {
 	public void levelMenuButon() {
 		estado=null;
 		LOGGER.info("The Menu Level view has been initializated");
-		LevelsMenuView lmv = new LevelsMenuView(f, g, this);
+		new LevelsMenuView(f, g, this);
 	}
 
 	public int nextLevel() throws  IOException {
@@ -408,11 +407,11 @@ public class controller {
 	public Pair<Pair<Character, Integer>, Pair<Integer, Integer>> undo() {
 		Character c = lvl.undo();
 		if (c.equals(' ')) {
-			return new Pair<Pair<Character, Integer>, Pair<Integer, Integer>>(
-					new Pair<Character, Integer>(' ', lvl.getLevelPoint()), new Pair<Integer, Integer>(0, 0));
+			return new Pair<>(
+					new Pair<>(' ', lvl.getLevelPoint()), new Pair<>(0, 0));
 		}
-		Pair<Pair<Character, Integer>, Pair<Integer, Integer>> res = new Pair<Pair<Character, Integer>, Pair<Integer, Integer>>(
-				new Pair<Character, Integer>(c, lvl.getLevelPoint()), lvl.getCars().get(c).getbackLabel());
+		Pair<Pair<Character, Integer>, Pair<Integer, Integer>> res = new Pair<>(
+				new Pair<>(c, lvl.getLevelPoint()), lvl.getCars().get(c).getbackLabel());
 		LOGGER.info("An undo of the vehicle with id: " +c+" has been done");
 		return res;
 	}
@@ -461,18 +460,18 @@ public class controller {
 			Level lv=game.cargarGame(name);
 			game.setLastLevel(lv);
 			m.addGame(game);
-			GamesMenuView gmv = new GamesMenuView(f, m, this);
+			new GamesMenuView(f, m, this);
 			r=0;
 			LOGGER.info("The game has been open correctly");
 		} else {
-			SavedGamesView sgv = new SavedGamesView(f, gl.getList(), this);
+			new SavedGamesView(f, gl.getList(), this);
 			LOGGER.info("The game could not be save");
 		}
 		return r;
 	}
 
 	public void openSavedGames() {
-		SavedGamesView sgv = new SavedGamesView(f, gl.getList(), this);
+		new SavedGamesView(f, gl.getList(), this);
 		LOGGER.info("The games saved  has been opened correctly");
 	}
 
@@ -488,34 +487,34 @@ public class controller {
 			m.addGame(game);
 			r=0;
 		}
-		GamesMenuView gmv = new GamesMenuView(f, m, this);
+		new GamesMenuView(f, m, this);
 		LOGGER.info("A new game has been created correctly");
 		return r;
 	}
 
 	public void openGame(Game game) {
 		this.g=game;
-		LevelsMenuView lmv = new LevelsMenuView(f, game, this);
+		new LevelsMenuView(f, game, this);
 		LOGGER.info("The game has been opened correctly");
 	}
 
 	public void gamesMenuButton() {
 		estado=null;
-		GamesMenuView gmv = new GamesMenuView(f,m,this);
+		new GamesMenuView(f,m,this);
 		LOGGER.info("The game Menu has been opened");
 	}
 	public void gamesMenu(Menu menu) {
 		this.m=menu;
-		GamesMenuView gm = new GamesMenuView(f,m,this);
+		new GamesMenuView(f,m,this);
 		LOGGER.info("The game Menu has been opened");
 	}
 	public void endGame() {
-		EndGameView ev= new EndGameView(f,m,g,this);
+		new EndGameView(f,m,g,this);
 		LOGGER.info("The En game view has been opened");
 	}
 
 	public static void main(String[] args) {
-		controller cont = new controller();
+		new Controller();
 	}
 
 }

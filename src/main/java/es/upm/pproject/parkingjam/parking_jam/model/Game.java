@@ -69,7 +69,7 @@ public class Game {
 	{
 		listaPoints.put(id, points);
 		gamePoints=0;
-		for (HashMap.Entry<Integer, Integer> entry : listaPoints.entrySet())             
+		for (Map.Entry<Integer, Integer> entry : listaPoints.entrySet())             
 			gamePoints += entry.getValue();   
 		LOGGER.info("The game: " + id + "has been updated with " + points+ " points");
 	}
@@ -124,31 +124,26 @@ public class Game {
 		// Crear una instancia de File con la ruta especificada
 		rutaFichero= rutaDirectorio+ File.separator+ "gamePoints.txt";
 		File fichero = new File(rutaFichero);
-		System.out.println(rutaFichero);
 		// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 		try (FileWriter fw = new FileWriter(fichero);
 				BufferedWriter bw = new BufferedWriter(fw)) {
 
 			// Escribir en el fichero
-
 			Iterator<Entry<Integer, Level>> it = listaLevels.entrySet().iterator();
 		
 			for (int i=0; i <listaLevels.size() && it.hasNext(); i++)
 			{    
 				Entry<Integer, Level> e= it.next();
 				bw.write(e.getKey()+" : " + e.getValue().getLevelPoint());
-                System.err.println(e.getKey()+", " +e.getValue().getLevelPoint());
 				bw.newLine();  // Salto de línea
 			}
 
 			if(level!=null) bw.write(level.getNLevel() + " , " + level.getLevelPoint());
 
-			System.out.println("El archivo se ha creado y se ha escrito correctamente en: " + rutaFichero);
 			LOGGER.info("The file has been created and its been witten corectly in " + rutaFichero);
 
 		} catch (IOException e) {
 			// Manejo de posibles excepciones
-			System.err.println("Se produjo un error al escribir en el archivo: " + e.getMessage());
 			LOGGER.error("There has been an error writting in the file", e);
 		}
 

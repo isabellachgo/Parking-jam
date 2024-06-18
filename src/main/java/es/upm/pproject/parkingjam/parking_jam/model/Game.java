@@ -13,12 +13,16 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
+import es.upm.pproject.parkingjam.parking_jam.controller.controller;
 import javafx.util.Pair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+
+
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -128,13 +132,12 @@ public class Game {
 			// Escribir en el fichero
 
 			Iterator<Entry<Integer, Level>> it = listaLevels.entrySet().iterator();
-			int last;
-			if(level!=null) last=listaLevels.size()-1;
-			else last=listaLevels.size();
-			for (int i=0; i <last && it.hasNext(); i++)
+		
+			for (int i=0; i <listaLevels.size() && it.hasNext(); i++)
 			{    
 				Entry<Integer, Level> e= it.next();
 				bw.write(e.getKey()+" : " + e.getValue().getLevelPoint());
+                System.err.println(e.getKey()+", " +e.getValue().getLevelPoint());
 				bw.newLine();  // Salto de línea
 			}
 
@@ -253,6 +256,9 @@ public class Game {
 					System.out.println("points = " + despuesDeDosPuntos);
 					int id = Integer.parseInt(antesDeDosPuntos) ;
 					int points = Integer.parseInt(despuesDeDosPuntos);
+                    Level level = new Level(id);
+                    level.setLevelPoints(points);
+                    setLevel(id, level);
 					actualizarGamePoints(id, points);
 					setUltimoLevelPassed(id);
 				}
@@ -363,6 +369,44 @@ public class Game {
 		return levelUncomplete;
 
 	}
+   /*  public static void main(String[] args) {
+		Game game= new Game("Paco2");
+        Game gameTest= new Game("");
+			Level level1=null;
+			Level level2=null;
+            Level level3=null;
+			
+			try {
+				level2= new Level(2);
+                level3= new Level(3);
+				level1=new Level(1);
+				level1.setLevelPoints(20);
+				level2.setLevelPoints(50);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				game.setLevel(1, level1);
+				game.setLevel(2, level2);
+				game.guardarGame(level3);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			Level unfinishedLevel = gameTest.cargarGame("Paco2");
+			
+			System.out.println(unfinishedLevel==null);
+			System.out.println(gameTest.getLevel(1)); //----------
+			System.out.println( gameTest.getLevel(2));
+            System.out.println(gameTest.getLevelPoints(1));
+            System.out.println(gameTest.getLevelPoints(2));
+            System.out.println(gameTest.getGamePoints());
+          
+			
+	}*/
 
 }
 

@@ -115,32 +115,32 @@ public class AppTest {
 	@Nested
 	class BoardReaderTest {
 		@Test
-		public void notFile() {
+		 void notFile() {
 			assertThrows(FileNotFoundException.class, () -> {BoardReader br = new BoardReader(0);});
 		}
 
 		@Nested
 		class wrongFormat_BoardReaderTest {
 			@Test
-			public void badFormat_noExit() throws FileNotFoundException, IOException {
+			 void badFormat_noExit() throws FileNotFoundException, IOException {
 				BoardReader br = new BoardReader(102);
 				assertNull(br.getBoard());
 			}
 
 			@Test
-			public void badFormat_wrongExit() throws FileNotFoundException, IOException {
+			 void badFormat_wrongExit() throws FileNotFoundException, IOException {
 				BoardReader br = new BoardReader(101);
 				assertNull(br.getBoard());
 			}
 
 			@Test
-			public void badFormat_noRedcar() throws FileNotFoundException, IOException {
+			 void badFormat_noRedcar() throws FileNotFoundException, IOException {
 				BoardReader br = new BoardReader(103);
 				assertNull(br.getBoard());
 			}
 
 			@Test
-			public void badFormat_badSize() throws FileNotFoundException, IOException {
+			 void badFormat_badSize() throws FileNotFoundException, IOException {
 				BoardReader br = new BoardReader(104);
 				assertNull(br.getBoard());
 			}
@@ -156,28 +156,28 @@ public class AppTest {
 			}
 
 			@Test
-			public void validFile() {
+			 void validFile() {
 				assertNotNull(br.getBoard());
 			}
 
 			@Test
-			public void title() {
-				assertEquals(br.getTitle(), "Initial level");
+			 void title() {
+				assertEquals( "Initial level",br.getTitle());
 			}
 
 			@Test 
-			public void dimensions() {
-				assertEquals(br.getDimensionX(), 8);
-				assertEquals(br.getDimensionY(), 8);
+			 void dimensions() {
+				assertEquals( 8,br.getDimensionX());
+				assertEquals( 8,br.getDimensionY());
 			}
 
 			@Test
-			public void exit() {
+			 void exit() {
 				assertEquals(br.getExit(), new Pair<Integer,Integer>(4,7));
 			}
 
 			@Test
-			public void cars() {
+			 void cars() {
 				Character[] ccars = new Character[8];
 				ccars[0] = 'a';
 				ccars[1] = 'b';
@@ -198,7 +198,7 @@ public class AppTest {
 			}
 
 			@Test
-			public void board() {
+			 void board() {
 				Character[][] boardt = new Character[8][8];
 				boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 				boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
@@ -231,22 +231,22 @@ public class AppTest {
 		}
 
 		@Test
-		public void testGetTitle() {
+		 void testGetTitle() {
 			assertEquals("Initial level", level.getTitle());
 		}
 		@Test
-		public void testGetDimensions() {
+		 void testGetDimensions() {
 			assertEquals(8, level.getDimensionX());
 			assertEquals(8, level.getDimensionY());
 
 		}
 		@Test
-		public void exit() {
+		 void exit() {
 			assertEquals(level.getExit(), new Pair<Integer,Integer>(4,7));
 		}
 
 		@Test
-		public void Testcars() {
+		 void Testcars() {
 			Character[] ccars = new Character[8];
 			ccars[0] = 'a';
 			ccars[1] = 'b';
@@ -266,7 +266,7 @@ public class AppTest {
 			}
 		}
 		@Test
-		public void board() {
+		 void board() {
 			Character[][] boardt = new Character[8][8];
 			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
 			boardt[0][1]='+'; boardt[1][1]='a';	 boardt[2][1]='a';  boardt[3][1]='b';  boardt[4][1]='b';  boardt[5][1]='b';  boardt[6][1]='c';  boardt[7][1]='+';
@@ -285,44 +285,44 @@ public class AppTest {
 			}
 		}
 		@Test
-		public void InValidBox() {	
+		 void InValidBox() {	
 			Vehicle  car1= level.getCars().get('a');
 			Pair<Integer,Integer> pos = new Pair<>(4,4);
 			assertFalse(level.posicionValida(car1, pos));
 		}
 		@Test
-		public void InValidBox2() {	
+		 void InValidBox2() {	
 			Vehicle  car1= level.getCars().get('c');
 			Pair<Integer,Integer> pos = new Pair<>(6,0);
 			assertFalse(level.posicionValida(car1, pos));
 		}
 		@Test
-		public void ValidBox() {
+		 void ValidBox() {
 			Vehicle  car1= level.getCars().get('e');
 			Pair<Integer,Integer> pos = new Pair<>(2,5);
 			assertTrue(level.posicionValida(car1, pos));
 		}
 		@Test
-		public void ValidBox2() {
+		 void ValidBox2() {
 			Vehicle  car1= level.getCars().get('f');
 			Pair<Integer,Integer> pos = new Pair<>(6,4);
 			assertTrue(level.posicionValida(car1, pos));
 		}
 		@Test
-		public void ValidBox3() {
+		 void ValidBox3() {
 			Vehicle  car1= level.getCars().get('e');
 			Pair<Integer,Integer> pos = new Pair<>(2,2);
 			assertTrue(level.posicionValida(car1, pos));
 		}
 		@Test
-		public void ValidBoxForRedcAR() {
+		 void ValidBoxForRedcAR() {
 			Vehicle  car1= level.getCars().get('*');
 			Pair<Integer,Integer> pos = new Pair<>(4,7);
 			assertTrue(level.posicionValida(car1, pos));
 		}
 
 		@Test 
-		public void testMove(){
+		 void testMove(){
 			Vehicle car = level.getCars().get('e');
 			boolean moved =level.move(car, 'U', 3);
 			assertTrue(moved);
@@ -335,8 +335,8 @@ public class AppTest {
 			boardt[0][5]='+'; boardt[1][5]='d';  boardt[2][5]=null;  boardt[3][5]=null; boardt[4][5]=null; boardt[5][5]=null; boardt[6][5]=null; boardt[7][5]='+';
 			boardt[0][6]='+'; boardt[1][6]=null; boardt[2][6]=null;  boardt[3][6]=null; boardt[4][6]='g';  boardt[5][6]='g';  boardt[6][6]='g';  boardt[7][6]='+';
 			boardt[0][7]='+'; boardt[1][7]='+';  boardt[2][7]='+';  boardt[3][7]='+';  boardt[4][7]='@';  boardt[5][7]='+';  boardt[6][7]='+';  boardt[7][7]='+';
-			assertEquals(level.getDimensionX(), 8);
-			assertEquals(level.getDimensionY(), 8);
+			assertEquals( 8,level.getDimensionX());
+			assertEquals( 8,level.getDimensionY());
 
 			Character[][] board = level.getBoard();
 			for(int i =0; i<8; i++) {
@@ -349,7 +349,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void BoardHistory() {
+		 void BoardHistory() {
 			Deque<Character[][]> boardHistory = new ArrayDeque<>();
 
 			Character[][] boardt = new Character[8][8];
@@ -373,7 +373,7 @@ public class AppTest {
 
 		}
 		@Test
-		public void SetBoardHistory() {
+		 void SetBoardHistory() {
 			Deque<Character[][]> bh = new ArrayDeque<>();
 			Character[][] boardt = new Character[8][8];
 			boardt[0][0]='+'; boardt[1][0]='+';	 boardt[2][0]='+';  boardt[3][0]='+';  boardt[4][0]='+';  boardt[5][0]='+';  boardt[6][0]='+';  boardt[7][0]='+';
@@ -402,7 +402,7 @@ public class AppTest {
 
 		}
 		@Test
-		public void BoardHistoryWithMov() {
+		 void BoardHistoryWithMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('f'), 'L', 1);
 			level.move(level.getCars().get('g'), 'L', 3);
@@ -430,7 +430,7 @@ public class AppTest {
 
 		}
 		@Test
-		public void BoardHistoryWithUndo() {
+		 void BoardHistoryWithUndo() {
 
 
 			level.move(level.getCars().get('e'), 'U', 3);
@@ -461,7 +461,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void BoardHistoryPostReset() {
+		 void BoardHistoryPostReset() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -494,7 +494,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void PositionHistory() {
+		 void PositionHistory() {
 
 			Deque<Map<Character, Set<Pair<Integer, Integer>>>> vehiclePositionHistory = new ArrayDeque<>();
 			Map<Character, Set<Pair<Integer, Integer>>> m1= new HashMap<Character, Set<Pair<Integer, Integer>>>();
@@ -550,7 +550,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void SetVehiclePositionHistory() {
+		 void SetVehiclePositionHistory() {
 			Deque<Map<Character, Set<Pair<Integer, Integer>>>> ph = new ArrayDeque<>();
 			Map<Character, Set<Pair<Integer, Integer>>> m1= new HashMap<Character, Set<Pair<Integer, Integer>>>();
 			Set<Pair<Integer, Integer>>  h1 =new HashSet<>();
@@ -643,7 +643,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void PositionHistoryWithMov() {
+		 void PositionHistoryWithMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('f'), 'L', 1);
 			level.move(level.getCars().get('g'), 'L', 3);
@@ -705,7 +705,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void MiddlePositionHistoryWithMov() {
+		 void MiddlePositionHistoryWithMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('f'), 'L', 1);
 			level.move(level.getCars().get('g'), 'L', 3);
@@ -776,7 +776,7 @@ public class AppTest {
 
 
 		@Test
-		public void PositionHistoryWithUndo() {
+		 void PositionHistoryWithUndo() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('f'), 'L', 1);
 			level.undo();
@@ -839,7 +839,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void PositionHistoryPostReset() {
+		 void PositionHistoryPostReset() {
 
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
@@ -870,7 +870,7 @@ public class AppTest {
 
 
 		@Test
-		public void MoveTowin() {
+		 void MoveTowin() {
 			assertTrue(level.move(level.getCars().get('e'), 'U', 3));
 			assertTrue(level.move(level.getCars().get('g'), 'L', 3));
 			assertTrue(level.move(level.getCars().get('c'), 'D', 3));
@@ -883,7 +883,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void undoMov() {
+		 void undoMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			assertEquals('g',level.undo());
@@ -906,7 +906,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void carPositionPostMov() {
+		 void carPositionPostMov() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			assertEquals('g',level.undo());
@@ -927,7 +927,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void LevelPoints() {
+		 void LevelPoints() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -936,12 +936,12 @@ public class AppTest {
 			level.move(level.getCars().get('d'), 'U', 2);
 			level.move(level.getCars().get('f'), 'L', 2);
 			level.move(level.getCars().get('*'), 'D', 4);
-			assertEquals(level.getLevelPoint(), 8);
+			assertEquals( 8,level.getLevelPoint());
 
 		}
 
 		@Test
-		public void WinGame() {
+		 void WinGame() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -972,7 +972,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void ResetGame() {
+		 void ResetGame() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -999,7 +999,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void WinGameWhitUndo() {
+		 void WinGameWhitUndo() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('f'), 'L', 1);
 			level.undo();
@@ -1033,7 +1033,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void testInvalidMove2() {
+		 void testInvalidMove2() {
 			Vehicle car2 = level.getCars().get('g');
 			boolean moved2= level.move(car2,'R',1 ); // A CAR CANNOT MOVE TOWARS A WALL
 			assertFalse(moved2);
@@ -1058,7 +1058,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void testInvalidMove3() {
+		 void testInvalidMove3() {
 			Vehicle car3 = level.getCars().get('*');
 			boolean moved3= level.move(car3,'D',1 ); // A CAR CANNOT MOVE IF THERES ANOHER CAR IN THAT POSITION
 			assertFalse(moved3);
@@ -1083,7 +1083,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void testInvalidMove4() {
+		 void testInvalidMove4() {
 			Vehicle car4 = level.getCars().get('g');
 			boolean moved4= level.move(car4,'D',19); // A CAR CANNOT MOVE outside of the board
 			assertFalse(moved4);
@@ -1108,7 +1108,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void testInvalidMoveCarPosition() {
+		 void testInvalidMoveCarPosition() {
 			Vehicle car4 = level.getCars().get('g');
 			Set<Pair<Integer, Integer>> positionA =car4.getPosition();
 			level.move(car4,'D',19); // A CAR CANNOT MOVE outside of the board
@@ -1118,7 +1118,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void testInvalidMoveCarPosition2() {
+		 void testInvalidMoveCarPosition2() {
 			Vehicle car3 = level.getCars().get('*');
 			Set<Pair<Integer, Integer>> positionA =car3.getPosition();
 			level.move(car3,'D',1 ); // A CAR CANNOT MOVE IF THERES ANOHER CAR IN THAT POSITION
@@ -1127,7 +1127,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void testInvalidMoveCarPosition3() {
+		 void testInvalidMoveCarPosition3() {
 			Vehicle car2 = level.getCars().get('g');
 			Set<Pair<Integer, Integer>> positionA =car2.getPosition();
 			level.move(car2,'R',1 ); // A CAR CANNOT MOVE TOWARS A WALL
@@ -1136,7 +1136,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void testValidMoveCarPosition() {
+		 void testValidMoveCarPosition() {
 			Vehicle car = level.getCars().get('e');
 
 			Set<Pair<Integer, Integer>> positionA =new HashSet();
@@ -1150,7 +1150,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void testValidMoveCarPosition2() {
+		 void testValidMoveCarPosition2() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -1170,7 +1170,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void UndoAllTheWay_BoardStatus() {
+		 void UndoAllTheWay_BoardStatus() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -1206,7 +1206,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void MoreUndosThanMovements() {
+		 void MoreUndosThanMovements() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -1228,7 +1228,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void IntialStatus() {
+		 void IntialStatus() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -1266,7 +1266,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void UndoAlTheWay_PositionStatus() {
+		 void UndoAlTheWay_PositionStatus() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -1303,7 +1303,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void UndoAlTheWay_PositionStatus2() {
+		 void UndoAlTheWay_PositionStatus2() {
 			level.move(level.getCars().get('e'), 'U', 3);
 			level.move(level.getCars().get('g'), 'L', 3);
 			level.move(level.getCars().get('c'), 'D', 3);
@@ -1357,7 +1357,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void getGamePointsTest() {
+		 void getGamePointsTest() {
 			assertEquals(0,game.getGamePoints());
 			game.actualizarGamePoints(1, 100);
 			assertEquals(100, game.getGamePoints());
@@ -1368,24 +1368,24 @@ public class AppTest {
 		}
 
 		@Test
-		public void getLevelPointsTest() {
+		 void getLevelPointsTest() {
 			game.actualizarGamePoints(1, 100);
 			assertEquals(100, game.getLevelPoints(1));
 		}
 
 		@Test
-		public void getNameTest() {
+		 void getNameTest() {
 			assertEquals("Paco", game.getName());
 		}
 
 		@Test
-		public void getUltimoLevelPassedTest() {
+		 void getUltimoLevelPassedTest() {
 			game.setUltimoLevelPassed(3);
 			assertEquals(3, game.getUltimoLevelPassed());
 		}
 
 		@Test
-		public void getLevelTest(){
+		 void getLevelTest(){
 			Level level=null;
 			try {
 				level = new Level (1);
@@ -1400,7 +1400,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void setLevelTest() {
+		 void setLevelTest() {
 			Level level=null;
 			try {
 				level = new Level (1);
@@ -1416,7 +1416,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void actualizarGamePointsTest() {
+		 void actualizarGamePointsTest() {
 			Level level=null;
 			try {
 				level = new Level (1);
@@ -1434,7 +1434,7 @@ public class AppTest {
 
 
 		@Test
-		public void guardarLevelsPointsWithoutPassedLevelsTest()
+		 void guardarLevelsPointsWithoutPassedLevelsTest()
 		{
 			try {
 				game.guardarGame(null);
@@ -1457,7 +1457,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void pointsFile_guardarGameWithoutUnfinishedLevelTest()
+		 void pointsFile_guardarGameWithoutUnfinishedLevelTest()
 		{
 			Level level1=null;
 			Level level2=null;
@@ -1498,7 +1498,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void pointsFile_guardarGameWithUnfinishedLevelTest()
+		 void pointsFile_guardarGameWithUnfinishedLevelTest()
 		{
 			Level level1=null;
 			Level level2=null;
@@ -1545,7 +1545,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void unfinishedLevelFile_guardarGameWithUnfinishedLevelTest() {
+		 void unfinishedLevelFile_guardarGameWithUnfinishedLevelTest() {
 			Level level1=null;
 			Level level2=null;
 			Level level3=null;
@@ -1605,7 +1605,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void cargarGameWithoutUnfinishedLevelTest(){
+		 void cargarGameWithoutUnfinishedLevelTest(){
 			Game gameTest= new Game("");
 			Level level1=null;
 			Level level2=null;
@@ -1647,7 +1647,7 @@ public class AppTest {
 		}
 
 		@Test
-		public void cargarGameWithUnfinishedLevelTest()
+		 void cargarGameWithUnfinishedLevelTest()
 		{
 			Game gameTest= new Game("");
 			Level level1=null;
@@ -1715,20 +1715,20 @@ public class AppTest {
 		}
 
 		@Test
-		public void loadVoidListTest() {
+		 void loadVoidListTest() {
 			ArrayList <String> list= gamesList.loadList();
 			assertTrue(list.isEmpty());
 		}
 
 		@Test
-		public void addGameTest()
+		 void addGameTest()
 		{
 			gamesList.addGame("Paco");
 			gamesList.addGame("Antonio");
 			ArrayList<String> lista = gamesList.getList();
 			assertTrue(lista.contains("Paco"));
 			assertTrue(lista.contains("Antonio"));
-			assertTrue(lista.size()==2);
+			assertEquals(2, lista.size());
 
 			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 			try (FileReader fr = new FileReader(ficheroListaGames);	BufferedReader br = new BufferedReader(fr)) {
@@ -1745,13 +1745,13 @@ public class AppTest {
 		}
 
 		@Test
-		public void savedGamesListVoidTest() {
+		 void savedGamesListVoidTest() {
 			ArrayList<String> lista = gamesList.getList();
 			assertTrue(lista.isEmpty());
 		}
 
 		@Test 
-		public void loadListAfterAddTest() {
+		 void loadListAfterAddTest() {
 			gamesList.addGame("Paco");
 			gamesList.addGame("Roberto");
 			gamesList.addGame("Sandra");
@@ -1786,14 +1786,14 @@ public class AppTest {
 		}
 		
 		@Test
-		public void AddGamesToMenu() {
+		 void AddGamesToMenu() {
 			games.add(g2);
 			m.addGame(g1);
 			m.addGame(g2);
 			assertEquals(m.getGames(), games);
 		}
 		@Test
-		public void GetNumGamesInMenu() {
+		 void GetNumGamesInMenu() {
 			games.add(g2);
 			games.add(g3);
 			games.add(g4);
@@ -1804,7 +1804,7 @@ public class AppTest {
 			assertEquals(games.size(), m.getNumGames());
 		}
 		@Test
-		public void GetNameGames() {
+		 void GetNameGames() {
 			games.add(g2);
 			m.addGame(g1);
 			m.addGame(g2);

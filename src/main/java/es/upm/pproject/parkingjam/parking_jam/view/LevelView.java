@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.sound.sampled.AudioInputStream;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -40,7 +39,7 @@ import javafx.util.Pair;
 
 
 
-public class view {
+public class LevelView {
 	private Map<Character, Vehicle> mapVehiculo; // Mapa con las posiciones de los vehículos
 	private Map <Character,Pair<Integer,Integer>> mapPosiciones;
 	private Map <Character,Pair<Integer,Integer>> mapCoordenadas;
@@ -84,7 +83,7 @@ public class view {
 	private JFrame frame;
 
 
-	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,Controller controller, int GamePoints) {
+	public LevelView(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,Controller controller, int GamePoints) {
 		this.frame = fm;
 		this.mapVehiculo = level.getCars();
 		this.mapPosiciones=posiciones;

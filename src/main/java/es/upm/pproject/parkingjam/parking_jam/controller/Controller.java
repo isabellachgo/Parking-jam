@@ -23,7 +23,7 @@ import es.upm.pproject.parkingjam.parking_jam.view.GamesMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.LevelsMenuView;
 import es.upm.pproject.parkingjam.parking_jam.view.SavedGamesView;
 import es.upm.pproject.parkingjam.parking_jam.view.StartView;
-import es.upm.pproject.parkingjam.parking_jam.view.view;
+import es.upm.pproject.parkingjam.parking_jam.view.LevelView;
 import javafx.util.Pair;
 
 public class Controller {
@@ -31,7 +31,7 @@ public class Controller {
 	JFrame f;
 	Game g;
 	Menu m;
-	view v;
+	LevelView v;
 	Level lvl;
 	GamesList gl;
 	Pair<Integer, Integer> click;
@@ -79,7 +79,7 @@ public class Controller {
 			mapPositions.put(key, vehicles.get(key).getbackLabel());
 		}
 		mapPositions.put('@', lvl.getExit());
-		v = new view(f, mapPositions, lvl, this, g.getGamePoints());
+		v = new LevelView(f, mapPositions, lvl, this, g.getGamePoints());
 	
 		LOGGER.info(" The view of the level " + n + " has been initializated");
 		return 0;

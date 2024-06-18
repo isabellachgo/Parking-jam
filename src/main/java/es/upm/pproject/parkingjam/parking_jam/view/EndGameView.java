@@ -3,10 +3,6 @@ package es.upm.pproject.parkingjam.parking_jam.view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.*;
 
@@ -30,33 +26,7 @@ public class EndGameView {
     }
 
     private void initEG() {
-        // Fuentes:
-    	
-        Font titleFont = null;
-        try {
-            titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(45f);
-        } catch (FontFormatException | IOException e1) {
-            e1.printStackTrace();
-        }
-        Font buttonFont = null;
-        try {
-            buttonFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(30f);
-        } catch (FontFormatException | IOException e1) {
-            e1.printStackTrace();
-        }
-        Font levelPointsFont = null;
-        try {
-            levelPointsFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/pointsfont.ttf")).deriveFont(50f);
-        } catch (FontFormatException | IOException e1) {
-            e1.printStackTrace();
-        }
-        Font infoFont = null;
-        try {
-           infoFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/pointsfont.ttf")).deriveFont(27f);
-        } catch (FontFormatException | IOException e1) {
-            e1.printStackTrace();
-        }
-
+       
         // Dimensiones:
         Dimension buttonSize = new Dimension(60, 60);
         // Colores:
@@ -66,20 +36,20 @@ public class EndGameView {
         Color winPColor = new Color(180,220,110);
 
         // Iconos:
-        ImageIcon levelsMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/levelsMenu.png")), 30, 30);
+        ImageIcon levelsMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/levelsMenu.png")), 30, 30);
         ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/finalParking.png"));
-        ImageIcon starIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/yellowstar.png")), 50, 50);
-        ImageIcon starIcon2 = rotateIcon(starIcon, 180);
-        ImageIcon saveMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
-        ImageIcon homeMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
-        ImageIcon closeMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
+        ImageIcon starIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/yellowstar.png")), 50, 50);
+        ImageIcon starIcon2 = Factory.rotateIcon(starIcon, 180);
+        ImageIcon saveMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
+        ImageIcon homeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
+        ImageIcon closeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
         // Imagenes:
         Image parkingImage = parkingIcon.getImage().getScaledInstance(600, 600, Image.SCALE_SMOOTH);
 
         // Elementos:
         JLabel titleL = new JLabel();
         titleL.setText("Parking Jam");
-        titleL.setFont(titleFont);
+        titleL.setFont(Factory.titleFont);
         titleL.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Estructura:
@@ -107,16 +77,16 @@ public class EndGameView {
 
        
         JLabel winL = new JLabel("Congratulations!");
-        winL.setFont(titleFont);
+        winL.setFont(Factory.titleFont);
         winL.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
         JLabel info = new JLabel("<html><div style='text-align: center;'>You have completed all the levels in the game '" + game.getName() + "'</div></html>");
-        info.setFont(infoFont);
+        info.setFont(Factory.infoFont);
         info.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         info.setPreferredSize(new Dimension(400, 90));  // Set preferred size to ensure it fits
 
         JLabel pointsWL = new JLabel(game.getGamePoints().toString());
-        pointsWL.setFont(levelPointsFont);
+        pointsWL.setFont(Factory.levelPointsFont);
         pointsWL.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
         JLabel star1W = new JLabel(starIcon);
@@ -176,23 +146,6 @@ public class EndGameView {
         frame.add(panel);
     }
 
-    private ImageIcon resizeIcon(ImageIcon icon, int i, int j) {
-        Image img = icon.getImage();
-        Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
-        return new ImageIcon(resizedImg);
-    }
-
-    private ImageIcon rotateIcon(ImageIcon icon, double angle) {
-        Image img = icon.getImage();
-        BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = bufferedImage.createGraphics();
-        AffineTransform transform = new AffineTransform();
-        transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2.0, img.getHeight(null) / 2.0);
-        g2d.setTransform(transform);
-        g2d.drawImage(img, 0, 0, null);
-        g2d.dispose();
-
-        return new ImageIcon(bufferedImage);
-    }
+    
  
 }

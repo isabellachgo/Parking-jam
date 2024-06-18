@@ -4,26 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Image;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
-
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
@@ -39,9 +34,7 @@ public class LevelsMenuView {
 	private Game game;
 	private controller cont;
 
-	Font menuFont;
-	Color levelBColor;
-	Color lockedLevelBColor;
+	
 	
 	private JButton l1B;
 	private JButton l2B;
@@ -59,37 +52,11 @@ public class LevelsMenuView {
 
 	private void initLMV() {
 
-		// Fuentes:
-		Font titleFont = null;
-		try {
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(35f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		Font gamePointsFont = null;
-		try {
-			gamePointsFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/pointsfont.ttf")).deriveFont(23f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		menuFont = null;
-		try {
-			menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(16f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		Font levelFont = null;
-		try {
-			levelFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(27f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-
 		// Colores:
 		Color bg = new Color(180,220,110);
 		Color buttonColor = new Color(65,130,4); 
-		levelBColor = new Color(39,193,245);
-		lockedLevelBColor = new Color(80,155,180);
+		Color levelBColor = new Color(39,193,245);
+		Color lockedLevelBColor = new Color(80,155,180);
 
 		// Dimensiones:
 		Dimension buttonSize = new Dimension(40,40);
@@ -97,14 +64,13 @@ public class LevelsMenuView {
 		Dimension buttonSize2 = new Dimension(195,40);
 
 		// Iconos:
-		ImageIcon closeMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
-		ImageIcon addMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/add.png")),30,30);
-		ImageIcon saveMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
-		ImageIcon loadMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
-		ImageIcon menuIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/menu.png")),30,30);
+		ImageIcon closeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
+		ImageIcon addMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/add.png")),30,30);
+		ImageIcon saveMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
+		ImageIcon loadMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
+		ImageIcon menuIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/menu.png")),30,30);
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
-		ImageIcon homeMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
-
+		ImageIcon homeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
 
 		// Imagenes:
 		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, 400, Image.SCALE_SMOOTH);
@@ -116,7 +82,7 @@ public class LevelsMenuView {
 		menuPanel.setBounds(50, 80, 207, 145);
 
 		JButton gamesB= new JButton("games menu");
-		Factory.setFormatButton(gamesB, null, buttonSize2, homeMIcon, Color.white, buttonColor,  menuFont, SwingConstants.LEFT);
+		Factory.setFormatButton(gamesB, null, buttonSize2, homeMIcon, Color.white, buttonColor, Factory.menuFont, SwingConstants.LEFT);
 		gamesB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -125,7 +91,7 @@ public class LevelsMenuView {
 			}
 		});
 		JButton saveB = new JButton("save game");
-		Factory.setFormatButton(saveB, null, buttonSize2, saveMIcon, Color.white, buttonColor,  menuFont, SwingConstants.LEFT);
+		Factory.setFormatButton(saveB, null, buttonSize2, saveMIcon, Color.white, buttonColor,  Factory.menuFont, SwingConstants.LEFT);
 		saveB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -133,7 +99,7 @@ public class LevelsMenuView {
 			}
 		});
 		JButton closeB = new JButton("close Parking Jam");
-		Factory.setFormatButton(closeB, null, buttonSize2, closeMIcon, Color.white, buttonColor,  menuFont, SwingConstants.LEFT);
+		Factory.setFormatButton(closeB, null, buttonSize2, closeMIcon, Color.white, buttonColor,  Factory.menuFont, SwingConstants.LEFT);
 		closeB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -161,27 +127,29 @@ public class LevelsMenuView {
 
 
 		JLabel gamePointsL = new JLabel();
-		gamePointsL.setFont(gamePointsFont);
+		gamePointsL.setFont(Factory.gamePointsFont);
 		gamePointsL.setText("Game Points: ");
 
 		JLabel gamePointsVL = new JLabel();
-		gamePointsVL.setFont(gamePointsFont);
+		gamePointsVL.setFont(Factory.gamePointsFont);
 		gamePointsVL.setText(game.getGamePoints().toString()); 
 
 		JLabel gameNameL = new JLabel();
-		gameNameL.setFont(titleFont);
+		gameNameL.setFont(Factory.titleFont2);
 		gameNameL.setText(game.getName()); 
 
+		
+		ArrayList<JButton> buttons = new ArrayList<>();
 		l1B = new JButton();
-		Factory.setFormatButton(l1B, "1", levelBSize, null, null, null,  levelFont, null);
-		levelsStatus(l1B);
+		Factory.setFormatButton(l1B, "1", levelBSize, null, null, null,  Factory.levelFont, null);
+		Factory.levelsStatus(l1B, game);
 		l1B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(1)==1) {
-						corruptLevel(1);
+						Factory.corruptLevel(1, frame, game, cont, buttons, true);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -189,15 +157,15 @@ public class LevelsMenuView {
 			}
 		});
 		l2B = new JButton();
-		Factory.setFormatButton(l2B, "2", levelBSize, null, null, null,  levelFont, null);
-		levelsStatus(l2B);
+		Factory.setFormatButton(l2B, "2", levelBSize, null, null, null,  Factory.levelFont, null);
+		Factory.levelsStatus(l2B, game);
 		l2B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(2)==1) {
-						corruptLevel(2);
+						Factory.corruptLevel(2, frame, game, cont, buttons, true);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -205,15 +173,15 @@ public class LevelsMenuView {
 			}
 		});
 		l3B = new JButton();
-		Factory.setFormatButton(l3B, "3", levelBSize, null, null, null,  levelFont, null);
-		levelsStatus(l3B);
+		Factory.setFormatButton(l3B, "3", levelBSize, null, null, null,  Factory.levelFont, null);
+		Factory.levelsStatus(l3B, game);
 		l3B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(3)==1) {
-						corruptLevel(3);
+						Factory.corruptLevel(3, frame, game, cont, buttons, true);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -221,22 +189,25 @@ public class LevelsMenuView {
 			}
 		});
 		l4B = new JButton();
-		Factory.setFormatButton(l4B, "4", levelBSize, null, null, null,  levelFont, null);
-		levelsStatus(l4B);
+		Factory.setFormatButton(l4B, "4", levelBSize, null, null, null,  Factory.levelFont, null);
+		Factory.levelsStatus(l4B, game);
 		l4B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(4)==1) {
-						corruptLevel(4);
+						Factory.corruptLevel(4, frame, game, cont, buttons, true);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		});
-
+		buttons.add(l1B);
+		buttons.add(l2B);
+		buttons.add(l3B);
+		buttons.add(l4B);
 
 		// Estructura:
 		JPanel panel = new JPanel();
@@ -302,14 +273,7 @@ public class LevelsMenuView {
 		panel.add(panelCenter, BorderLayout.CENTER);
 		frame.add(panel);
 	}
-
-
-	private ImageIcon resizeIcon(ImageIcon icon, int i, int j) {
-		Image img = icon.getImage();
-		Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
-		return new ImageIcon(resizedImg);
-	}
-
+/*
 	private void levelsStatus(JButton b) {
 		int last = game.getUltimoLevelPassed() + 1;
 		if(Integer.parseInt(b.getText()) <= last && game.getOkLevel(Integer.parseInt(b.getText())) ) {
@@ -355,6 +319,6 @@ public class LevelsMenuView {
 			}
 		} 
 	}
-	
+	*/
 	
 }

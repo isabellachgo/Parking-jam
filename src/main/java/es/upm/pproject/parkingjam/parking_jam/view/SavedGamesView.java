@@ -4,15 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -54,32 +50,6 @@ public class SavedGamesView {
 		Integer gamesH = pictureH +80;
 		Integer scrollH = gamesH + 40;
 
-		// Fuentes:
-		Font titleFont = null;
-		try {
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(45f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		Font gameFont = null;
-		try {
-			gameFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(30f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		Font textFont = null;
-		try {
-			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(16f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		Font menuFont = null;
-		try {
-			menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(16f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-
 		// Dimensiones:
 		Dimension gameButtonSize = new Dimension(420, 80);
 		Dimension buttonSize = new Dimension(40,40);
@@ -91,9 +61,9 @@ public class SavedGamesView {
 
 		// Iconos:
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
-		ImageIcon carIcon = resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
-		ImageIcon loadIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
-		ImageIcon backIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/back.png")),30,30);
+		ImageIcon carIcon = Factory.resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
+		ImageIcon loadIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
+		ImageIcon backIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/back.png")),30,30);
 
 		// Imagenes:
 		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 450), Image.SCALE_SMOOTH);		
@@ -101,15 +71,15 @@ public class SavedGamesView {
 		// Elementos:
 		JLabel titleL = new JLabel();
 		titleL.setText("Saved Games");
-		titleL.setFont(titleFont);
+		titleL.setFont(Factory.titleFont);
 
 		JLabel textL = new JLabel();
 		textL.setText("Choose the game you want to load");
-		textL.setFont(textFont);
+		textL.setFont(Factory.menuFont);
 		
 		JLabel noGamesTextL = new JLabel();
 		noGamesTextL.setText("There are no saved games");
-		noGamesTextL.setFont(textFont);
+		noGamesTextL.setFont(Factory.menuFont);
 		noGamesTextL.setForeground(Color.white);
 		
 		JButton goBackB = new JButton();
@@ -122,16 +92,7 @@ public class SavedGamesView {
 			}
 		});
 		
-		JTextArea textArea = new JTextArea("There is alredy a game with the same name, it is not possible to load a game with the same name as another existing one.");
-	    textArea.setWrapStyleWord(true);
-	    textArea.setLineWrap(true);
-	    textArea.setOpaque(false);
-	    textArea.setEditable(false);
-	    textArea.setFocusable(false);
-	    textArea.setForeground(Color.red);
-	    textArea.setBackground(UIManager.getColor("Label.background"));
-	    textArea.setFont(textFont);
-	    textArea.setMargin(new Insets(10, 10, 10, 10));
+		JTextArea textArea = Factory.genTextArea("There is alredy a game with the same name, it is not possible to load a game with the same name as another existing one.");
 
 	    JPanel panelErrorNewg = new JPanel(new BorderLayout());
 	    panelErrorNewg.add(textArea, BorderLayout.CENTER);
@@ -139,7 +100,7 @@ public class SavedGamesView {
 		ArrayList<JButton> buttons = new ArrayList<>();
 		for(String g : savedGames) {
 			JButton b = new JButton(" "+g);
-			Factory.setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
+			Factory.setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, Factory.buttonFont, SwingConstants.LEFT);
 			b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -230,10 +191,4 @@ public class SavedGamesView {
 		frame.add(panel);	
 	}
 
-	private ImageIcon resizeIcon(ImageIcon icon, int i, int j) {
-		Image img = icon.getImage();
-		Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
-		return new ImageIcon(resizedImg);
-	}
-	
 }

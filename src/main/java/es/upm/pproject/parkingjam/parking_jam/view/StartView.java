@@ -38,7 +38,7 @@ public class StartView {
 
     private void initSV() {
         // Fuentes:
-        Font titleFont = null;
+       /* Font titleFont = null;
         try {
             titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(45f);
         } catch (FontFormatException | IOException e1) {
@@ -50,7 +50,7 @@ public class StartView {
             buttonFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(30f);
         } catch (FontFormatException | IOException e1) {
             e1.printStackTrace();
-        }
+        }*/
 
         // Dimensiones:
         Dimension buttonSize = new Dimension(200, 50);
@@ -61,7 +61,7 @@ public class StartView {
         Color buttonActionColor = new Color(100, 170, 200);
 
         // Iconos:
-        ImageIcon startIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/playicon.png")), 97, 60);
+        ImageIcon startIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/playicon.png")), 97, 60);
         ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parkinglogo.png"));
 
         // Imagenes:
@@ -70,14 +70,14 @@ public class StartView {
         // Elementos:
         JLabel titleL = new JLabel();
         titleL.setText("Parking Jam");
-        titleL.setFont(titleFont);
+        titleL.setFont(Factory.titleFont);
         titleL.setHorizontalAlignment(SwingConstants.CENTER);
 
         JButton startButton = new JButton();
         startButton.setPreferredSize(buttonSize);
         startButton.setIcon(startIcon);
         startButton.setBackground(buttonColor);
-        startButton.setFont(buttonFont);
+        startButton.setFont(Factory.buttonFont);
         startButton.setHorizontalAlignment(SwingConstants.CENTER);
         startButton.setFocusPainted(false);
         Timer timer = new Timer(500, e -> {
@@ -119,9 +119,4 @@ public class StartView {
         frame.add(panel);
     }
 
-    private ImageIcon resizeIcon(ImageIcon icon, int i, int j) {
-        Image img = icon.getImage();
-        Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
-        return new ImageIcon(resizedImg);
-    }
 }

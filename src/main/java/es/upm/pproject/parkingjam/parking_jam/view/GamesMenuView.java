@@ -4,17 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -57,32 +52,6 @@ public class GamesMenuView {
 		Integer gamesH = pictureH +80;
 		Integer scrollH = gamesH + 40;
 
-		// Fuentes:
-		Font titleFont = null;
-		try {
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(45f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		Font gameFont = null;
-		try {
-			gameFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(30f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		Font newGameFont = null;
-		try {
-			newGameFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(23f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		Font menuFont = null;
-		try {
-			menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(16f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		
 		// Dimensiones:
 		Dimension gameButtonSize = new Dimension(420, 80);
 		Dimension buttonSize2 = new Dimension(180,40);
@@ -94,16 +63,16 @@ public class GamesMenuView {
 		
 		// Iconos:
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
-		ImageIcon addIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/add_black.png")),40,40);
-		ImageIcon carIcon = resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
-		ImageIcon loadIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
+		ImageIcon addIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/add_black.png")),40,40);
+		ImageIcon carIcon = Factory.resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
+		ImageIcon loadIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 		
 		// Imagenes:
 		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 430), Image.SCALE_SMOOTH);		
 		
 		// Elementos:
 		JButton loadGameB = new JButton("Load game");
-		Factory.setFormatButton(loadGameB, null, buttonSize2, loadIcon, Color.white, buttonColor, menuFont, SwingConstants.CENTER);
+		Factory.setFormatButton(loadGameB, null, buttonSize2, loadIcon, Color.white, buttonColor, Factory.menuFont, SwingConstants.CENTER);
 		loadGameB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -114,13 +83,13 @@ public class GamesMenuView {
 
 		JLabel titleL = new JLabel();
 		titleL.setText("Parking Jam");
-		titleL.setFont(titleFont);
+		titleL.setFont(Factory.titleFont);
 		
 		JPanel panelGameName = new JPanel();
 		panelGameName.setLayout(new BorderLayout());
 		
 		JLabel pgnText = new JLabel();
-		pgnText.setFont(newGameFont);
+		pgnText.setFont(Factory.newGameFont);
 		pgnText.setOpaque(true);
 		pgnText.setText("Game name: ");
 		
@@ -130,22 +99,13 @@ public class GamesMenuView {
 		panelGameName.add(pgnText, BorderLayout.NORTH);
 		panelGameName.add(pgnInput, BorderLayout.CENTER);
 		
-		JTextArea textArea = new JTextArea("There is alredy a game with the same name, please change the name of the new game.");
-	    textArea.setWrapStyleWord(true);
-	    textArea.setLineWrap(true);
-	    textArea.setOpaque(false);
-	    textArea.setEditable(false);
-	    textArea.setFocusable(false);
-	    textArea.setForeground(Color.red);
-	    textArea.setBackground(UIManager.getColor("Label.background"));
-	    textArea.setFont(menuFont);
-	    textArea.setMargin(new Insets(10, 10, 10, 10));
+		JTextArea textArea = Factory.genTextArea("There is alredy a game with the same name, please change the name of the new game.");
 
 	    JPanel panelErrorNewg = new JPanel(new BorderLayout());
 	    panelErrorNewg.add(textArea, BorderLayout.CENTER);
 		
 		JButton addGameB = new JButton("New game");
-		Factory.setFormatButton(addGameB, null, gameButtonSize, addIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
+		Factory.setFormatButton(addGameB, null, gameButtonSize, addIcon, null, gameBColor, Factory.buttonFont, SwingConstants.LEFT);
 		addGameB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
@@ -175,7 +135,7 @@ public class GamesMenuView {
 		ArrayList<Game> games = menu.getGames();
 		for(Game g : games) {
 			JButton b = new JButton(" "+g.getName());
-			Factory.setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
+			Factory.setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, Factory.buttonFont, SwingConstants.LEFT);
 			b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -269,14 +229,6 @@ public class GamesMenuView {
 		panel.add(panelScroll, BorderLayout.CENTER);
 		frame.add(panel);
 	}
-	
-	
-	private ImageIcon resizeIcon(ImageIcon icon, int i, int j) {
-		Image img = icon.getImage();
-		Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
-		return new ImageIcon(resizedImg);
-	}
-	
-	
+
 
 }

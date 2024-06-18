@@ -6,17 +6,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,11 +22,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
@@ -88,7 +81,6 @@ public class view {
 	private Image salida_derechaImage;
 	private Image salida_izquierdaImage;
 	private JFrame frame;
-	private Font menuFont;
 
 
 	public view(JFrame fm, Map<Character,Pair<Integer,Integer>> posiciones, Level level,controller controller, int GamePoints) {
@@ -211,45 +203,19 @@ public class view {
 		Color borderWinPColor = new Color(50,150,90);
 		Color shadeWinPColor = new Color(57,64,50);
 
-		// Fuentes de texto:
-		Font titleFont = null;
-		try {
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/titlefont.ttf")).deriveFont(35f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		Font gamePointsFont = null;
-		try {
-			gamePointsFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/pointsfont.ttf")).deriveFont(23f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		Font levelPointsFont = null;
-		try {
-			levelPointsFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/pointsfont.ttf")).deriveFont(27f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-		menuFont = null;
-		try {
-			menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/menuText.ttf")).deriveFont(16f);
-		} catch (FontFormatException | IOException e1) {
-			e1.printStackTrace();
-		}
-
 		// Iconos:
-		ImageIcon menuIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/menu.png")),30,30);
-		ImageIcon restartIcon = resizeIcon( new ImageIcon(getClass().getResource("/icons/restart.png")),30,30);
-		ImageIcon undoIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/undo.png")),30,30);
-		ImageIcon starIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/yellowstar.png")),30,30);
-		ImageIcon starIcon2 = rotateIcon(starIcon, 180);
-		ImageIcon closeMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
-		ImageIcon addMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/add.png")),30,30);
-		ImageIcon saveMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
-		ImageIcon loadMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
-		ImageIcon levelsMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/levelsMenu.png")),30,30);
-		ImageIcon nextIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/next.png")),30,30);
-		ImageIcon homeMIcon = resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
+		ImageIcon menuIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/menu.png")),30,30);
+		ImageIcon restartIcon = Factory.resizeIcon( new ImageIcon(getClass().getResource("/icons/restart.png")),30,30);
+		ImageIcon undoIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/undo.png")),30,30);
+		ImageIcon starIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/yellowstar.png")),30,30);
+		ImageIcon starIcon2 = Factory.rotateIcon(starIcon, 180);
+		ImageIcon closeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
+		ImageIcon addMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/add.png")),30,30);
+		ImageIcon saveMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
+		ImageIcon loadMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
+		ImageIcon levelsMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/levelsMenu.png")),30,30);
+		ImageIcon nextIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/next.png")),30,30);
+		ImageIcon homeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
 
 
 		// Panel donde se dibujan los vehículos
@@ -306,7 +272,7 @@ public class view {
 		gamesB.setIcon(homeMIcon);
 		gamesB.setBackground(buttonColor);
 		gamesB.setForeground(Color.white);
-		gamesB.setFont(menuFont);
+		gamesB.setFont(Factory.menuFont);
 		gamesB.setHorizontalAlignment(SwingConstants.LEFT);
 		gamesB.addActionListener(new ActionListener() {
 			@Override
@@ -322,7 +288,7 @@ public class view {
 		levelsB.setIcon(levelsMIcon);
 		levelsB.setBackground(buttonColor);
 		levelsB.setForeground(Color.white);
-		levelsB.setFont(menuFont);
+		levelsB.setFont(Factory.menuFont);
 		levelsB.setHorizontalAlignment(SwingConstants.LEFT);
 		levelsB.addActionListener(new ActionListener() {
 			@Override
@@ -338,7 +304,7 @@ public class view {
 		saveB.setIcon(saveMIcon);
 		saveB.setBackground(buttonColor);
 		saveB.setForeground(Color.white);
-		saveB.setFont(menuFont);
+		saveB.setFont(Factory.menuFont);
 		saveB.setHorizontalAlignment(SwingConstants.LEFT);
 		saveB.addActionListener(new ActionListener() {
 			@Override
@@ -353,7 +319,7 @@ public class view {
 		closeB.setIcon(closeMIcon);
 		closeB.setBackground(buttonColor);
 		closeB.setForeground(Color.white);
-		closeB.setFont(menuFont);
+		closeB.setFont(Factory.menuFont);
 		closeB.setHorizontalAlignment(SwingConstants.LEFT);
 		closeB.addActionListener(new ActionListener() {
 			@Override
@@ -398,7 +364,7 @@ public class view {
 
 		});
 		JLabel levelPointsValue= new JLabel(level.getLevelPoint().toString());
-		if(levelPointsFont!=null){ levelPointsValue.setFont(levelPointsFont); }
+		if(Factory.levelPointsFont2!=null){ levelPointsValue.setFont(Factory.levelPointsFont2); }
 		else {levelPointsValue.setFont(new Font("Serif",Font.PLAIN,30));}
 
 		JButton undoB = new JButton(undoIcon);
@@ -407,8 +373,6 @@ public class view {
 		undoB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("undo button pressed");
-
 				Pair <Pair<Character,Integer>,Pair<Integer,Integer>> newPos = controller.undo();
 				if(!newPos.getKey().getKey().equals(' '))
 				{
@@ -423,11 +387,11 @@ public class view {
 		});
 
 		JLabel gamePointsLabel = new JLabel("Game Points: "); 
-		if(gamePointsFont!=null){ gamePointsLabel.setFont(gamePointsFont); }
+		if(Factory.gamePointsFont!=null){ gamePointsLabel.setFont(Factory.gamePointsFont); }
 		else {gamePointsLabel.setFont(new Font("Serif",Font.PLAIN,25)); }
 
 		JLabel gamePointsValue= new JLabel(gamePoints.toString());
-		if(gamePointsFont!=null){ gamePointsValue.setFont(gamePointsFont); }
+		if(Factory.gamePointsFont!=null){ gamePointsValue.setFont(Factory.gamePointsFont); }
 		else {gamePointsValue.setFont(new Font("Serif",Font.PLAIN,25)); }
 
 		row1.add(Box.createHorizontalStrut(30));
@@ -444,7 +408,7 @@ public class view {
 
 		JPanel row2 = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
 		JLabel title = new JLabel(level.getTitle()); //debe recibir el title del nivel del controller
-		if(titleFont!=null){ title.setFont(titleFont); }
+		if(Factory.titleFont2!=null){ title.setFont(Factory.titleFont2); }
 		else {title.setFont(new Font("Serif",Font.PLAIN,40)); }
 		row2.add(title);
 		headerPanel.add(row2);
@@ -477,10 +441,10 @@ public class view {
 		winPanel.setBorder(b);
 
 		JLabel winL = new JLabel("VICTORY");
-		winL.setFont(titleFont);
+		winL.setFont(Factory.titleFont2);
 
 		JLabel pointsWL = new JLabel("0000"); //TODO : valor a partir de game
-		pointsWL.setFont(levelPointsFont);
+		pointsWL.setFont(Factory.levelPointsFont2);
 
 		JLabel star1W = new JLabel(starIcon);
 		JLabel star2W = new JLabel(starIcon2);
@@ -523,7 +487,7 @@ public class view {
 				try {
 					int r = controller.nextLevel();
 					if(r!=0) {
-						corruptLevel(r);
+						Factory.corruptLevel(r, frame, null, controller, null, false);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -732,28 +696,7 @@ public class view {
 		}
 
 	}
-
-
-	private ImageIcon resizeIcon(ImageIcon icon, int i, int j) {
-		Image img = icon.getImage();
-		Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
-		return new ImageIcon(resizedImg);
-	}
-
-	private ImageIcon rotateIcon(ImageIcon icon, double angle) {
-		Image img = icon.getImage();
-		BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2d = bufferedImage.createGraphics();
-		// Rotar la imagen usando AffineTransform
-		AffineTransform transform = new AffineTransform();
-		transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2.0, img.getHeight(null) / 2.0);
-		g2d.setTransform(transform);
-		g2d.drawImage(img, 0, 0, null);
-		g2d.dispose();
-
-		return new ImageIcon(bufferedImage);
-	}
-
+/*
 	private void corruptLevel(Integer n) {
 		JPanel errorP = new JPanel();
 		errorP.setLayout(new BorderLayout());
@@ -781,5 +724,5 @@ public class view {
 			}
 		} 
 	}
-
+*/
 }

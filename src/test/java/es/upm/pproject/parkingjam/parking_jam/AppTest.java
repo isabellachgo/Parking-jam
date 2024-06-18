@@ -93,8 +93,8 @@ public class AppTest {
 			vehicle.setPix(pix);
 			assertEquals(pix, vehicle.getPix());
 		}
-		
-		
+
+
 		@Test
 		void testSetBackFrontLabel() {
 			Set<Pair<Integer, Integer>> newPosition= new HashSet<>();
@@ -1394,7 +1394,7 @@ public class AppTest {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			game.setLevel(1, level);
 			assertEquals(level, game.getLevel(1));
 		}
@@ -1410,11 +1410,11 @@ public class AppTest {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			game.setLevel(1, level);
 			assertEquals(level, game.getLevel(1));
 		}
-		
+
 		@Test
 		public void actualizarGamePointsTest() {
 			Level level=null;
@@ -1426,12 +1426,12 @@ public class AppTest {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			game.setLevel(1, level);
 			game.actualizarGamePoints(1, level.getLevelPoint());
 			assertEquals(50, game.getLevelPoints(1));
 		}
-		
+
 
 		@Test
 		public void guardarLevelsPointsWithoutPassedLevelsTest()
@@ -1502,11 +1502,11 @@ public class AppTest {
 		{
 			Level level1=null;
 			Level level2=null;
-			
+
 			try {
 				level1 = new Level(1);
 				level2= new Level(2);
-				
+
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -1522,7 +1522,7 @@ public class AppTest {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			String rutaDirectorioBase = System.getProperty("user.dir");
 			String rutaFicheroPoints = rutaDirectorioBase + File.separator + "src" + File.separator + "main" + File.separator + "gamesSaved" + File.separator + "Paco" + File.separator + "gamePoints.txt";
 			File ficheroPoints = new File(rutaFicheroPoints);
@@ -1543,7 +1543,7 @@ public class AppTest {
 				System.err.println("Se produjo un error al leer el archivo: " + e.getMessage());
 			}
 		}
-		
+
 		@Test
 		public void unfinishedLevelFile_guardarGameWithUnfinishedLevelTest() {
 			Level level1=null;
@@ -1568,7 +1568,7 @@ public class AppTest {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			String rutaDirectorioBase = System.getProperty("user.dir");			
 			String rutaFicheroTablero = rutaDirectorioBase + File.separator + "src" + File.separator + "main" + File.separator + "gamesSaved" + File.separator + "Paco" + File.separator + "level.txt";
 			File ficheroTablero = new File(rutaFicheroTablero);
@@ -1609,7 +1609,7 @@ public class AppTest {
 			Game gameTest= new Game("");
 			Level level1=null;
 			Level level2=null;
-			
+
 			try {
 				level2= new Level(2);
 				level1=new Level(1);
@@ -1620,7 +1620,7 @@ public class AppTest {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			try {
 				game.setLevel(1, level1);
 				game.setLevel(2, level2);
@@ -1630,16 +1630,16 @@ public class AppTest {
 			}
 
 			Level unfinishedLevel = gameTest.cargarGame("Paco");
-			
+
 			assertEquals(null, unfinishedLevel);
 			assertEquals(level1.getTitle(), gameTest.getLevel(1).getTitle()); //----------
 			assertEquals(level1.getLevelPoint(), gameTest.getLevel(1).getLevelPoint()); //----------
 			assertEquals(level2.getTitle(), gameTest.getLevel(2).getTitle()); //----------
 			assertEquals(level2.getLevelPoint(), gameTest.getLevel(2).getLevelPoint()); //----------
-			
-			
+
+
 			assertEquals(70, gameTest.getGamePoints());
-			
+
 			System.out.println("PUUNTOS LEVEL 1: "+gameTest.getLevelPoints(1));
 			System.out.println("PUUNTOS LEVEL 2: "+gameTest.getLevelPoints(2));
 			assertEquals(20, gameTest.getLevelPoints(1) );
@@ -1677,13 +1677,13 @@ public class AppTest {
 			assertEquals(20, gameTest.getLevelPoints(1) );
 			assertEquals(50, gameTest.getLevelPoints(2));  //------------------------------
 			assertEquals(70, gameTest.getGamePoints());
-			
+
 			assertEquals(level1.getTitle(), gameTest.getLevel(1).getTitle());
 			assertEquals(level1.getLevelPoint(), gameTest.getLevel(1).getLevelPoint());
 			assertEquals(level2.getTitle(), gameTest.getLevel(2).getTitle());
 			assertEquals(level2.getLevelPoint(), gameTest.getLevel(2).getLevelPoint());
-			
-			
+
+
 			//assertEquals(level3.getBoardHistory(), unfinishedLevel.getBoardHistory());
 			assertEquals(level3.getTitle(), unfinishedLevel.getTitle());
 			assertEquals(level3.getLevelPoint(), unfinishedLevel.getLevelPoint());
@@ -1729,7 +1729,7 @@ public class AppTest {
 			assertTrue(lista.contains("Paco"));
 			assertTrue(lista.contains("Antonio"));
 			assertTrue(lista.size()==2);
-			
+
 			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 			try (FileReader fr = new FileReader(ficheroListaGames);	BufferedReader br = new BufferedReader(fr)) {
 				String linea = br.readLine();
@@ -1762,6 +1762,59 @@ public class AppTest {
 			assertEquals("Sandra", list.get(2));	
 		}
 
+	}
+	@Nested
+	class MenuTest{
+		private Menu m;
+		private ArrayList<Game> games;
+		private Game g1;
+		private Game g2;
+		private Game g3;
+		private Game g4;
+
+
+		@BeforeEach
+		public void Ini() throws FileNotFoundException,IOException {
+			games = new ArrayList<Game>();
+			m =new Menu();
+			g1= new Game("A");
+			g2= new Game("B");
+			g3= new Game("C");
+			g4= new Game("D");
+			games.add(g1);
+			
+		}
+		
+		@Test
+		public void AddGamesToMenu() {
+			games.add(g2);
+			m.addGame(g1);
+			m.addGame(g2);
+			assertEquals(m.getGames(), games);
+		}
+		@Test
+		public void GetNumGamesInMenu() {
+			games.add(g2);
+			games.add(g3);
+			games.add(g4);
+			m.addGame(g1);
+			m.addGame(g2);
+			m.addGame(g3);
+			m.addGame(g4);
+			assertEquals(games.size(), m.getNumGames());
+		}
+		@Test
+		public void GetNameGames() {
+			games.add(g2);
+			m.addGame(g1);
+			m.addGame(g2);
+			m.addGame(g3);
+			m.addGame(g4);
+			for(int i=0; i<games.size(); i++) {
+				assertEquals(m.getGames().get(i).getName(), games.get(i).getName());
+			}
+		}
+		
 	}
 
 }

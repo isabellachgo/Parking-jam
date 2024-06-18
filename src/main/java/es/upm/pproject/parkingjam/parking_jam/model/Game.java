@@ -13,12 +13,16 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
+
 import javafx.util.Pair;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.FileWriter;
+
+
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -128,13 +132,12 @@ public class Game {
 			// Escribir en el fichero
 
 			Iterator<Entry<Integer, Level>> it = listaLevels.entrySet().iterator();
-			int last;
-			if(level!=null) last=listaLevels.size()-1;
-			else last=listaLevels.size();
-			for (int i=0; i <last && it.hasNext(); i++)
+		
+			for (int i=0; i <listaLevels.size() && it.hasNext(); i++)
 			{    
 				Entry<Integer, Level> e= it.next();
 				bw.write(e.getKey()+" : " + e.getValue().getLevelPoint());
+                System.err.println(e.getKey()+", " +e.getValue().getLevelPoint());
 				bw.newLine();  // Salto de línea
 			}
 
@@ -253,6 +256,9 @@ public class Game {
 					System.out.println("points = " + despuesDeDosPuntos);
 					int id = Integer.parseInt(antesDeDosPuntos) ;
 					int points = Integer.parseInt(despuesDeDosPuntos);
+                    Level level = new Level(id);
+                    level.setLevelPoints(points);
+                    setLevel(id, level);
 					actualizarGamePoints(id, points);
 					setUltimoLevelPassed(id);
 				}
@@ -307,8 +313,10 @@ public class Game {
 					tamX = partes[0].trim();
 					tamY = partes[1].trim();
 				}
-				sizeX = Integer.parseInt(tamX);
-				sizeY = Integer.parseInt(tamY);
+                if (tamX != null && !tamX.isEmpty() && tamY != null && !tamY.isEmpty()) {
+                    sizeX = Integer.parseInt(tamX);
+                    sizeY = Integer.parseInt(tamY);
+                }
 			}
 
 			Deque<Map<Character, Set<Pair<Integer, Integer>>>> vph= new ArrayDeque<>();
@@ -363,6 +371,6 @@ public class Game {
 		return levelUncomplete;
 
 	}
-
+   
 }
 

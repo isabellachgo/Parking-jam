@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.Box;
+
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -49,7 +49,7 @@ public class GamesMenuView {
 		this.frame.setVisible(true);
 	}
 
-	public void initGMV() {
+	private void initGMV() {
 		
 		// Altura scroll:
 		Integer listH = (menu.getNumGames()+1)*80 + (menu.getNumGames())*10;
@@ -104,17 +104,10 @@ public class GamesMenuView {
 		
 		// Elementos:
 		JButton loadGameB = new JButton("Load game");
-		loadGameB.setPreferredSize(buttonSize2);
-		loadGameB.setIcon(loadIcon);
-		loadGameB.setBackground(buttonColor);
-		loadGameB.setForeground(Color.white);
-		loadGameB.setFont(menuFont);
-		loadGameB.setHorizontalAlignment(SwingConstants.CENTER);
+		setFormatButton(loadGameB, null, buttonSize2, loadIcon, Color.white, buttonColor, menuFont, SwingConstants.CENTER);
 		loadGameB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("load game button pressed");
-				
 				frame.getContentPane().removeAll();
 				cont.openSavedGames();
 			}
@@ -153,11 +146,7 @@ public class GamesMenuView {
 	    panelErrorNewg.add(textArea, BorderLayout.CENTER);
 		
 		JButton addGameB = new JButton("New game");
-		addGameB.setPreferredSize(gameButtonSize);
-		addGameB.setIcon(addIcon);
-		addGameB.setBackground(gameBColor);
-		addGameB.setFont(gameFont);
-		addGameB.setHorizontalAlignment(SwingConstants.LEFT);
+		setFormatButton(addGameB, null, gameButtonSize, addIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
 		addGameB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -168,10 +157,9 @@ public class GamesMenuView {
 				dialog.setVisible(true);
 				Object res = ((JOptionPane) dialog.getContentPane().getComponent(0)).getValue();
 				
-				if(res!=null && res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
+				if(res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
 					String input = pgnInput.getText();
 					if(input != null && !input.trim().isEmpty()) {
-						System.out.println("Ok new game button pressed");
 						frame.getContentPane().removeAll();
 						if(cont.newGame(input) == 1) {
 							JDialog existingGame = new JDialog(frame, "Existing Game", true);
@@ -190,15 +178,10 @@ public class GamesMenuView {
 		ArrayList<Game> games = menu.getGames();
 		for(Game g : games) {
 			JButton b = new JButton(" "+g.getName());
-			b.setPreferredSize(gameButtonSize);
-			b.setIcon(carIcon);
-			b.setBackground(gameBColor);
-			b.setFont(gameFont);
-			b.setHorizontalAlignment(SwingConstants.LEFT);
+			setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
 			b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println(g.getName()+" game button pressed");
 					frame.getContentPane().removeAll();
 					cont.openGame(g);
 				}
@@ -295,6 +278,16 @@ public class GamesMenuView {
 		Image img = icon.getImage();
 		Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
 		return new ImageIcon(resizedImg);
+	}
+	
+	private void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Color foreg, Color backg, Font font, Integer sc) {
+		if(t!=null) b.setText(t);
+		if(size!=null) b.setPreferredSize(size);
+		if(ic!=null) b.setIcon(ic);
+		if(foreg!=null) b.setForeground(foreg);
+		if(backg!=null) b.setBackground(backg);
+		if(font!=null) b.setFont(font);
+		if(sc!=null) b.setHorizontalAlignment(sc);
 	}
 
 }

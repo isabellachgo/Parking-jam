@@ -30,7 +30,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.controller;
-import es.upm.pproject.parkingjam.parking_jam.model.Game;
+
 
 public class SavedGamesView {
 
@@ -47,7 +47,7 @@ public class SavedGamesView {
 		f.setVisible(true);
 	}
 
-	public void initSGV() {
+	private void initSGV() {
 		// Altura scroll:
 		Integer listH = (savedGames.size()+1)*80 + (savedGames.size())*10;
 		Integer pictureH = listH +60;
@@ -113,13 +113,10 @@ public class SavedGamesView {
 		noGamesTextL.setForeground(Color.white);
 		
 		JButton goBackB = new JButton();
-		goBackB.setPreferredSize(buttonSize);
-		goBackB.setIcon(backIcon);
-		goBackB.setBackground(buttonColor);
+		setFormatButton(goBackB, null, buttonSize, backIcon, null, buttonColor, null, null);
 		goBackB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("back button pressed");
 				frame.getContentPane().removeAll();
 				cont.gamesMenuButton();
 			}
@@ -142,15 +139,10 @@ public class SavedGamesView {
 		ArrayList<JButton> buttons = new ArrayList<>();
 		for(String g : savedGames) {
 			JButton b = new JButton(" "+g);
-			b.setPreferredSize(gameButtonSize);
-			b.setIcon(carIcon);
-			b.setBackground(gameBColor);
-			b.setFont(gameFont);
-			b.setHorizontalAlignment(SwingConstants.LEFT);
+			setFormatButton(b, null, gameButtonSize, carIcon, null, gameBColor, gameFont, SwingConstants.LEFT);
 			b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println(g+" game button pressed");
 					frame.getContentPane().removeAll();
 					if(cont.openSavedGame(g) == 1) {
 						JDialog existingGame = new JDialog(frame, "Existing Game", true);
@@ -242,6 +234,16 @@ public class SavedGamesView {
 		Image img = icon.getImage();
 		Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
 		return new ImageIcon(resizedImg);
+	}
+	
+	private void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Color foreg, Color backg, Font font, Integer sc) {
+		if(t!=null) b.setText(t);
+		if(size!=null) b.setPreferredSize(size);
+		if(ic!=null) b.setIcon(ic);
+		if(foreg!=null) b.setForeground(foreg);
+		if(backg!=null) b.setBackground(backg);
+		if(font!=null) b.setFont(font);
+		if(sc!=null) b.setHorizontalAlignment(sc);
 	}
 	
 

@@ -1,10 +1,9 @@
 
 package es.upm.pproject.parkingjam.parking_jam.model;
 
-import java.util.List;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -14,8 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
-
-import es.upm.pproject.parkingjam.parking_jam.controller.controller;
 
 import java.util.Set;
 
@@ -37,7 +34,7 @@ public class Level  {
 	private Integer nLevel;
 	private static final Logger LOGGER = Logger.getLogger(Level.class);
 
-	public Level (Integer n_level) throws FileNotFoundException, IOException{
+	public Level (Integer n_level) throws IOException{
 		bReader = new BoardReader(n_level);
 		nLevel=n_level;
 		dimensionX = bReader.getDimensionX();
@@ -62,7 +59,7 @@ public class Level  {
 		this.levelPoints= 0;
 
 	}
-	public Level (String filepath) throws FileNotFoundException, IOException{
+	public Level (String filepath) throws  IOException{
 		bReader = new BoardReader(filepath);
 		dimensionX = bReader.getDimensionX();
 		dimensionY = bReader.getDimensionY();

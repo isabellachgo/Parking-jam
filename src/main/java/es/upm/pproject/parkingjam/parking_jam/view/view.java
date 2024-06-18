@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,13 +35,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+
 import javax.swing.border.BevelBorder;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Level;
 import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
-import javafx.scene.layout.Border;
+
 import javafx.util.Pair;
 
 
@@ -98,8 +98,8 @@ public class view {
 		this.dimensionMapaX=level.getDimensionX();
 		this.dimensionMapaY=level.getDimensionY();
 		this.gamePoints=GamePoints;
-		tamanoCeldaX=Math.round((400+(dimensionMapaX/2))/(dimensionMapaX-2));
-		tamanoCeldaY=Math.round((400+(dimensionMapaY/2))/(dimensionMapaY-2)) ;
+		tamanoCeldaX=Math.round((float)(400+(dimensionMapaX/2.0))/(dimensionMapaX-2));
+		tamanoCeldaY=Math.round((float)(400+(dimensionMapaY/2.0))/(dimensionMapaY-2)) ;
 		System.out.println("tamaño celda " +tamanoCeldaX);
 		this.level=level;
 		this.controller=controller;
@@ -746,7 +746,7 @@ public class view {
 		Graphics2D g2d = bufferedImage.createGraphics();
 		// Rotar la imagen usando AffineTransform
 		AffineTransform transform = new AffineTransform();
-		transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2, img.getHeight(null) / 2);
+		transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2.0, img.getHeight(null) / 2.0);
 		g2d.setTransform(transform);
 		g2d.drawImage(img, 0, 0, null);
 		g2d.dispose();
@@ -769,7 +769,7 @@ public class view {
 		dialog.setVisible(true);
 		Object res = ((JOptionPane) dialog.getContentPane().getComponent(0)).getValue();
 
-		if(res!=null && res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
+		if(res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
 			System.out.println("Ok new game button pressed");
 
 			frame.getContentPane().removeAll();

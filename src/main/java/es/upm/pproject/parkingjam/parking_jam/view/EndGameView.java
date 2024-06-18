@@ -131,40 +131,30 @@ public class EndGameView {
         buttonpanel.setBackground(winPColor);
 
         JButton gamesB = new JButton(homeMIcon);
-        gamesB.setPreferredSize(buttonSize);
-        gamesB.setBackground(buttonColor);
-       
+        setFormatButton(gamesB, null, buttonSize, null, null, buttonColor, null, null);       
         gamesB.setAlignmentX(JButton.CENTER_ALIGNMENT);
         gamesB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("games button pressed");
                 frame.getContentPane().removeAll();
                 cont.gamesMenuButton();
             }
         });
 
         JButton closeB = new JButton(closeMIcon);
-        closeB.setPreferredSize(buttonSize);
-        closeB.setBackground(buttonColor);
+        setFormatButton(closeB, null, buttonSize, null, null, buttonColor, null, null);
         closeB.setAlignmentX(JButton.CENTER_ALIGNMENT);
         closeB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("close button pressed");
                 frame.dispose();
             }
         });
         JButton saveB = new JButton(saveMIcon);
-		saveB.setPreferredSize(buttonSize);
-		saveB.setBackground(buttonColor);
-		saveB.setForeground(Color.white);
-		saveB.setHorizontalAlignment(SwingConstants.LEFT);
+        setFormatButton(saveB, null, buttonSize, null, Color.white, buttonColor, null, SwingConstants.LEFT);
 		saveB.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("save button pressed");
-				
+			public void actionPerformed(ActionEvent e) {				
 				cont.saveGame();
 			}
 		});
@@ -197,11 +187,21 @@ public class EndGameView {
         BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufferedImage.createGraphics();
         AffineTransform transform = new AffineTransform();
-        transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2, img.getHeight(null) / 2);
+        transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2.0, img.getHeight(null) / 2.0);
         g2d.setTransform(transform);
         g2d.drawImage(img, 0, 0, null);
         g2d.dispose();
 
         return new ImageIcon(bufferedImage);
     }
+    
+    private void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Color foreg, Color backg, Font font, Integer sc) {
+		if(t!=null) b.setText(t);
+		if(size!=null) b.setPreferredSize(size);
+		if(ic!=null) b.setIcon(ic);
+		if(foreg!=null) b.setForeground(foreg);
+		if(backg!=null) b.setBackground(backg);
+		if(font!=null) b.setFont(font);
+		if(sc!=null) b.setHorizontalAlignment(sc);
+	}
 }

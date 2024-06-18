@@ -1,13 +1,13 @@
 package es.upm.pproject.parkingjam.parking_jam.controller;
 
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
-import java.util.Deque;
+
 import java.util.HashMap;
-import java.util.HashSet;
+
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
+
 
 import javax.swing.JFrame;
 
@@ -62,7 +62,7 @@ public class controller {
 
 	}
 
-	public int showLevel(int n) throws FileNotFoundException, IOException {
+	public int showLevel(int n) throws  IOException {
 		if(g.getLastLevel()!=null&&g.getLastLevel().getNLevel()==n) lvl=g.getLastLevel();
 		else lvl = new Level(n);
 		if(lvl.getBoard()==null) {
@@ -93,14 +93,14 @@ public class controller {
 			row = lvl.getDimensionX() - 1;
 		else
 			row = ((x - 150) / cellSize) + 1;
-		System.out.println(" la x es = " + row);
+		
 		if (y < 50)
 			col = 0;
 		else if (y > 450)
 			col = lvl.getDimensionY() - 1;
 		else
 			col = ((y - 50) / cellSize) + 1;
-		System.out.println(" la y es = " + col);
+	
 		return new Pair<>(row, col);
 	}
 
@@ -148,14 +148,13 @@ public class controller {
 							if (!newLabel.equals(actLabel)) {
 								this.prevLabel = new Pair(newLabel.getKey(),newLabel.getValue()-1);Integer a=(punt/cellSize);
 								this.actLabel = newLabel;
-								//if(conflLabelF!=null)
-								System.out.println("bajo "+actLabel.toString()+" "+prevLabel.toString() /*+" conf "+ conflLabelF.toString()*/);
+							
 							}
 							return new Pair<>(0, vehicleClicked.getPix().getValue() + punt);
 						}
 
 					} else {
-						if(conflLabelF==null&&(conflLabelB==null||(conflLabelB.getValue()!=newLabel.getValue()&&newLabel.getValue()>conflLabelB.getValue()))) 
+						if(conflLabelF==null&&(conflLabelB==null||(!conflLabelB.getValue().equals( newLabel.getValue()) && newLabel.getValue() > conflLabelB.getValue()))) 
 							conflLabelF=newLabel;
 						prevLabel = actLabel;
 						return new Pair<>(0, v.devuelveCoordenadas(vehicleClicked.getId()).getValue());
@@ -185,13 +184,12 @@ public class controller {
 								&&(conflLabelB==null||newLabel.getValue()>conflLabelB.getValue())) {				
 							if (!newLabel.equals(actLabel)) {
 								this.prevLabel = new Pair(newLabel.getKey(),newLabel.getValue()+1);
-								this.actLabel = newLabel;if(actLabel!=null)System.out.println("Subo "+actLabel.toString()+" "+prevLabel.toString());
-
+								this.actLabel = newLabel;
 							}
 							return new Pair<>(0, vehicleClicked.getPix().getValue() + punt);
 						}
 					} else {
-						if(conflLabelB==null&&(conflLabelF==null||(conflLabelF.getValue()!=newLabel.getValue()&&newLabel.getValue()<conflLabelF.getValue()))) 
+						if(conflLabelB==null&&(conflLabelF==null||(!conflLabelF.getValue().equals( newLabel.getValue()) && newLabel.getValue() < conflLabelF.getValue()))) 
 							conflLabelB=newLabel;
 						prevLabel = actLabel;
 						return new Pair<>(0, v.devuelveCoordenadas(vehicleClicked.getId()).getValue());
@@ -214,7 +212,6 @@ public class controller {
 								vehicleClicked.getfrontLabel().getValue());
 
 					}
-					System.out.println(newLabel.toString());
 
 					if (newLabel.getKey() >= lvl.getDimensionX() || newLabel.getKey() < 0)
 						return new Pair<>(v.devuelveCoordenadas(vehicleClicked.getId()).getKey(), 0);
@@ -227,12 +224,12 @@ public class controller {
 								&&(conflLabelB==null||(newLabel.getKey()-vehicleClicked.getDimension().getKey())>conflLabelB.getKey())){			
 							if (!newLabel.equals(actLabel)) {
 								this.prevLabel = new Pair(newLabel.getKey()-1,newLabel.getValue());
-								this.actLabel = newLabel;if(actLabel!=null)System.out.println("Dch "+actLabel.toString()+" "+prevLabel.toString());
+								this.actLabel = newLabel;
 							}
 							return new Pair<>(vehicleClicked.getPix().getKey() + punt, 0);
 						}
 					} else {
-						if(conflLabelF==null&&(conflLabelB==null||(conflLabelB.getKey()!=newLabel.getKey()&&newLabel.getKey()>conflLabelB.getKey()))) 
+						if(conflLabelF==null&&(conflLabelB==null||(!conflLabelB.getKey().equals( newLabel.getKey()) && newLabel.getKey()>conflLabelB.getKey()))) 
 							conflLabelF=newLabel;
 						prevLabel = actLabel;
 						return new Pair<>(v.devuelveCoordenadas(vehicleClicked.getId()).getKey(), 0);
@@ -254,7 +251,6 @@ public class controller {
 								vehicleClicked.getbackLabel().getValue());
 
 					}
-					System.out.println(newLabel.toString());
 					if (newLabel.getKey() >= lvl.getDimensionX() || newLabel.getKey() < 0)
 						return new Pair<>(v.devuelveCoordenadas(vehicleClicked.getId()).getKey(), 0);
 					if (actLabel == null)
@@ -265,12 +261,12 @@ public class controller {
 								&&(conflLabelB==null||newLabel.getKey()>conflLabelB.getKey())) {				
 							if (!newLabel.equals(actLabel)) {
 								this.prevLabel = new Pair(newLabel.getKey()+1,newLabel.getValue());
-								this.actLabel = newLabel;System.out.println("Izq "+actLabel.toString()+" "+prevLabel.toString());
+								this.actLabel = newLabel;
 							}
 							return new Pair<>(vehicleClicked.getPix().getKey() + punt, 0);
 						}
 					} else {
-						if(conflLabelB==null&&(conflLabelF==null||(conflLabelF.getKey()!=newLabel.getKey()&&newLabel.getKey()<conflLabelF.getKey()))) 
+						if(conflLabelB==null&&(conflLabelF==null||(! conflLabelF.getKey().equals( newLabel.getKey()) && newLabel.getKey()<conflLabelF.getKey()))) 
 							conflLabelB=newLabel;
 						prevLabel = actLabel;
 						return new Pair<>(v.devuelveCoordenadas(vehicleClicked.getId()).getKey(), 0);
@@ -280,7 +276,8 @@ public class controller {
 			}
 
 		}
-		return new Pair<>(v.devuelveCoordenadas(vehicleClicked.getId()).getKey(), v.devuelveCoordenadas(vehicleClicked.getId()).getValue());
+		 if(vehicleClicked!=null)return new Pair<>(v.devuelveCoordenadas(vehicleClicked.getId()).getKey(), v.devuelveCoordenadas(vehicleClicked.getId()).getValue());
+		else return null;
 	}
 
 	public Pair<Pair<Integer, Integer>, Pair<Integer, Boolean>> drop(Pair<Integer, Integer> posF) {
@@ -294,43 +291,43 @@ public class controller {
 			if (punt2 % cellSize > cellSize / 2||actLabel.equals(lvl.getExit())) {
 				if (punt>0&&avanza) {
 					moveVehicle(vehicleClicked.getfrontLabel(), actLabel);
-					System.out.println("1 "+punt2%cellSize + " "+actLabel.toString());
+			
 				}
 				else if(punt>0&&!avanza) {
 					if(prevLabel.equals(actLabel))moveVehicle(vehicleClicked.getfrontLabel(), prevLabel);
 					moveVehicle(vehicleClicked.getbackLabel(), prevLabel);
-					System.out.println("2 "+punt2%cellSize + " "+prevLabel.toString());
+					
 				}
 				else if(punt<0&&avanza) {
 					if(prevLabel.equals(actLabel))moveVehicle(vehicleClicked.getbackLabel(), prevLabel);
 					moveVehicle(vehicleClicked.getfrontLabel(), prevLabel);
-					System.out.println("3 "+punt2%cellSize + " "+prevLabel.toString());
+				
 				}
 				else {
 					moveVehicle(vehicleClicked.getbackLabel(), actLabel);
-					System.out.println("4 "+punt2%cellSize + " "+actLabel.toString());
+					
 				}
 
 
 			} else {
 				if (punt>0&&avanza) {
 					moveVehicle(vehicleClicked.getfrontLabel(), prevLabel);
-					System.out.println("5 "+punt2%cellSize + " "+prevLabel.toString());
+				
 				}
 				else if(punt>0&&!avanza) {
 					if(prevLabel.equals(actLabel))moveVehicle(vehicleClicked.getfrontLabel(), prevLabel);
 					moveVehicle(vehicleClicked.getbackLabel(), actLabel);
-					System.out.println("6 "+punt2%cellSize + " "+actLabel.toString());
+				
 
 				}
 				else if(punt<0&&avanza) {
 					if(prevLabel.equals(actLabel))moveVehicle(vehicleClicked.getbackLabel(), prevLabel);
 					moveVehicle(vehicleClicked.getfrontLabel(), actLabel);
-					System.out.println("7 "+punt2%cellSize + " "+actLabel.toString());}
+					}
 
 				else {
 					moveVehicle(vehicleClicked.getbackLabel(), prevLabel);
-					System.out.println("8 "+punt2%cellSize + " "+prevLabel.toString());}
+				}
 			}
 		}
 		Pair<Integer, Boolean> res = new Pair<>(lvl.getLevelPoint(),
@@ -388,7 +385,7 @@ public class controller {
 		LevelsMenuView lmv = new LevelsMenuView(f, g, this);
 	}
 
-	public int nextLevel() throws FileNotFoundException, IOException {
+	public int nextLevel() throws  IOException {
 		if(lvlAct<4) {
 			int n =lvlAct + 1;
 			int r = showLevel(n);

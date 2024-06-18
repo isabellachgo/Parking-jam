@@ -8,13 +8,12 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Insets;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -27,9 +26,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JTextArea;
+
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+
 
 import es.upm.pproject.parkingjam.parking_jam.controller.controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
@@ -384,7 +383,7 @@ public class LevelsMenuView {
 		levelsStatus(l3B);
 		levelsStatus(l4B);
 		
-		if(res!=null && res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
+		if( res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
 			System.out.println("Ok new game button pressed");
 			
 			frame.getContentPane().removeAll();

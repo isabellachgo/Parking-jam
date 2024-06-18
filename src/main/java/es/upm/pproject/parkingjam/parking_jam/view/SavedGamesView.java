@@ -30,7 +30,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.controller;
-import es.upm.pproject.parkingjam.parking_jam.model.Game;
+
 
 public class SavedGamesView {
 
@@ -47,7 +47,7 @@ public class SavedGamesView {
 		f.setVisible(true);
 	}
 
-	public void initSGV() {
+	private void initSGV() {
 		// Altura scroll:
 		Integer listH = (savedGames.size()+1)*80 + (savedGames.size())*10;
 		Integer pictureH = listH +60;

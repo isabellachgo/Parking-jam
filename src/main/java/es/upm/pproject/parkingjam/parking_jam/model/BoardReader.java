@@ -2,7 +2,6 @@ package es.upm.pproject.parkingjam.parking_jam.model;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,7 +23,7 @@ public class BoardReader {
 
 	String filepathFormat = "src/main/resources/levels/level_%d.txt";
 
-	public BoardReader(int nlevel) throws FileNotFoundException, IOException{
+	public BoardReader(int nlevel) throws  IOException{
 
 		String filepath = String.format(filepathFormat, nlevel);
 		file = new FileReader(new File(filepath));
@@ -41,7 +40,7 @@ public class BoardReader {
 		board = createBoard();
 
 	}
-	public BoardReader(String filepath) throws FileNotFoundException, IOException{
+	public BoardReader(String filepath) throws  IOException{
 		
 		file = new FileReader(new File(filepath));
 		reader = new BufferedReader(file);

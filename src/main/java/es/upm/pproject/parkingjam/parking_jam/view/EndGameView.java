@@ -197,7 +197,7 @@ public class EndGameView {
         BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufferedImage.createGraphics();
         AffineTransform transform = new AffineTransform();
-        transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2, img.getHeight(null) / 2);
+        transform.rotate(Math.toRadians(angle), img.getWidth(null) / 2.0, img.getHeight(null) / 2.0);
         g2d.setTransform(transform);
         g2d.drawImage(img, 0, 0, null);
         g2d.dispose();

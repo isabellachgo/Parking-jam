@@ -39,9 +39,9 @@
 		<sonar.language>java</sonar.language>
 		<sonar.host.url>https://costa.ls.fi.upm.es/sonar</sonar.host.url>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
-		<sonar.projectName>ParkingJam-210241</sonar.projectName>
-		<sonar.projectKey>es.upm.pproject.parkingjam:parking-jam:ParkingJam:210241</sonar.projectKey>
-		<sonar.coverage.exclusions>**/view,**.controller</sonar.coverage.exclusions>
+		<sonar.projectName>ParkingJam-210115</sonar.projectName>
+		<sonar.projectKey>es.upm.pproject.parkingjam:parking-jam:ParkingJam:210115</sonar.projectKey>
+		 <sonar.coverage.exclusions>**/view/**,**/controller/**</sonar.coverage.exclusions>
 		<jacoco.version>0.8.6</jacoco.version>
 		<sonar.scm.provider>git</sonar.scm.provider>
 
@@ -181,5 +181,14 @@
 
 
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.txt</include>
+                </includes>
+            </resource>
+        </resources>
+
     </build>
 </project>

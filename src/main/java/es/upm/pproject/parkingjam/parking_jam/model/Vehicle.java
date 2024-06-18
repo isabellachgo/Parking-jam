@@ -18,7 +18,23 @@ public class Vehicle {
 		this.redCar=redCar;
 		this.id=id;
 		this.dimension=dimension;
-		setPosition(position);
+		this.position=position;
+		this.backLabel = new Pair<>(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        this.frontLabel = new Pair<>(Integer.MIN_VALUE, Integer.MIN_VALUE);
+
+        // Buscar el par menor y el par mayor
+        for (Pair<Integer, Integer> p : position) {
+            // Comparar para encontrar el menor par
+            if (p.getKey() < backLabel.getKey() || 
+                (p.getKey().equals(backLabel.getKey()) && p.getValue() < backLabel.getValue())) {
+                this.backLabel = p;
+            }
+            // Comparar para encontrar el mayor par
+            if (p.getKey() > frontLabel.getKey() || 
+                (p.getKey().equals(frontLabel.getKey()) && p.getValue() > frontLabel.getValue())) {
+                this.frontLabel = p;
+            }
+        }
 		
 	}
 	public void setPosition(Set<Pair<Integer,Integer>> position) {

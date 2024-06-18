@@ -13,11 +13,11 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
-import es.upm.pproject.parkingjam.parking_jam.controller.controller;
+
 import javafx.util.Pair;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 
@@ -313,8 +313,10 @@ public class Game {
 					tamX = partes[0].trim();
 					tamY = partes[1].trim();
 				}
-				sizeX = Integer.parseInt(tamX);
-				sizeY = Integer.parseInt(tamY);
+                if (tamX != null && !tamX.isEmpty() && tamY != null && !tamY.isEmpty()) {
+                    sizeX = Integer.parseInt(tamX);
+                    sizeY = Integer.parseInt(tamY);
+                }
 			}
 
 			Deque<Map<Character, Set<Pair<Integer, Integer>>>> vph= new ArrayDeque<>();
@@ -369,44 +371,6 @@ public class Game {
 		return levelUncomplete;
 
 	}
-   /*  public static void main(String[] args) {
-		Game game= new Game("Paco2");
-        Game gameTest= new Game("");
-			Level level1=null;
-			Level level2=null;
-            Level level3=null;
-			
-			try {
-				level2= new Level(2);
-                level3= new Level(3);
-				level1=new Level(1);
-				level1.setLevelPoints(20);
-				level2.setLevelPoints(50);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			try {
-				game.setLevel(1, level1);
-				game.setLevel(2, level2);
-				game.guardarGame(level3);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			Level unfinishedLevel = gameTest.cargarGame("Paco2");
-			
-			System.out.println(unfinishedLevel==null);
-			System.out.println(gameTest.getLevel(1)); //----------
-			System.out.println( gameTest.getLevel(2));
-            System.out.println(gameTest.getLevelPoints(1));
-            System.out.println(gameTest.getLevelPoints(2));
-            System.out.println(gameTest.getGamePoints());
-          
-			
-	}*/
-
+   
 }
 

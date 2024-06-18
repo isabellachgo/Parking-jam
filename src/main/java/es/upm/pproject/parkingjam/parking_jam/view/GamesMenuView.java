@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.Box;
+
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -49,7 +49,7 @@ public class GamesMenuView {
 		this.frame.setVisible(true);
 	}
 
-	public void initGMV() {
+	private void initGMV() {
 		
 		// Altura scroll:
 		Integer listH = (menu.getNumGames()+1)*80 + (menu.getNumGames())*10;
@@ -168,7 +168,7 @@ public class GamesMenuView {
 				dialog.setVisible(true);
 				Object res = ((JOptionPane) dialog.getContentPane().getComponent(0)).getValue();
 				
-				if(res!=null && res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
+				if(res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
 					String input = pgnInput.getText();
 					if(input != null && !input.trim().isEmpty()) {
 						System.out.println("Ok new game button pressed");

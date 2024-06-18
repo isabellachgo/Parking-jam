@@ -19,7 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
@@ -108,7 +110,7 @@ public class GamesMenuView {
 						frame.getContentPane().removeAll();
 						if(cont.newGame(input) == 1) {
 							JDialog existingGame = new JDialog(frame, "Existing Game", true);
-							existingGame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+							existingGame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 							existingGame.setSize(new Dimension(300,150));
 						    existingGame.add(panelErrorNewg);	
 							existingGame.setLocationRelativeTo(frame);
@@ -196,8 +198,8 @@ public class GamesMenuView {
 		JScrollPane panelScroll = new JScrollPane(panelCenter);
 		panelScroll.setBackground(bg);
 		panelScroll.setBounds(0,0,700,550);
-		panelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		panelScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		panelScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panelScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 			
 		
 		panel.add(panelNorth, BorderLayout.NORTH);

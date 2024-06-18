@@ -475,8 +475,6 @@ public class LevelView {
 					int clickX = e.getX();
 					int clickY=e.getY();
 
-					int x = ((clickX-150)/tamanoCeldaX) ; 
-					int y = ((clickY-50)/tamanoCeldaY);
 				}
 				carSelect = controller.click(new Pair<>(e.getX(),e.getY()));
 			}
@@ -485,20 +483,20 @@ public class LevelView {
 				//drop
 				if(carSelect!=' ')
 				{
-					Pair<Integer,Integer> newPos = new Pair<>(null, null); // pair < par<int,int>,int>
-					Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>> newInfo = new Pair<>(null, null); 
+					Pair<Integer,Integer> newPos; // pair < par<int,int>,int>
+					Pair<Pair<Integer,Integer>,Pair<Integer,Boolean>> newInfo ; 
 					newInfo = controller.drop(new Pair<>(e.getX(), e.getY()));
 					newPos = newInfo.getKey();
 					if(newPos!=null)
 					{
-						if(newInfo.getValue().getValue())mapPosiciones.remove(carSelect);
+						if(Boolean.TRUE.equals(newInfo.getValue().getValue()))mapPosiciones.remove(carSelect);
 
 						else mapPosiciones.put(carSelect, newPos);
 						mapCoordenadas= cambioCoodenadas(mapPosiciones);
 						levelPointsValue.setText(newInfo.getValue().getKey().toString());
 						gamePanel.repaint();
 
-						if(newInfo.getValue().getValue()) {
+						if(Boolean.TRUE.equals(newInfo.getValue().getValue())) {
 
 							pointsWL.setText(newInfo.getValue().getKey().toString());
 							layeredP.add(shadowPanel, JLayeredPane.PALETTE_LAYER);
@@ -526,7 +524,7 @@ public class LevelView {
 				
 				if(carSelect!=' ')
 				{
-					Pair <Integer,Integer>desp= new Pair<>(null, null);
+					Pair <Integer,Integer>desp;
 					desp = controller.hold(new Pair<>(e.getX(), e.getY()));
 
 					if(desp.getKey()!=0)

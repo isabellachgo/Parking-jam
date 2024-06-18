@@ -116,46 +116,48 @@ public class LevelsMenuView {
 		menuPanel.setBounds(50, 80, 207, 145);
 
 		JButton gamesB= new JButton("games menu");
-		gamesB.setPreferredSize(buttonSize2);
+		setFormatButton(gamesB, null, buttonSize2, homeMIcon, Color.white, buttonColor,  menuFont, SwingConstants.LEFT);
+		/*gamesB.setPreferredSize(buttonSize2); //
 		gamesB.setIcon(homeMIcon);
-		gamesB.setBackground(buttonColor);
-		gamesB.setForeground(Color.white);
-		gamesB.setFont(menuFont);
+		gamesB.setBackground(buttonColor); //
+		gamesB.setForeground(Color.white); //
+		gamesB.setFont(menuFont); //
 		gamesB.setHorizontalAlignment(SwingConstants.LEFT);
+		*/
 		gamesB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("games button pressed");
-
 				frame.getContentPane().removeAll();
 				cont.gamesMenuButton();
 			}
 		});
 		JButton saveB = new JButton("save game");
-		saveB.setPreferredSize(buttonSize2);
+		setFormatButton(saveB, null, buttonSize2, saveMIcon, Color.white, buttonColor,  menuFont, SwingConstants.LEFT);
+		/*saveB.setPreferredSize(buttonSize2);
 		saveB.setIcon(saveMIcon);
-		saveB.setBackground(buttonColor);
+		saveB.setBackground(buttonColor); 
 		saveB.setForeground(Color.white);
 		saveB.setFont(menuFont);
 		saveB.setHorizontalAlignment(SwingConstants.LEFT);
+		*/
 		saveB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("save button pressed");
 				cont.saveGame();
 			}
 		});
 		JButton closeB = new JButton("close Parking Jam");
-		closeB.setPreferredSize(buttonSize2);
+		setFormatButton(closeB, null, buttonSize2, closeMIcon, Color.white, buttonColor,  menuFont, SwingConstants.LEFT);
+		/*closeB.setPreferredSize(buttonSize2);
 		closeB.setIcon(closeMIcon);
 		closeB.setBackground(buttonColor);
 		closeB.setForeground(Color.white);
 		closeB.setFont(menuFont);
 		closeB.setHorizontalAlignment(SwingConstants.LEFT);
+		*/
 		closeB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("close button pressed");
 				frame.dispose();
 			}
 		});
@@ -165,15 +167,15 @@ public class LevelsMenuView {
 		menuPanel.add(closeB);
 
 		JButton menuB = new JButton();
-		menuB.setPreferredSize(buttonSize);
+		setFormatButton(menuB, null, buttonSize, menuIcon, Color.white, buttonColor, null, null);
+		/*menuB.setPreferredSize(buttonSize);
 		menuB.setIcon(menuIcon);
 		menuB.setBackground(buttonColor);	
 		menuB.setForeground(Color.white);
+		*/
 		menuB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("menu button pressed ");
-
 				if(!menuPanel.isVisible()) {
 					menuPanel.show(frame, 50, 87);
 					menuPanel.setVisible(true);
@@ -197,15 +199,15 @@ public class LevelsMenuView {
 		gameNameL.setText(game.getName()); 
 
 		l1B = new JButton();
-		l1B.setText("1");
+		setFormatButton(l1B, "1", levelBSize, null, null, null,  levelFont, null);
+		/*l1B.setText("1");
 		l1B.setFont(levelFont);
 		l1B.setPreferredSize(levelBSize);
+		*/
 		levelsStatus(l1B);
 		l1B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("level 1");
-
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(1)==1) {
@@ -217,15 +219,15 @@ public class LevelsMenuView {
 			}
 		});
 		l2B = new JButton();
-		l2B.setText("2");
+		setFormatButton(l2B, "2", levelBSize, null, null, null,  levelFont, null);
+		/*l2B.setText("2");
 		l2B.setFont(levelFont);
 		l2B.setPreferredSize(levelBSize);
+		*/
 		levelsStatus(l2B);
 		l2B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("level 2");
-
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(2)==1) {
@@ -237,15 +239,15 @@ public class LevelsMenuView {
 			}
 		});
 		l3B = new JButton();
-		l3B.setText("3");
+		setFormatButton(l3B, "3", levelBSize, null, null, null,  levelFont, null);
+		/*l3B.setText("3");
 		l3B.setFont(levelFont);
 		l3B.setPreferredSize(levelBSize);
+		*/
 		levelsStatus(l3B);
 		l3B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("level 3");
-
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(3)==1) {
@@ -257,15 +259,15 @@ public class LevelsMenuView {
 			}
 		});
 		l4B = new JButton();
-		l4B.setText("4");
+		setFormatButton(l4B, "4", levelBSize, null, null, null,  levelFont, null);
+		/*l4B.setText("4");
 		l4B.setFont(levelFont);
 		l4B.setPreferredSize(levelBSize);
+		*/
 		levelsStatus(l4B);
 		l4B.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("level 4");
-
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(4)==1) {
@@ -394,6 +396,16 @@ public class LevelsMenuView {
 				e.printStackTrace();
 			}
 		} 
+	}
+	
+	private void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Color foreg, Color backg, Font font, Integer sc) {
+		if(t!=null) b.setText(t);
+		if(size!=null) b.setPreferredSize(size);
+		if(ic!=null) b.setIcon(ic);
+		if(foreg!=null) b.setForeground(foreg);
+		if(backg!=null) b.setBackground(backg);
+		if(font!=null) b.setFont(font);
+		if(sc!=null) b.setHorizontalAlignment(sc);
 	}
 
 }

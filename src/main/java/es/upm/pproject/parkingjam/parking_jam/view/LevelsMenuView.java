@@ -7,8 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -37,11 +35,7 @@ public class LevelsMenuView {
 
 	
 	
-	private JButton l1B;
-	private JButton l2B;
-	private JButton l3B;
-	private JButton l4B;
-
+	
 	public LevelsMenuView(JFrame frame, Game game, Controller cont) {
 		this.frame = frame;
 		this.game = game;
@@ -52,12 +46,14 @@ public class LevelsMenuView {
 	}
 
 	private void initLMV() {
+		JButton l1B;
+		JButton l2B;
+		JButton l3B;
+		JButton l4B;
 
 		// Colores:
 		Color bg = new Color(180,220,110);
-		Color buttonColor = new Color(65,130,4); 
-		Color levelBColor = new Color(39,193,245);
-		Color lockedLevelBColor = new Color(80,155,180);
+		Color buttonColor = new Color(65,130,4);
 
 		// Dimensiones:
 		Dimension buttonSize = new Dimension(40,40);
@@ -66,9 +62,7 @@ public class LevelsMenuView {
 
 		// Iconos:
 		ImageIcon closeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
-		ImageIcon addMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/add.png")),30,30);
 		ImageIcon saveMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
-		ImageIcon loadMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 		ImageIcon menuIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/menu.png")),30,30);
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
 		ImageIcon homeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
@@ -84,29 +78,20 @@ public class LevelsMenuView {
 
 		JButton gamesB= new JButton("games menu");
 		Factory.setFormatButton(gamesB, null, buttonSize2, homeMIcon, new Pair<>(Color.white, buttonColor), Factory.menuFont, SwingConstants.LEFT);
-		gamesB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().removeAll();
-				cont.gamesMenuButton();
-			}
+		gamesB.addActionListener(e -> {
+			frame.getContentPane().removeAll();
+			cont.gamesMenuButton();
 		});
 		JButton saveB = new JButton("save game");
 		Factory.setFormatButton(saveB, null, buttonSize2, saveMIcon, new Pair<>(Color.white, buttonColor),  Factory.menuFont, SwingConstants.LEFT);
-		saveB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cont.saveGame();
-			}
-		});
+		saveB.addActionListener(e -> 
+				cont.saveGame()
+		);
 		JButton closeB = new JButton("close Parking Jam");
 		Factory.setFormatButton(closeB, null, buttonSize2, closeMIcon, new Pair<>(Color.white, buttonColor),  Factory.menuFont, SwingConstants.LEFT);
-		closeB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		closeB.addActionListener(e ->
+				frame.dispose()
+		);
 
 		menuPanel.add(gamesB);
 		menuPanel.add(saveB);
@@ -114,16 +99,13 @@ public class LevelsMenuView {
 
 		JButton menuB = new JButton();
 		Factory.setFormatButton(menuB, null, buttonSize, menuIcon, new Pair<>(Color.white, buttonColor), null, null);
-		menuB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		menuB.addActionListener(e -> {
 				if(!menuPanel.isVisible()) {
 					menuPanel.show(frame, 50, 87);
 					menuPanel.setVisible(true);
 				} else {
 					menuPanel.setVisible(false);
 				}
-			}
 		});
 
 
@@ -144,66 +126,54 @@ public class LevelsMenuView {
 		l1B = new JButton();
 		Factory.setFormatButton(l1B, "1", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
 		Factory.levelsStatus(l1B, game);
-		l1B.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		l1B.addActionListener(e ->{
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(1)==1) {
 						Factory.corruptLevel(1, frame, game, cont, buttons, true);
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					ex.printStackTrace();
 				}
-			}
 		});
 		l2B = new JButton();
 		Factory.setFormatButton(l2B, "2", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
 		Factory.levelsStatus(l2B, game);
-		l2B.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		l2B.addActionListener(e ->{
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(2)==1) {
 						Factory.corruptLevel(2, frame, game, cont, buttons, true);
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					ex.printStackTrace();
 				}
-			}
 		});
 		l3B = new JButton();
 		Factory.setFormatButton(l3B, "3", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
 		Factory.levelsStatus(l3B, game);
-		l3B.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		l3B.addActionListener(e ->{
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(3)==1) {
 						Factory.corruptLevel(3, frame, game, cont, buttons, true);
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					ex.printStackTrace();
 				}
-			}
 		});
 		l4B = new JButton();
 		Factory.setFormatButton(l4B, "4", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
 		Factory.levelsStatus(l4B, game);
-		l4B.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		l4B.addActionListener(e ->{
 				frame.getContentPane().removeAll();
 				try {
 					if(cont.showLevel(4)==1) {
 						Factory.corruptLevel(4, frame, game, cont, buttons, true);
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					ex.printStackTrace();
 				}
-			}
 		});
 		buttons.add(l1B);
 		buttons.add(l2B);

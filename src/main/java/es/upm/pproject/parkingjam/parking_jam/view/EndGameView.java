@@ -1,14 +1,11 @@
 package es.upm.pproject.parkingjam.parking_jam.view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 import es.upm.pproject.parkingjam.parking_jam.controller.Controller;
 import es.upm.pproject.parkingjam.parking_jam.model.Game;
-import es.upm.pproject.parkingjam.parking_jam.model.Menu;
 import javafx.util.Pair;
 
 public class EndGameView {
@@ -100,31 +97,22 @@ public class EndGameView {
         JButton gamesB = new JButton(homeMIcon);
         Factory.setFormatButton(gamesB, null, buttonSize, null, new Pair<>(null, buttonColor), null, null);       
         gamesB.setAlignmentX(Component.CENTER_ALIGNMENT);
-        gamesB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        gamesB.addActionListener(e ->{
                 frame.getContentPane().removeAll();
                 cont.gamesMenuButton();
-            }
         });
 
         JButton closeB = new JButton(closeMIcon);
         Factory.setFormatButton(closeB, null, buttonSize, null, new Pair<>(null, buttonColor), null, null);
         closeB.setAlignmentX(Component.CENTER_ALIGNMENT);
-        closeB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
+        closeB.addActionListener(e -> 
+                frame.dispose()
+        );
         JButton saveB = new JButton(saveMIcon);
         Factory.setFormatButton(saveB, null, buttonSize, null, new Pair<>(Color.white, buttonColor), null, SwingConstants.LEFT);
-		saveB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {				
-				cont.saveGame();
-			}
-		});
+		saveB.addActionListener(e -> 				
+				cont.saveGame()
+		);
 
         buttonpanel.add(gamesB);
         buttonpanel.add(closeB);

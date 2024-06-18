@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,12 +66,9 @@ public class GamesMenuView {
 		// Elementos:
 		JButton loadGameB = new JButton("Load game");
 		Factory.setFormatButton(loadGameB, null, buttonSize2, loadIcon, new Pair<>(Color.white, buttonColor), Factory.menuFont, SwingConstants.CENTER);
-		loadGameB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		loadGameB.addActionListener(e -> {
 				frame.getContentPane().removeAll();
 				cont.openSavedGames();
-			}
 		});
 
 		JLabel titleL = new JLabel();
@@ -101,9 +96,7 @@ public class GamesMenuView {
 		
 		JButton addGameB = new JButton("New game");
 		Factory.setFormatButton(addGameB, null, gameButtonSize, addIcon, new Pair<>(null, gameBColor), Factory.buttonFont, SwingConstants.LEFT);
-		addGameB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {				
+		addGameB.addActionListener(e -> {				
 				JDialog dialog = new JOptionPane(panelGameName, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, carIcon).createDialog(frame, "New Game");
 				dialog.setLocationRelativeTo(frame);
 				dialog.setVisible(true);
@@ -123,7 +116,6 @@ public class GamesMenuView {
 						}
 					}
 				}
-			}
 		});
 		
 		ArrayList<JButton> buttons = new ArrayList<>();
@@ -131,12 +123,9 @@ public class GamesMenuView {
 		for(Game g : games) {
 			JButton b = new JButton(" "+g.getName());
 			Factory.setFormatButton(b, null, gameButtonSize, carIcon, new Pair<>(null, gameBColor), Factory.buttonFont, SwingConstants.LEFT);
-			b.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
+			b.addActionListener(e ->{
 					frame.getContentPane().removeAll();
 					cont.openGame(g);
-				}
 			});
 			
 			buttons.add(b);

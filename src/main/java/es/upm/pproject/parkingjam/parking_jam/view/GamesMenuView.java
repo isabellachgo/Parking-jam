@@ -41,31 +41,30 @@ public class GamesMenuView {
 		initGMV();
 		this.frame.setVisible(true);
 	}
-
+	// Builds the elements and the structure of the view
 	private void initGMV() {
-		
-		// Altura scroll:
+		// Scroll height:
 		Integer listH = (menu.getNumGames()+1)*80 + (menu.getNumGames())*10;
 		Integer pictureH = listH +80;
 		Integer gamesH = pictureH +80;
 		Integer scrollH = gamesH + 40;
 
-		// Dimensiones:
+		// Dimensions:
 		Dimension gameButtonSize = new Dimension(420, 80);
 		Dimension buttonSize2 = new Dimension(180,40);
 
-		// Colores:
+		// Colors:
 		Color bg = new Color(180,220,110);
-		Color buttonColor = new Color(65,130,4); //verde oscuro
-		Color gameBColor = new Color(252,231,68); //amarillo
+		Color buttonColor = new Color(65,130,4); 
+		Color gameBColor = new Color(252,231,68);
 		
-		// Iconos:
+		// Icons:
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
 		ImageIcon addIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/add_black.png")),40,40);
 		ImageIcon carIcon = Factory.resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
 		ImageIcon loadIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/upload.png")),30,30);
 				
-		// Elementos:
+		// Elements:
 		JButton loadGameB = new JButton("Load game");
 		Factory.setFormatButton(loadGameB, null, buttonSize2, loadIcon, new Pair<>(Color.white, buttonColor), Factory.menuFont, SwingConstants.CENTER);
 		loadGameB.addActionListener(e -> {
@@ -133,7 +132,7 @@ public class GamesMenuView {
 			buttons.add(b);
 		}
 				
-		// Estructura:
+		// Structure:
 		JPanel panel = Factory.genPanel(bg, new BorderLayout());
 		
 		JPanel panelNorth = new JPanel();

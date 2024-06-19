@@ -40,29 +40,29 @@ public class SavedGamesView {
 		initSGV();
 		f.setVisible(true);
 	}
-
+	
+	// Builds the elements and the structure of the view
 	private void initSGV() {
-		// Altura scroll:
+		// Scroll height:
 		Integer listH = (savedGames.size()+1)*80 + (savedGames.size())*10;
 		Integer pictureH = listH +60;
 		Integer gamesH = pictureH +80;
 	
-
-		// Dimensiones:
+		// Dimensions:
 		Dimension gameButtonSize = new Dimension(420, 80);
 		Dimension buttonSize = new Dimension(40,40);
 
 		// Colores:
 		Color bg = new Color(180,220,110);
-		Color gameBColor = new Color(252,231,68); //amarillo
+		Color gameBColor = new Color(252,231,68);
 		Color buttonColor = new Color(65,130,4); 
 
-		// Iconos:
+		// Icons:
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
 		ImageIcon carIcon = Factory.resizeIcon( new ImageIcon(getClass().getResource("/icons/car.png")),40,40);
 		ImageIcon backIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/back.png")),30,30);
 
-		// Elementos:
+		// Elements:
 		JLabel titleL = new JLabel();
 		titleL.setText("Saved Games");
 		titleL.setFont(Factory.titleFont);
@@ -108,7 +108,7 @@ public class SavedGamesView {
 			buttons.add(b);
 		}
 
-		// Estructura:
+		// Structure:
 		JPanel panel = Factory.genPanel(bg, new BorderLayout());
 
 		JPanel panelNorth = new JPanel();

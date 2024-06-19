@@ -32,23 +32,24 @@ public class StartView {
         this.frame.setVisible(true);
     }
 
+    // Builds the elements and the structure of the view
     private void initSV() {
-        // Dimensiones:
+        // Dimensions:
         Dimension buttonSize = new Dimension(200, 50);
 
-        // Colores:
+        // Colors:
         Color bg = new Color(180, 220, 110);
-        Color buttonColor = new Color(39, 193, 245); // Azul
+        Color buttonColor = new Color(39, 193, 245); 
         Color buttonActionColor = new Color(100, 170, 200);
 
-        // Iconos:
+        // Icons:
         ImageIcon startIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/playicon.png")), 97, 60);
         ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parkinglogo.png"));
 
-        // Imagenes:
+        // Images:
         Image parkingImage = parkingIcon.getImage().getScaledInstance(600, 600, Image.SCALE_SMOOTH);
 
-        // Elementos:
+        // Elements:
         JLabel titleL = new JLabel();
         titleL.setText("Parking Jam");
         titleL.setFont(Factory.titleFont);
@@ -73,7 +74,7 @@ public class StartView {
             cont.gamesMenu(menu);
         });
 
-        // Estructura:
+        // Structure:
         JPanel panel = new JPanel();
         panel.setBackground(bg);
         panel.setLayout(new BorderLayout());
@@ -92,7 +93,7 @@ public class StartView {
         panelBg.setBackground(bg);
         panelBg.setBounds(0, 0, 950, 750);
 
-        startButton.setBounds(250, 540, 200, 50); // Ajusta la posición y tamaño del botón
+        startButton.setBounds(250, 540, 200, 50);
 
         panelCenter.add(panelBg, JLayeredPane.DEFAULT_LAYER);
         panelCenter.add(startButton, JLayeredPane.PALETTE_LAYER);

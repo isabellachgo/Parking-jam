@@ -35,8 +35,6 @@ import es.upm.pproject.parkingjam.parking_jam.model.Vehicle;
 
 import javafx.util.Pair;
 
-
-
 public class LevelView {
 	private Map<Character, Vehicle> mapVehiculo; // Mapa con las posiciones de los vehículos
 	private Map <Character,Pair<Integer,Integer>> mapPosiciones;
@@ -91,44 +89,20 @@ public class LevelView {
 		this.level=level;
 		this.controller=controller;
 		mapCoordenadas=cambioCoodenadas(posiciones);
+		
 		initUI();
 		frame.setVisible(true);
-
 	}
 
-	private Map <Character,Pair<Integer,Integer>> cambioCoodenadas (Map <Character,Pair<Integer,Integer>> mapPosiciones){
-		Map <Character,Pair<Integer,Integer>> sol = new HashMap<>();
-		Iterator <Character> it = mapPosiciones.keySet().iterator();
-		int x;
-		int y;
-		int coordX=0;
-		int coordY=0;
-		while (it.hasNext()) 
-		{
-			char car = it.next();
-			x=mapPosiciones.get(car).getKey();
-			y=mapPosiciones.get(car).getValue();
-			if(x==0) coordX=100;
-			if(y==0) coordY=0;
-			if(x==1) coordX=150;
-			if(y==1) coordY=50;
-			if(x>1) coordX= 150 + (tamanoCeldaX*(x-1));
-			if(y>1) coordY= 50 + (tamanoCeldaY*(y-1));
-			sol.put(car,new Pair<>(coordX,coordY));
-		}
-		return sol;
-	}
-	public Pair<Integer,Integer> devuelveCoordenadas(Character c){
-		return mapCoordenadas.get(c);
-	}
 
+
+	// Builds the elements and the structure of the view
 	private void initUI() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		frame.add(panel);
 
-
-		// Imagenes:
+		// Images:
 		ImageIcon cocheRojoHorizontal = new ImageIcon(getClass().getResource("/images/coche_rojo_horizontal.png"));
 		ImageIcon cocheRojoVertical = new ImageIcon(getClass().getResource("/images/coche_rojo_vertical.png")); // Asegúrate de que el path es correcto
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking2.jpg"));
@@ -189,17 +163,17 @@ public class LevelView {
 		Image arbolImg2 = arbol.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 		Image plantaImg1 = planta.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
-		// Dimensiones:
+		// Dimensions:
 		Dimension buttonSize = new Dimension(40,40);
 		Dimension buttonSize2 = new Dimension(195,40);
 
-		// Colores:
+		// Colors:
 		Color buttonColor = new Color(65,130,4); 
 		Color winPColor = new Color(180,220,110);
 		Color borderWinPColor = new Color(50,150,90);
 		Color shadeWinPColor = new Color(57,64,50);
 
-		// Iconos:
+		// Icons:
 		ImageIcon menuIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/menu.png")),30,30);
 		ImageIcon restartIcon = Factory.resizeIcon( new ImageIcon(getClass().getResource("/icons/restart.png")),30,30);
 		ImageIcon undoIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/undo.png")),30,30);
@@ -212,7 +186,7 @@ public class LevelView {
 		ImageIcon homeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
 
 
-		// Panel donde se dibujan los vehículos
+		// Panel where vehicles are drawn
 		JPanel gamePanel = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
@@ -230,8 +204,7 @@ public class LevelView {
 					pintarVehiculo(caracter,esRojo,esSalida,dimension.getValue(),dimension.getKey(),posicion.getKey(),posicion.getValue(),g,this);
 				}
 
-
-				//arboles de fondo
+				// background trees
 				g.drawImage(arbolImg1, 20, 30, this);
 				g.drawImage(arbolImg1, 600, 90, this);
 				g.drawImage(arbolImg1, 630, 240, this);
@@ -240,7 +213,6 @@ public class LevelView {
 				g.drawImage(plantaImg1, 600, 370, this);
 				g.drawImage(plantaImg1, 15, 280, this);
 				g.drawImage(plantaImg1, 630, 450, this);
-
 			}
 
 		};
@@ -248,11 +220,11 @@ public class LevelView {
 		gamePanel.setBounds(0,0,700,700);
 
 		//--------------------PANEL NORTH-----------------------------
-		// Header del view
+		// Header
 		JPanel headerPanel = new JPanel();
 		headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
 
-		//estructura del header
+		// Header structure
 		JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10,10)); 
 
 		JPopupMenu menuPanel = new JPopupMenu();
@@ -383,8 +355,7 @@ public class LevelView {
 
 		panel.add(headerPanel, BorderLayout.NORTH); 
 
-		//-------------------------PANEL CENTRAL--------------------
-
+		//-------------------------PANEL CENTER--------------------
 		JLayeredPane layeredP = new JLayeredPane();
 		layeredP.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
 
@@ -517,7 +488,6 @@ public class LevelView {
 
 		});
 
-
 		gamePanel.addMouseMotionListener(new MouseAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
@@ -546,10 +516,9 @@ public class LevelView {
 			}
 		});
 
-
-
-
 	}
+	
+	// Returns the position of the vehicle with id 'c'
 	public Pair<Boolean,Integer> conseguirPosicion(Character car){
 		Pair<Boolean,Integer> sol=null;
 		if(car.equals('@'))
@@ -558,7 +527,6 @@ public class LevelView {
 			sol=par;
 		}
 		else{
-
 			int x = mapVehiculo.get(car).getDimension().getKey();
 			int y=mapVehiculo.get(car).getDimension().getValue();
 
@@ -575,6 +543,8 @@ public class LevelView {
 		}
 		return sol;
 	}
+	
+	// Draws the vehicle with id 'character' with the characteristics passed as parameters
 	public void pintarVehiculo(char caracter,boolean esRojo,boolean esSalida, int tamano, boolean esVertical, int   posX, int posY, Graphics g, Component context) {
 		Image vehiculoPintar = null; // Asegúrate de que esté inicializada a null
 		int x=posX;
@@ -583,7 +553,6 @@ public class LevelView {
 			if(posX==100)
 			{
 				vehiculoPintar=salidaIzquierdaImage;
-
 			}
 			if(posX>=550)
 			{
@@ -593,7 +562,6 @@ public class LevelView {
 			if(posY==0)
 			{
 				vehiculoPintar=salidaArribaImage;
-
 			}
 			if(posY>=450)
 			{
@@ -627,12 +595,10 @@ public class LevelView {
 			else vehiculoPintar = camionVerdeVerticalImage;
 
 		} else if (tamano == 3 && !esVertical) {
-
 			if(caracter == 'g'   || caracter=='h')vehiculoPintar = camionAmarilloHorizontalImage;
 			else if( caracter =='c'  || caracter=='f')vehiculoPintar = camionMarronHorizontalImage;
 			else if(caracter=='e' || caracter=='d') vehiculoPintar = camionGrisHorizontalImage;
 			else vehiculoPintar = camionVerdeHorizontalImage;
-
 		}
 
 		if (vehiculoPintar != null) {
@@ -640,5 +606,35 @@ public class LevelView {
 		}
 
 	}
+	
+	// Translates the map passed as parameters that contains pairs that represent cells, to another map that contains pairs that represent coordinates in pixels
+	private Map <Character,Pair<Integer,Integer>> cambioCoodenadas (Map <Character,Pair<Integer,Integer>> mapPosiciones){
+		Map <Character,Pair<Integer,Integer>> sol = new HashMap<>();
+		Iterator <Character> it = mapPosiciones.keySet().iterator();
+		int x;
+		int y;
+		int coordX=0;
+		int coordY=0;
+		while (it.hasNext()) 
+		{
+			char car = it.next();
+			x=mapPosiciones.get(car).getKey();
+			y=mapPosiciones.get(car).getValue();
+			if(x==0) coordX=100;
+			if(y==0) coordY=0;
+			if(x==1) coordX=150;
+			if(y==1) coordY=50;
+			if(x>1) coordX= 150 + (tamanoCeldaX*(x-1));
+			if(y>1) coordY= 50 + (tamanoCeldaY*(y-1));
+			sol.put(car,new Pair<>(coordX,coordY));
+		}
+		return sol;
+	}
+	
+	// Returns the position of the vehicle with id 'c'
+	public Pair<Integer,Integer> devuelveCoordenadas(Character c){
+		return mapCoordenadas.get(c);
+	}
+	
 
 }

@@ -472,9 +472,17 @@ public class Controller {
 			LOGGER.info("The game has been open correctly");
 		} else {
 			new SavedGamesView(f, gl.getList(), this);
-			LOGGER.info("The game could not be save");
+			LOGGER.info("The game already exists");
 		}
 		return r;
+	}
+	public void overwrite(String name) {		
+		Game game= new Game(name);
+		Level lv=game.cargarGame(name);
+		game.setLastLevel(lv);
+		m.removeGame(name);
+		m.addGame(game);
+		new GamesMenuView(f, m, this);		
 	}
 	
 	//Method that controlls when the load game button is clicked in the view

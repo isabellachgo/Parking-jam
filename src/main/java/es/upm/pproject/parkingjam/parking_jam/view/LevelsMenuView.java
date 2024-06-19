@@ -87,9 +87,10 @@ public class LevelsMenuView {
 		);
 		JButton closeB = new JButton("close Parking Jam");
 		Factory.setFormatButton(closeB, null, buttonSize2, closeMIcon, new Pair<>(Color.white, buttonColor),  Factory.menuFont, SwingConstants.LEFT);
-		closeB.addActionListener(e ->
-				frame.dispose()
-		);
+		closeB.addActionListener(e -> {
+				frame.dispose();
+				 System.exit(0);
+		});
 
 		menuPanel.add(gamesB);
 		menuPanel.add(saveB);

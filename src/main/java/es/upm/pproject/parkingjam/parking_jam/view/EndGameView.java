@@ -107,9 +107,10 @@ public class EndGameView {
         JButton closeB = new JButton(closeMIcon);
         Factory.setFormatButton(closeB, null, buttonSize, null, new Pair<>(null, buttonColor), null, null);
         closeB.setAlignmentX(Component.CENTER_ALIGNMENT);
-        closeB.addActionListener(e -> 
-                frame.dispose()
-        );
+        closeB.addActionListener(e -> {
+                frame.dispose();
+                System.exit(0);
+        });
         JButton saveB = new JButton(saveMIcon);
         Factory.setFormatButton(saveB, null, buttonSize, null, new Pair<>(Color.white, buttonColor), null, SwingConstants.LEFT);
 		saveB.addActionListener(e -> 				

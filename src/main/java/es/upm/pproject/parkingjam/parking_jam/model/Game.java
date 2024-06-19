@@ -40,7 +40,8 @@ public class Game {
 	private static final String ERROR_MESSAGE_READ = "There has been an error writing in the file";
 
 	private static final Logger LOGGER = Logger.getLogger(Game.class);
-
+	
+	// Constructor
 	public Game( String name)
 	{
 		gameName=name;
@@ -66,7 +67,8 @@ public class Game {
 		if(listaPoints.containsKey(id))	return listaPoints.get(id);
 		else return null;
 	}
-
+	
+	// Updates the game points with the points obtained in the current level
 	public void actualizarGamePoints (int id , int points)
 	{
 		listaPoints.put(id, points);
@@ -115,6 +117,7 @@ public class Game {
 		okLevels.put(n, b);
 	}
 
+	// Saves the Game in 'gamesSaved'
 	public  void guardarGame(Level level) throws IOException
 	{
 		String rutaFichero = System.getProperty("user.dir");  
@@ -125,21 +128,20 @@ public class Game {
 			LOGGER.error("Failed to create directories: " + directorio.getAbsolutePath());
 		}
 
-		// Crear una instancia de File con la ruta especificada
+		// Creates a file 
 		rutaFichero= rutaDirectorio+ File.separator+ "gamePoints.txt";
 		File fichero = new File(rutaFichero);
-		// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 		try (FileWriter fw = new FileWriter(fichero);
 				BufferedWriter bw = new BufferedWriter(fw)) {
 
-			// Escribir en el fichero
+			//writes in file
 			Iterator<Entry<Integer, Level>> it = listaLevels.entrySet().iterator();
 		
 			for (int i=0; i <listaLevels.size() && it.hasNext(); i++)
 			{    
 				Entry<Integer, Level> e= it.next();
 				bw.write(e.getKey()+" : " + e.getValue().getLevelPoint());
-				bw.newLine();  // Salto de línea
+				bw.newLine(); 
 			}
 
 			if(level!=null) bw.write(level.getNLevel() + " , " + level.getLevelPoint());
@@ -147,7 +149,7 @@ public class Game {
 			LOGGER.info("The file has been created and its been witten correctly in " + rutaFichero);
 
 		} catch (IOException e) {
-			// Manejo de posibles excepciones
+			
 			LOGGER.error(ERROR_MESSAGE_WRITE, e);
 		}
 
@@ -155,13 +157,10 @@ public class Game {
 		{
 			rutaFichero= rutaDirectorio+ File.separator+ "level.txt";
 			File ficheroTablero = new File(rutaFichero);
-			
-
-			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 			try (FileWriter fw = new FileWriter(ficheroTablero);
 					BufferedWriter bw = new BufferedWriter(fw)) {
 
-				// Escribir en el fichero
+				// Writes in file
 				bw.write(level.getTitle());
 				bw.newLine();
 				bw.write(level.getDimensionX()+ " " + level.getDimensionY());
@@ -181,19 +180,14 @@ public class Game {
 				LOGGER.info("The file has been created and its been witten corectly in " + rutaFichero);
 
 			} catch (IOException e) {
-				// Manejo de posibles excepciones
-				
 				LOGGER.error(ERROR_MESSAGE_WRITE, e);
 			}
 
 			rutaFichero= rutaDirectorio+ File.separator+ "HistoryBoards.txt";
 			File ficheroTablerosHistoricos = new File(rutaFichero);
 		
-			// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 			try (FileWriter fw = new FileWriter(ficheroTablerosHistoricos);
 					BufferedWriter bw = new BufferedWriter(fw)) {
-
-				// Escribir en el fichero
 				bw.write(Integer.toString(level.getBoardHistory().size()) );
 				bw.newLine();
 				bw.write(level.getDimensionX()+" "+level.getDimensionY());
@@ -216,7 +210,6 @@ public class Game {
 
 
 			} catch (IOException e) {
-				// Manejo de posibles excepciones
 				LOGGER.error(ERROR_MESSAGE_WRITE, e);
 			}
 
@@ -231,23 +224,16 @@ public class Game {
 		List<Character[][]> boardHistory= new ArrayList<>();
 		Level levelUncomplete = null;
 		this.gameName=name;
-		// Crear una instancia de File con la ruta del archivo especificada
 		File ficheroPoints = new File(rutaFicheroPoints);
 
-		// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 		try (FileReader fr = new FileReader(ficheroPoints);
 				BufferedReader br = new BufferedReader(fr)) {
-
-			// Leer el fichero línea por línea
 			String linea;
 			while ((linea = br.readLine()) != null) {
-				// Dividir la línea en dos partes usando ":" como separador
 				String[] partes = linea.split(" : ");
 				if (partes.length == 2) {
 					String antesDeDosPuntos = partes[0].trim();
 					String despuesDeDosPuntos = partes[1].trim();
-
-					// Imprimir las partes
 					int id = Integer.parseInt(antesDeDosPuntos) ;
 					int points = Integer.parseInt(despuesDeDosPuntos);
                     Level level = new Level(id);
@@ -276,18 +262,13 @@ public class Game {
 			}
 
 		} catch (IOException e) {
-			// Manejo de posibles excepciones
 			LOGGER.error(ERROR_MESSAGE_READ, e);
 		}
 
 
 		File ficheroHistoyBoards = new File(rutaFicheroHistoryBoards);
-
-		// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 		try (FileReader fr = new FileReader(ficheroHistoyBoards);
 				BufferedReader br = new BufferedReader(fr)) {
-
-			// Leer el fichero línea por línea
 			String linea;
 			int sizeX = 0;
 			int sizeY=0;
@@ -354,7 +335,6 @@ public class Game {
 				levelUncomplete.setInitialVehiclePositions(posAux);
 			}
 		} catch (IOException e) {
-			// Manejo de posibles excepciones
 			LOGGER.error(ERROR_MESSAGE_READ, e);
 		}
 		LOGGER.info("The game has been loaded correctly");

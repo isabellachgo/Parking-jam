@@ -2,7 +2,7 @@ package es.upm.pproject.parkingjam.parking_jam.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// Represents a game smenu
 public class Menu {
 	ArrayList<Game> games;
 	

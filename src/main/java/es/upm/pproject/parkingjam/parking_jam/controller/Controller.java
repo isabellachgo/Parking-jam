@@ -61,7 +61,7 @@ public class Controller {
 		new StartView(f,this);
 
 	}
-
+	//Method that shows a level clicked on the interface, collecting it from the model and showing it in the view
 	public int showLevel(int n) throws  IOException {
 		if(g.getLastLevel()!=null&&g.getLastLevel().getNLevel()==n) lvl=g.getLastLevel();
 		else lvl = new Level(n);
@@ -84,7 +84,7 @@ public class Controller {
 		LOGGER.info(" The view of the level " + n + " has been initializated");
 		return 0;
 	}
-
+	//Method that returns the square on the board in which a pair of pixels are located 
 	private Pair<Integer, Integer> convertToGrid(int x, int y) {
 		int row;
 		int col;
@@ -104,7 +104,8 @@ public class Controller {
 	
 		return new Pair<>(row, col);
 	}
-
+	
+	//Method that detects if a vehicle is being clicked
 	public Character click(Pair<Integer, Integer> clicked) {
 		click = clicked;
 		mPr=clicked;
@@ -122,11 +123,12 @@ public class Controller {
 	
 		return res;
 	}
-
+	
+	//Method that controlls when a vehicle is being dragged
 	public Pair<Integer, Integer> hold(Pair<Integer, Integer> m) {
 		if (vehicleClicked != null) {
-			if (vehicleClicked.getDimension().getKey() == 1) {// Se mueve de arriba a abajo
-				if (mPr.getValue() < m.getValue()) {// abajo
+			if (vehicleClicked.getDimension().getKey() == 1) {// moves up or down
+				if (mPr.getValue() < m.getValue()) {// down
 					mPr=m;
 					avanza=true;
 					punt = m.getValue() - click.getValue();
@@ -161,7 +163,7 @@ public class Controller {
 						return new Pair<>(0, v.devuelveCoordenadas(vehicleClicked.getId()).getValue());
 					}
 
-				} else if(mPr.getValue() > m.getValue()){// arriba
+				} else if(mPr.getValue() > m.getValue()){// up
 					mPr=m;
 					avanza=false;
 					punt = m.getValue() - click.getValue();
@@ -198,8 +200,8 @@ public class Controller {
 
 				}
 
-			} else {// Se mueve de izq a derecha
-				if (mPr.getKey() < m.getKey()) {// derecha
+			} else {// moves left or right
+				if (mPr.getKey() < m.getKey()) {// right
 					mPr=m;
 					avanza=true;
 					punt = m.getKey() - click.getKey();
@@ -238,7 +240,7 @@ public class Controller {
 
 				}
 
-				else if(mPr.getKey() > m.getKey()){// izq
+				else if(mPr.getKey() > m.getKey()){// left
 					mPr=m;
 					avanza=false;
 					punt = m.getKey() - click.getKey();
@@ -280,7 +282,8 @@ public class Controller {
 		 if(vehicleClicked!=null)return new Pair<>(v.devuelveCoordenadas(vehicleClicked.getId()).getKey(), v.devuelveCoordenadas(vehicleClicked.getId()).getValue());
 		else return null;
 	}
-
+	
+	//Method that controlls when a car that was previously clicked is released, check and update where the vehicle is released
 	public Pair<Pair<Integer, Integer>, Pair<Integer, Boolean>> drop(Pair<Integer, Integer> posF) {
 		if (vehicleClicked == null)
 			return null;
@@ -355,7 +358,8 @@ public class Controller {
 		conflLabelB=null;
 		return mv;
 	}
-
+	
+	//Method that uses model class 'level' to update the position of a vehicle moved
 	public boolean moveVehicle(Pair<Integer, Integer> initPos, Pair<Integer, Integer> endPos) {
 		char direction;
 		int distance = 0;
@@ -380,13 +384,13 @@ public class Controller {
 		LOGGER.info("A vehicle was moved from a position to another");
 		return lvl.move(vehicleClicked, direction, distance);
 	}
-
+	//Method that controlls when the level menu button is clicked in the view
 	public void levelMenuButon() {
 		estado=null;
 		LOGGER.info("The Menu Level view has been initializated");
 		new LevelsMenuView(f, g, this);
 	}
-
+	//Method that controlls when the next level button is clicked in the view
 	public int nextLevel() throws  IOException {
 		if(lvlAct<4) {
 			int n =lvlAct + 1;
@@ -404,7 +408,7 @@ public class Controller {
 			return 0;
 		}
 	}
-
+	//Method that controlls when the undo button is clicked in the view
 	public Pair<Pair<Character, Integer>, Pair<Integer, Integer>> undo() {
 		Character c = lvl.undo();
 		if (c.equals(' ')) {
@@ -416,7 +420,8 @@ public class Controller {
 		LOGGER.info("An undo of the vehicle with id: " +c+" has been done");
 		return res;
 	}
-
+	
+	//Method that controlls when the restart level button is clicked in the view
 	public void restart() {
 		lvl.reset();
 		try {
@@ -427,7 +432,7 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-
+	//Method that controlls when the save game button is clicked in the view
 	public void saveGame() {
 		if(estado==null) {
 			try {
@@ -449,6 +454,7 @@ public class Controller {
 			}
 		}
 	}
+	//Method that controlls when a saved game is loaded
 	public int openSavedGame(String name) {
 		int r = 1;
 		boolean exist=false;
@@ -470,12 +476,14 @@ public class Controller {
 		}
 		return r;
 	}
-
+	
+	//Method that controlls when the load game button is clicked in the view
 	public void openSavedGames() {
 		new SavedGamesView(f, gl.getList(), this);
 		LOGGER.info("The games saved  has been opened correctly");
 	}
-
+	
+	//Method that controlls when the new game button is clicked in the view
 	public int newGame(String name) {
 		int r = 1;
 		boolean exist=false;
@@ -492,28 +500,34 @@ public class Controller {
 		LOGGER.info("A new game has been created correctly");
 		return r;
 	}
-
+	
+	//Method that controlls when a game is clicked in the view
 	public void openGame(Game game) {
 		this.g=game;
 		new LevelsMenuView(f, game, this);
 		LOGGER.info("The game has been opened correctly");
 	}
-
+	
+	//Method that controlls when the games menu button is clicked in the view
 	public void gamesMenuButton() {
 		estado=null;
 		new GamesMenuView(f,m,this);
 		LOGGER.info("The game Menu has been opened");
 	}
+	//Method that controlls when the game is started clicking start button in the view
 	public void gamesMenu(Menu menu) {
 		this.m=menu;
 		new GamesMenuView(f,m,this);
 		LOGGER.info("The game Menu has been opened");
 	}
+	
+	//Method that controlls when the user completes the game
 	public void endGame() {
 		new EndGameView(f,g,this);
 		LOGGER.info("The En game view has been opened");
 	}
-
+	
+	//Main method that start the game
 	public static void main(String[] args) {
 		new Controller();
 	}

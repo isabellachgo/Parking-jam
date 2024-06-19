@@ -1814,6 +1814,13 @@ public class AppTest {
 				assertEquals(m.getGames().get(i).getName(), games.get(i).getName());
 			}
 		}
+		@Test
+		void revomeGameTest()
+		{
+			m.addGame(g1);
+			m.removeGame(g1.getName());
+			assertTrue(m.getGames().isEmpty());
+		}
 		
 	}
 

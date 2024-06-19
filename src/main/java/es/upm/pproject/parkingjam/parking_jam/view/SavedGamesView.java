@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -15,6 +16,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -84,10 +86,10 @@ public class SavedGamesView {
 			
 		});
 		
-		JTextArea textArea = Factory.genTextArea("There is alredy a game with the same name, it is not possible to load a game with the same name as another existing one.");
+		JTextArea textArea = Factory.genTextArea("Do you want to overwrite the Game?");
 
 	    JPanel panelErrorNewg = new JPanel(new BorderLayout());
-	    panelErrorNewg.add(textArea, BorderLayout.CENTER);
+	    panelErrorNewg.add(textArea, BorderLayout.SOUTH);
 		
 		ArrayList<JButton> buttons = new ArrayList<>();
 		for(String g : savedGames) {
@@ -96,12 +98,15 @@ public class SavedGamesView {
 			b.addActionListener(e-> {
 					frame.getContentPane().removeAll();
 					if(cont.openSavedGame(g) == 1) {
-						JDialog existingGame = new JDialog(frame, "Existing Game", true);
-						existingGame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-						existingGame.setSize(new Dimension(300,150));
-					    existingGame.add(panelErrorNewg);	
-						existingGame.setLocationRelativeTo(frame);
-						existingGame.setVisible(true);
+						JDialog dialog = new JOptionPane(panelErrorNewg, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, carIcon).createDialog(frame, "Existing Game");
+						dialog.setLocationRelativeTo(frame);
+						dialog.setSize(new Dimension(300,150));
+						dialog.setVisible(true);
+						Object res = ((JOptionPane) dialog.getContentPane().getComponent(0)).getValue();
+						if(res instanceof Integer && (Integer)res == JOptionPane.OK_OPTION) {
+							frame.getContentPane().removeAll();
+							cont.overwrite(g);
+						}
 					}
 			});
 			

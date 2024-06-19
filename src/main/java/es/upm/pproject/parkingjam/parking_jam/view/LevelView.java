@@ -272,9 +272,10 @@ public class LevelView {
 		closeB.setForeground(Color.white);
 		closeB.setFont(Factory.menuFont);
 		closeB.setHorizontalAlignment(SwingConstants.LEFT);
-		closeB.addActionListener(e -> 
-		frame.dispose()
-				);
+		closeB.addActionListener(e -> {
+			frame.dispose();
+			System.exit(0);
+		});
 
 		menuPanel.add(gamesB);
 		menuPanel.add(levelsB);

@@ -35,6 +35,7 @@ public class Level  {
 	private static final Logger LOGGER = Logger.getLogger(Level.class);
 	private String msg = "The movement is not valid because the position is occupied";
 
+	//Constructor with number of level as argument 
 	public Level (Integer nl) throws IOException{
 		bReader = new BoardReader(nl);
 		nLevel=nl;
@@ -45,6 +46,7 @@ public class Level  {
 		buildLevel();
 
 	}
+	//Constructor withfilepath of level as argument 
 	public Level (String filepath) throws  IOException{
 		bReader = new BoardReader(filepath);
 		dimensionX = bReader.getDimensionX();
@@ -53,7 +55,7 @@ public class Level  {
 		board = bReader.getBoard();
 		buildLevel();
 	}
-
+	// builds the level 
 	private void buildLevel() {
 		if(board!=null) {
 			exitPos = bReader.getExit();
@@ -71,7 +73,7 @@ public class Level  {
 		this.levelPoints=0;
 	}
 
-
+	// Getters and Setters
 	public Integer getNLevel() {
 		return nLevel;
 	}
@@ -130,8 +132,8 @@ public class Level  {
 		return vehiclePositionHistory;
 	}
 
+	//moves a vehicle, changing the board and cars positions
 	public boolean move (Vehicle car, char direction, int distance ) {
-
 		boolean moved=true;
 		if(distance ==0) return false;
 

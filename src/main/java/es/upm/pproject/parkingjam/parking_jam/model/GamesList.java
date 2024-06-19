@@ -20,8 +20,8 @@ public class GamesList {
 	public GamesList(){
 		if(listGames==null) listGames = new ArrayList<>();
 	}
-
-	public boolean addGame (String game) // usar cuando se guarde un game
+	// Adds a game to the list of games
+	public boolean addGame (String game)
 	{
 		boolean res = false;
 		if(!listGames.contains(game))
@@ -31,8 +31,8 @@ public class GamesList {
 		}
 		return res;
 	}
-
-	public boolean removeGame(String game) // usar cuando se elimine un game guardado
+	// removes the game from the list
+	public boolean removeGame(String game) 
 	{
 		if(!listGames.contains(game))return false;
 		boolean res=listGames.remove(game);
@@ -40,7 +40,7 @@ public class GamesList {
 		String rutaDirectorio = System.getProperty(USER_DIR)+"/src/main/gamesSaved/"+ game;
 		File directorio = new File(rutaDirectorio);
 
-		// Eliminar el contenido del directorio y luego el directorio
+		// DEletes the content on the directly
 		if (directorio.exists()) {
 			removeDirectory(directorio);
 			LOGGER.info("Folder and its content had been removed correctly: "+ rutaDirectorio);
@@ -54,8 +54,8 @@ public class GamesList {
 	public ArrayList<String> getList() {
 		return listGames;
 	}
-
-	public ArrayList<String> loadList() // llamar siempre al iniciar el programa
+    // loads the list of games
+	public ArrayList<String> loadList() 
 	{
 		ArrayList<String> list=new ArrayList<>();
 		String rutaFicheroListaGames=System.getProperty(USER_DIR)+"/src/main/gamesSaved/GamesList.txt";
@@ -69,20 +69,16 @@ public class GamesList {
 			}
 
 		}catch (IOException e) {
-			// Manejo de posibles excepciones
 			LOGGER.error("Error reading the file: "+ e.getMessage());
 		}
 
 		return list;
 	}
-
+	// saves the game in the file 'GameList'
 	private void saveGames()
 	{
-
 		String rutaFicheroListaGames=System.getProperty(USER_DIR)+"/src/main/gamesSaved/GamesList.txt";
 		File fichero = new File(rutaFicheroListaGames);
-
-		// Usar try-with-resources para asegurar que los recursos se cierren automáticamente
 		try (FileWriter fw = new FileWriter(fichero);
 				BufferedWriter bw = new BufferedWriter(fw)) {
 
@@ -92,22 +88,19 @@ public class GamesList {
 			} 
 
 		}catch (IOException e) {
-			// Manejo de posibles excepciones
 			LOGGER.error("Error writing on the file: "+ e.getMessage());
 		}
 	}
 
+	//Deletes the directory
 	private static void removeDirectory(File directorio) {
-		// Obtener todos los archivos y subdirectorios en el directorio
 		File[] contenido = directorio.listFiles();
 
 		if (contenido != null) {
 			for (File archivo : contenido) {
-				// Si el archivo es un directorio, eliminar su contenido recursivamente
 				if (archivo.isDirectory()) {
 					removeDirectory(archivo);
 				} else {
-					// Eliminar archivo
 					Path archivoPath= archivo.toPath();
 					try {
 						Files.delete(archivoPath);
@@ -117,8 +110,6 @@ public class GamesList {
 				}
 			}
 		}
-
-		// Finalmente, eliminar el directorio en sí
 		Path directorioPath= directorio.toPath();
 		try {
 			Files.delete(directorioPath);

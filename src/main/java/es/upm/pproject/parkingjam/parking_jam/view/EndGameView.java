@@ -21,32 +21,34 @@ public class EndGameView {
         this.frame.setVisible(true);
     }
 
+    // Builds the elements and the structure of the view
     private void initEG() {
-       
-        // Dimensiones:
+        // Dimensions:
         Dimension buttonSize = new Dimension(60, 60);
-        // Colores:
+        
+        // Colors:
         Color bg = new Color(180, 220, 110);
         Color buttonColor = new Color(39, 193, 245); // Azul
         Color winPColor = new Color(180,220,110);
 
-        // Iconos:
+        // Icons:
         ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/finalParking.png"));
         ImageIcon starIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/yellowstar.png")), 50, 50);
         ImageIcon starIcon2 = Factory.rotateIcon(starIcon, 180);
         ImageIcon saveMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
         ImageIcon homeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
         ImageIcon closeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
-        // Imagenes:
+        
+        // Images:
         Image parkingImage = parkingIcon.getImage().getScaledInstance(600, 600, Image.SCALE_SMOOTH);
 
-        // Elementos:
+        // Elements:
         JLabel titleL = new JLabel();
         titleL.setText("Parking Jam");
         titleL.setFont(Factory.titleFont);
         titleL.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Estructura:
+        // Structure:
         JPanel panel = new JPanel();
         panel.setBackground(bg);
         panel.setLayout(new BorderLayout());

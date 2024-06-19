@@ -58,11 +58,12 @@ public class Factory {
 	//Sounds
 	static Clip clip;
 
+	// Private constructor
 	private Factory() {
 
 	}
 
-
+	// Generates a new Font from the file and if it doesn't work, assigns a default one
 	private static Font genFont(String path, float size) {
 		Font font = null;
 		try {
@@ -73,7 +74,7 @@ public class Factory {
 		return font;
 	}
 
-
+	// Assign the characteristics passed as parameters to the 'b' button
 	public static void setFormatButton (JButton b, String t, Dimension size, ImageIcon ic, Pair<Color,Color> colors, Font font, Integer sc) {
 		Color foreg= colors.getKey();
 		Color backg= colors.getValue();
@@ -87,12 +88,14 @@ public class Factory {
 		if(sc!=null) b.setHorizontalAlignment(sc);
 	}
 
+	// Resize the icon 'icon' according to the parameters 'i' and 'j'
 	public static ImageIcon resizeIcon(ImageIcon icon, int i, int j) {
 		Image img = icon.getImage();
 		Image resizedImg = img.getScaledInstance(i, j, Image.SCALE_SMOOTH);
 		return new ImageIcon(resizedImg);
 	}
 
+	// Rotate the 'icon' according to the angle passed as a parameter
 	public static ImageIcon rotateIcon(ImageIcon icon, double angle) {
 		Image img = icon.getImage();
 		BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -106,6 +109,7 @@ public class Factory {
 		return new ImageIcon(bufferedImage);
 	}
 
+	// Called when a level file is incorrect, it shows the error message and if 'checkStatus' is true it updates the view of the level buttons
 	public static void corruptLevel(Integer n, JFrame frame, Game game, Controller cont, List<JButton> buttons, Boolean checkStatus) {
 		JPanel errorP = new JPanel();
 		errorP.setLayout(new BorderLayout());
@@ -140,7 +144,7 @@ public class Factory {
 		} 
 	}
 
-
+	// Updates the status (locked/unlocked) of the level buttons
 	public static void levelsStatus(JButton b, Game game) {
 		int last = game.getUltimoLevelPassed() + 1;
 		if(Integer.parseInt(b.getText()) <= last 
@@ -153,6 +157,7 @@ public class Factory {
 		}
 	}
 
+	// Generate a JTextArea with the 'text' message and specific characteristics
 	public static JTextArea genTextArea(String text) {
 		JTextArea ta = new JTextArea(text);
 		ta.setWrapStyleWord(true);
@@ -168,6 +173,7 @@ public class Factory {
 		return ta;
 	}
 
+	// Generate a JPanel with with the background color 'bg' and the layout 'l'
 	public static JPanel genPanel(Color bg, LayoutManager l) {
 		JPanel p = new JPanel();
 		p.setBackground(bg);
@@ -175,6 +181,7 @@ public class Factory {
 		return p;
 	}
 
+	// Generate a background JPanel with the 'icon' image and the indicated size
 	public static JPanel genPanelBg(Color bg, Integer d1, Integer d2, Integer pictd1, Integer pictd2, ImageIcon icon) {
 		Image parkingImage= icon.getImage().getScaledInstance(500, Math.max(pictd1, pictd2), Image.SCALE_SMOOTH);		
 
@@ -190,6 +197,7 @@ public class Factory {
 		return panelBg;
 	}
 
+	// Plays the sound 'soundFile'
 	public static void playSound(String soundFile) { 
 		File soundPath = new File(soundFile); 
 		if(clip!=null) {

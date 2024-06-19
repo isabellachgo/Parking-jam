@@ -23,6 +23,7 @@ public class BoardReader {
 
 	String filepathFormat = "src/main/resources/levels/level_%d.txt";
 
+	// Constructor with number level as  argument
 	public BoardReader(int nlevel) throws  IOException{
 
 		String filepath = String.format(filepathFormat, nlevel);
@@ -40,6 +41,7 @@ public class BoardReader {
 		board = createBoard();
 
 	}
+	// Constructor with filepath as argument
 	public BoardReader(String filepath) throws  IOException{
 		
 		file = new FileReader(new File(filepath));
@@ -56,7 +58,7 @@ public class BoardReader {
 		board = createBoard();
 	
 	}
-
+	// Getters and setters
 	public String getTitle() {
 		return title;
 	}
@@ -138,7 +140,7 @@ public class BoardReader {
 		}
 
 		// check that there is an exit in valid position
-		if(nExit != 1) return null; //error: no tiene salida o tiene más de una
+		if(nExit != 1) return null; //error:there is no exit or there is more than one 
 		if((exitp.getKey()==0 && exitp.getValue()==0)
 				|| (exitp.getKey()==0 && exitp.getValue()==dimY-1)
 				|| (exitp.getKey()==dimX-1 && exitp.getValue()==0)

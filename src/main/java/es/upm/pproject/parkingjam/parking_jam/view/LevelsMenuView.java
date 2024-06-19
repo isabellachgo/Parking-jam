@@ -33,9 +33,6 @@ public class LevelsMenuView {
 	private Game game;
 	private Controller cont;
 
-	
-	
-	
 	public LevelsMenuView(JFrame frame, Game game, Controller cont) {
 		this.frame = frame;
 		this.game = game;
@@ -45,32 +42,33 @@ public class LevelsMenuView {
 		this.frame.setVisible(true);
 	}
 
+	// Builds the elements and the structure of the view
 	private void initLMV() {
 		JButton l1B;
 		JButton l2B;
 		JButton l3B;
 		JButton l4B;
 
-		// Colores:
+		// Colors:
 		Color bg = new Color(180,220,110);
 		Color buttonColor = new Color(65,130,4);
 
-		// Dimensiones:
+		// Dimensions:
 		Dimension buttonSize = new Dimension(40,40);
 		Dimension levelBSize = new Dimension(80,80);
 		Dimension buttonSize2 = new Dimension(195,40);
 
-		// Iconos:
+		// Icons:
 		ImageIcon closeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/close.png")),30,30);
 		ImageIcon saveMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/save.png")),30,30);
 		ImageIcon menuIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/menu.png")),30,30);
 		ImageIcon parkingIcon = new ImageIcon(getClass().getResource("/images/parking3.png"));
 		ImageIcon homeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
 
-		// Imagenes:
+		// Images:
 		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, 400, Image.SCALE_SMOOTH);
 
-		// Elementos:
+		// Elements:
 		JPopupMenu menuPanel = new JPopupMenu();
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		menuPanel.setPopupSize(207,145);
@@ -180,7 +178,7 @@ public class LevelsMenuView {
 		buttons.add(l3B);
 		buttons.add(l4B);
 
-		// Estructura:
+		// Structure:
 		JPanel panel = new JPanel();
 		panel.setBackground(bg);
 		panel.setLayout(new BorderLayout());

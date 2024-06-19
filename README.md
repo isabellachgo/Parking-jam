@@ -41,13 +41,14 @@ The Model represents the data and business logic, encapsulating the application'
 
 The View is the presentation layer, responsible for displaying the data to the user and providing a means for user interaction. Contains: 
 - `StartView` show the initial view.
-- `GamesMenuView` represents the menu which show the open games.
+- `GamesMenuView` represents the menu which show the open games and the option to load a saved game.
 - `SavedGamesView` it will be shown the saved games which could be loaded.
 - `LevelsMenuView` represents the menu which show the levels and theirs status in a game.
-- `view` that show a level to play it.
-- `EndGameView` it will appear when you finish all the levels of a game.
+- `LevelView` that show a level to play it, the level and game points and some buttons with game functionalities .
+- `EndGameView` it will appear when you finish all the levels of a game showing the final points and some options.
+- `Factory` contains common methods used in different views.
 
-Finally, the Controller acts as an intermediary between the Model and the View, processing user input from the View, updating the Model accordingly, and then updating the View to reflect any changes in the Model. This one contains only one class `controller`, with all the necessary methods. 
+Finally, the Controller acts as an intermediary between the Model and the View, processing user input from the View, updating the Model accordingly, and then updating the View to reflect any changes in the Model. This one contains only one class `Controller`, with all the necessary methods. 
 
 These three folders are contained in `src/main/java/`. Additionally, the project has the folders: 
 - `src/main/resources` that contains the icons, images, text fonts and level files for building the game.

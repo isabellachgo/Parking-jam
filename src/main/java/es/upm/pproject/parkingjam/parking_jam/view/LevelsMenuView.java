@@ -19,7 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 
@@ -31,23 +32,29 @@ public class LevelsMenuView {
 
 	private JFrame frame;
 	private Game game;
+	private int nLevels;
 	private Controller cont;
 
-	public LevelsMenuView(JFrame frame, Game game, Controller cont) {
+	public LevelsMenuView(JFrame frame, Game game, int nLevels, Controller cont) {
 		this.frame = frame;
 		this.game = game;
+		this.nLevels = nLevels;
 		this.cont = cont;
-				
+
 		initLMV();
 		this.frame.setVisible(true);
 	}
 
 	// Builds the elements and the structure of the view
 	private void initLMV() {
-		JButton l1B;
-		JButton l2B;
-		JButton l3B;
-		JButton l4B;
+		// Number of rows of levels
+		int nRows = nLevels/2;
+		if(nLevels%2 != 0) nRows++;
+		
+		// Scroll height:
+		Integer listH = (nRows)*80 + (nRows)*30;
+		Integer pictureH = listH + 90;
+		Integer levelsH = pictureH + 120;
 
 		// Colors:
 		Color bg = new Color(180,220,110);
@@ -66,7 +73,7 @@ public class LevelsMenuView {
 		ImageIcon homeMIcon = Factory.resizeIcon(new ImageIcon(getClass().getResource("/icons/home.png")),30,30);
 
 		// Images:
-		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, 400, Image.SCALE_SMOOTH);
+		Image parkingImage= parkingIcon.getImage().getScaledInstance(500, Math.max(pictureH, 410), Image.SCALE_SMOOTH);
 
 		// Elements:
 		JPopupMenu menuPanel = new JPopupMenu();
@@ -83,13 +90,13 @@ public class LevelsMenuView {
 		JButton saveB = new JButton("save game");
 		Factory.setFormatButton(saveB, null, buttonSize2, saveMIcon, new Pair<>(Color.white, buttonColor),  Factory.menuFont, SwingConstants.LEFT);
 		saveB.addActionListener(e -> 
-				cont.saveGame()
-		);
+		cont.saveGame()
+				);
 		JButton closeB = new JButton("close Parking Jam");
 		Factory.setFormatButton(closeB, null, buttonSize2, closeMIcon, new Pair<>(Color.white, buttonColor),  Factory.menuFont, SwingConstants.LEFT);
 		closeB.addActionListener(e -> {
-				frame.dispose();
-				 System.exit(0);
+			frame.dispose();
+			System.exit(0);
 		});
 
 		menuPanel.add(gamesB);
@@ -99,12 +106,12 @@ public class LevelsMenuView {
 		JButton menuB = new JButton();
 		Factory.setFormatButton(menuB, null, buttonSize, menuIcon, new Pair<>(Color.white, buttonColor), null, null);
 		menuB.addActionListener(e -> {
-				if(!menuPanel.isVisible()) {
-					menuPanel.show(frame, 50, 87);
-					menuPanel.setVisible(true);
-				} else {
-					menuPanel.setVisible(false);
-				}
+			if(!menuPanel.isVisible()) {
+				menuPanel.show(frame, 50, 87);
+				menuPanel.setVisible(true);
+			} else {
+				menuPanel.setVisible(false);
+			}
 		});
 
 
@@ -120,64 +127,25 @@ public class LevelsMenuView {
 		gameNameL.setFont(Factory.titleFont2);
 		gameNameL.setText(game.getName()); 
 
-		
 		ArrayList<JButton> buttons = new ArrayList<>();
-		l1B = new JButton();
-		Factory.setFormatButton(l1B, "1", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
-		Factory.levelsStatus(l1B, game);
-		l1B.addActionListener(e ->{
+		for(int i=1; i<=nLevels; i++) {
+			int n =i;
+			JButton b = new JButton();
+			Factory.setFormatButton(b, Integer.toString(n), levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
+			Factory.levelsStatus(b, game);
+			b.addActionListener(e ->{
 				frame.getContentPane().removeAll();
 				try {
-					if(cont.showLevel(1)==1) {
-						Factory.corruptLevel(1, frame, game, cont, buttons, true);
+					if(cont.showLevel(n)==1) {
+						Factory.corruptLevel(n, frame, game, cont, buttons, true);
 					}
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				}
-		});
-		l2B = new JButton();
-		Factory.setFormatButton(l2B, "2", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
-		Factory.levelsStatus(l2B, game);
-		l2B.addActionListener(e ->{
-				frame.getContentPane().removeAll();
-				try {
-					if(cont.showLevel(2)==1) {
-						Factory.corruptLevel(2, frame, game, cont, buttons, true);
-					}
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-		});
-		l3B = new JButton();
-		Factory.setFormatButton(l3B, "3", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
-		Factory.levelsStatus(l3B, game);
-		l3B.addActionListener(e ->{
-				frame.getContentPane().removeAll();
-				try {
-					if(cont.showLevel(3)==1) {
-						Factory.corruptLevel(3, frame, game, cont, buttons, true);
-					}
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-		});
-		l4B = new JButton();
-		Factory.setFormatButton(l4B, "4", levelBSize, null, new Pair<>(null, null),  Factory.levelFont, null);
-		Factory.levelsStatus(l4B, game);
-		l4B.addActionListener(e ->{
-				frame.getContentPane().removeAll();
-				try {
-					if(cont.showLevel(4)==1) {
-						Factory.corruptLevel(4, frame, game, cont, buttons, true);
-					}
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-		});
-		buttons.add(l1B);
-		buttons.add(l2B);
-		buttons.add(l3B);
-		buttons.add(l4B);
+			});
+			buttons.add(b);
+		}
+
 
 		// Structure:
 		JPanel panel = new JPanel();
@@ -203,46 +171,56 @@ public class LevelsMenuView {
 		panelNorth.add(row1);
 		panelNorth.add(row2);
 
-
 		JLayeredPane panelCenter = new JLayeredPane();
-		panelCenter.setPreferredSize(new Dimension(500,500));
+		panelCenter.setBackground(bg);
+		panelCenter.setPreferredSize(new Dimension(700, Math.max(levelsH, 558)));
+		panelCenter.setBounds(0,0,700, Math.max(levelsH, 558));
 
 		JPanel panelBg = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				g.drawImage(parkingImage,100,75 , this);
+				g.drawImage(parkingImage,100,75, this);
 			}
 		};
 		panelBg.setBackground(bg);
-		panelBg.setBounds(0, 10, 700, 500);
+		panelBg.setBounds(0, 0, 700, Math.max(levelsH, 558)); 
 
 		JPanel panelElem = new JPanel();
-		panelElem.setBounds(100, 160, 500, 300);
-		panelElem.setBackground(new Color(3,3,3,0));
+		panelElem.setBounds(100, 130, 500, listH);
+		panelElem.setBackground(new Color(0,0,0,0));
 		panelElem.setLayout(new BoxLayout(panelElem, BoxLayout.Y_AXIS));
-		JPanel row3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		row3.setBackground(new Color(3,3,3,0));
-		row3.add(l1B);
-		row3.add(Box.createHorizontalStrut(60));
-		row3.add(l2B);
-		JPanel row4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		row4.setBackground(new Color(3,3,3,0));
-		row4.add(l3B);
-		row4.add(Box.createHorizontalStrut(60));
-		row4.add(l4B);
-		panelElem.add(row3);
-		panelElem.add(row4);
+				
+		int nb=0;
+		for(int j=0; j<nRows; j++) {
+			JPanel row = new JPanel(new FlowLayout(FlowLayout.CENTER));
+			row.setBackground(new Color(0,0,0,0));
+			row.add(buttons.get(nb));
+			nb++;	
+			if(nb<buttons.size()) {
+				row.add(Box.createHorizontalStrut(60));
+				row.add(buttons.get(nb));
+				nb++;
+			}
+			panelElem.add(row);
+		}
 
 		panelCenter.add(panelBg, JLayeredPane.DEFAULT_LAYER);
 		panelCenter.add(panelElem, JLayeredPane.PALETTE_LAYER);
 		panelCenter.revalidate();
 		panelCenter.repaint();
+		
+		JScrollPane panelScroll = new JScrollPane(panelCenter);
+		panelScroll.setBackground(bg);
+		panelScroll.setBounds(0,0,700,Math.max(levelsH, 560));
+		panelScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panelScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		panel.add(panelNorth, BorderLayout.NORTH);
-		panel.add(panelCenter, BorderLayout.CENTER);
+		panel.add(panelScroll, BorderLayout.CENTER);
 		frame.add(panel);
+
 	}
 
-	
+
 }

@@ -2,12 +2,15 @@ package es.upm.pproject.parkingjam.parking_jam.controller;
 
 
 import java.io.IOException;
-
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 import java.util.Iterator;
 import java.util.Map;
-
 
 import javax.swing.JFrame;
 
@@ -66,10 +69,10 @@ public class Controller {
 		if(g.getLastLevel()!=null&&g.getLastLevel().getNLevel()==n) lvl=g.getLastLevel();
 		else lvl = new Level(n);
 		if(lvl.getBoard()==null) {
-			new LevelsMenuView(f,g,this);
+			new LevelsMenuView(f,g, numLevels(), this);
 			return 1;
 		}
-		
+
 		estado=n;
 		cellSize = (400 + (lvl.getDimensionX() / 2)) / (lvl.getDimensionX() - 2);
 		lvlAct = n;
@@ -80,7 +83,7 @@ public class Controller {
 		}
 		mapPositions.put('@', lvl.getExit());
 		v = new LevelView(f, mapPositions, lvl, this, g.getGamePoints());
-	
+
 		LOGGER.info(" The view of the level " + n + " has been initializated");
 		return 0;
 	}
@@ -94,17 +97,17 @@ public class Controller {
 			row = lvl.getDimensionX() - 1;
 		else
 			row = ((x - 150) / cellSize) + 1;
-		
+
 		if (y < 50)
 			col = 0;
 		else if (y > 450)
 			col = lvl.getDimensionY() - 1;
 		else
 			col = ((y - 50) / cellSize) + 1;
-	
+
 		return new Pair<>(row, col);
 	}
-	
+
 	//Method that detects if a vehicle is being clicked
 	public Character click(Pair<Integer, Integer> clicked) {
 		click = clicked;
@@ -120,10 +123,10 @@ public class Controller {
 		} 
 		if (vehicleClicked != null) 
 			res = vehicleClicked.getId();
-	
+
 		return res;
 	}
-	
+
 	//Method that controlls when a vehicle is being dragged
 	public Pair<Integer, Integer> hold(Pair<Integer, Integer> m) {
 		if (vehicleClicked != null) {
@@ -151,7 +154,7 @@ public class Controller {
 							if (!newLabel.equals(actLabel)) {
 								this.prevLabel = new Pair<>(newLabel.getKey(),newLabel.getValue()-1);
 								this.actLabel = newLabel;
-							
+
 							}
 							return new Pair<>(0, vehicleClicked.getPix().getValue() + punt);
 						}
@@ -279,56 +282,56 @@ public class Controller {
 			}
 
 		}
-		 if(vehicleClicked!=null)return new Pair<>(v.devuelveCoordenadas(vehicleClicked.getId()).getKey(), v.devuelveCoordenadas(vehicleClicked.getId()).getValue());
+		if(vehicleClicked!=null)return new Pair<>(v.devuelveCoordenadas(vehicleClicked.getId()).getKey(), v.devuelveCoordenadas(vehicleClicked.getId()).getValue());
 		else return null;
 	}
-	
+
 	//Method that controlls when a car that was previously clicked is released, check and update where the vehicle is released
 	public Pair<Pair<Integer, Integer>, Pair<Integer, Boolean>> drop(Pair<Integer, Integer> posF) {
 		if (vehicleClicked == null)
 			return null;
 		Pair<Pair<Integer, Integer>, Pair<Integer, Boolean>> mv;
 		int punt2 = punt;
-		
+
 		if (actLabel != null && prevLabel != null) {
 
 			punt2 = Math.abs(punt);
 			if (punt2 % cellSize > cellSize / 2||actLabel.equals(lvl.getExit())) {
 				if (punt>0&&avanza) {
 					moveVehicle(vehicleClicked.getfrontLabel(), actLabel);
-			
+
 				}
 				else if(punt>0&&!avanza) {
 					if(prevLabel.equals(actLabel))moveVehicle(vehicleClicked.getfrontLabel(), prevLabel);
 					moveVehicle(vehicleClicked.getbackLabel(), prevLabel);
-					
+
 				}
 				else if(punt<0&&avanza) {
 					if(prevLabel.equals(actLabel))moveVehicle(vehicleClicked.getbackLabel(), prevLabel);
 					moveVehicle(vehicleClicked.getfrontLabel(), prevLabel);
-				
+
 				}
 				else {
 					moveVehicle(vehicleClicked.getbackLabel(), actLabel);
-					
+
 				}
 
 
 			} else {
 				if (punt>0&&avanza) {
 					moveVehicle(vehicleClicked.getfrontLabel(), prevLabel);
-				
+
 				}
 				else if(punt>0&&!avanza) {
 					if(prevLabel.equals(actLabel))moveVehicle(vehicleClicked.getfrontLabel(), prevLabel);
 					moveVehicle(vehicleClicked.getbackLabel(), actLabel);
-				
+
 
 				}
 				else if(punt<0&&avanza) {
 					if(prevLabel.equals(actLabel))moveVehicle(vehicleClicked.getbackLabel(), prevLabel);
 					moveVehicle(vehicleClicked.getfrontLabel(), actLabel);
-					}
+				}
 
 				else {
 					moveVehicle(vehicleClicked.getbackLabel(), prevLabel);
@@ -358,7 +361,7 @@ public class Controller {
 		conflLabelB=null;
 		return mv;
 	}
-	
+
 	//Method that uses model class 'level' to update the position of a vehicle moved
 	public boolean moveVehicle(Pair<Integer, Integer> initPos, Pair<Integer, Integer> endPos) {
 		char direction;
@@ -388,7 +391,7 @@ public class Controller {
 	public void levelMenuButon() {
 		estado=null;
 		LOGGER.info("The Menu Level view has been initializated");
-		new LevelsMenuView(f, g, this);
+		new LevelsMenuView(f, g,numLevels(),  this);
 	}
 	//Method that controlls when the next level button is clicked in the view
 	public int nextLevel() throws  IOException {
@@ -420,7 +423,7 @@ public class Controller {
 		LOGGER.info("An undo of the vehicle with id: " +c+" has been done");
 		return res;
 	}
-	
+
 	//Method that controlls when the restart level button is clicked in the view
 	public void restart() {
 		lvl.reset();
@@ -454,6 +457,7 @@ public class Controller {
 			}
 		}
 	}
+
 	//Method that controlls when a saved game is loaded
 	public int openSavedGame(String name) {
 		int r = 1;
@@ -476,6 +480,7 @@ public class Controller {
 		}
 		return r;
 	}
+
 	public void overwrite(String name) {		
 		Game game= new Game(name);
 		Level lv=game.cargarGame(name);
@@ -484,13 +489,13 @@ public class Controller {
 		m.addGame(game);
 		new GamesMenuView(f, m, this);		
 	}
-	
+
 	//Method that controlls when the load game button is clicked in the view
 	public void openSavedGames() {
 		new SavedGamesView(f, gl.getList(), this);
 		LOGGER.info("The games saved  has been opened correctly");
 	}
-	
+
 	//Method that controlls when the new game button is clicked in the view
 	public int newGame(String name) {
 		int r = 1;
@@ -508,14 +513,14 @@ public class Controller {
 		LOGGER.info("A new game has been created correctly");
 		return r;
 	}
-	
+
 	//Method that controlls when a game is clicked in the view
 	public void openGame(Game game) {
 		this.g=game;
-		new LevelsMenuView(f, game, this);
+		new LevelsMenuView(f, game, numLevels(), this);
 		LOGGER.info("The game has been opened correctly");
 	}
-	
+
 	//Method that controlls when the games menu button is clicked in the view
 	public void gamesMenuButton() {
 		estado=null;
@@ -528,16 +533,37 @@ public class Controller {
 		new GamesMenuView(f,m,this);
 		LOGGER.info("The game Menu has been opened");
 	}
-	
+
 	//Method that controlls when the user completes the game
 	public void endGame() {
 		new EndGameView(f,g,this);
 		LOGGER.info("The En game view has been opened");
 	}
-	
+
 	//Main method that start the game
 	public static void main(String[] args) {
 		new Controller();
+	}
+
+	// Return the number of levels
+	private int numLevels() {
+		int n=0;
+		try {
+			Path folder = Paths.get("src/main/resources/levels");
+	        if (!Files.isDirectory(folder)) {
+	            throw new IllegalArgumentException("Is not a directory");
+	        }
+
+	        try (DirectoryStream<Path> stream = Files.newDirectoryStream(folder)) {
+	            for (Path entry : stream) {
+	                if (Files.isRegularFile(entry)) n++;
+	            }
+	            n=n-4;
+	        }
+		} catch (IOException | DirectoryIteratorException e) {
+			e.printStackTrace();
+		}
+		return n;
 	}
 
 }

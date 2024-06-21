@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 
@@ -395,7 +396,7 @@ public class Controller {
 	}
 	//Method that controlls when the next level button is clicked in the view
 	public int nextLevel() throws  IOException {
-		if(lvlAct<4) {
+		if(lvlAct< numLevels()) {
 			int n =lvlAct + 1;
 			int r = showLevel(n);
 			if(r!=0) {
@@ -548,6 +549,7 @@ public class Controller {
 	// Return the number of levels
 	private int numLevels() {
 		int n=0;
+		Pattern pattern= Pattern.compile("level_\\d+\\.txt");
 		try {
 			Path folder = Paths.get("src/main/resources/levels");
 	        if (!Files.isDirectory(folder)) {
@@ -556,9 +558,9 @@ public class Controller {
 
 	        try (DirectoryStream<Path> stream = Files.newDirectoryStream(folder)) {
 	            for (Path entry : stream) {
-	                if (Files.isRegularFile(entry)) n++;
+	                if (Files.isRegularFile(entry) && pattern.matcher(entry.getFileName().toString()).matches()) n++;
 	            }
-	            n=n-4;
+	            n=n-4;  // there are 4  wrong files used for test
 	        }
 		} catch (IOException | DirectoryIteratorException e) {
 			e.printStackTrace();

@@ -26,14 +26,16 @@ public class Menu {
 
 	public void removeGame(String name) {
 		boolean enc = false;
+		Game g=null;
 		Iterator<Game> it = games.iterator();
 		while (!enc && it.hasNext()) {
-			Game g = it.next();
+			g = it.next();
 			if (g.getName().equals(name)) {
-				games.remove(g);
 				enc = true;
 			}
 		}
+
+		if(g!=null) games.remove(g);
 	}
 
 }

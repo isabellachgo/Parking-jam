@@ -51,8 +51,8 @@ The View is the presentation layer, responsible for displaying the data to the u
 Finally, the Controller acts as an intermediary between the Model and the View, processing user input from the View, updating the Model accordingly, and then updating the View to reflect any changes in the Model. This one contains only one class `Controller`, with all the necessary methods. 
 
 These three folders are contained in `src/main/java/`. Additionally, the project has the folders: 
-- `src/main/resources` that contains the icons, images, text fonts and level files for building the game.
-- `src/main/gamesSaved` where the .txt files with the information of the saved games will be stored.
+- `src/main/resources` that contains the icons (.png), images(.png and .jpg) , sounds (.wav), text fonts (.ttf) and  level files (.txt) for building the game. Inside the `levels` directory, there are 4 files that represents wrong definitions of levels, that are only used in internal tests.
+- `src/main/gamesSaved` where the files (.txt) with the information of the saved games will be stored.
 - `src/test/java` which contains the tests.
 
 
@@ -65,12 +65,16 @@ Here is the view of the first leve:
 </div>
 
 ### Play
-At the beginning you will have to create a new game and when you create it you will be able to access the levels of the game, which will be unlocked each time you manage to finish one. 
+At the beginning you will have to create a new game and when you open it you will be able to access the levels of the game, which will be unlocked each time you manage to finish one. 
 
-Once you pass a level you can try again to get a better score. At any time you can return to the level menu, the games menu, close the game or save the game by clicking on the buttons in the drop-down menu.
+To pass a level, you need to get the red car out of the parking, moving the other cars out of the exit. To move a vehicle you'll need to click it and drag it towards the direction you want. 
+
+Once you pass a level you can try again to get a better score. At any time you can go back to the level menu, the games menu, close the game or save the game by clicking on the buttons in the drop-down menu.
 
 ### Save and load games
 To save the game you will only have to click on the 'save game' button in the drop-down menu, and when you want to load the saved game, in the games menu, when you click on the load game button, the saved games will be shown and you will be able to Choose the game you saved to continue playing where you left off.
+
+Whenever you try to load a game that is already loaded, a dialog will ask you if you want to overwrite the game that was already saved.
 
 When you save a game, a folder will be created in the directory indicated above. This will have the name of the saved game and will contain three files:
 - one with the points of the past levels and the last unfinished one if there is one 

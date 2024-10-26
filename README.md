@@ -59,10 +59,10 @@ These three folders are contained in `src/main/java/`. Additionally, the project
 ## How to use
 To play you must be in the root directory of the repository. Subsequently, you must compile the project using the `mvn clean compile` command, and finally run it with the `mvn exec:java` command that will open a new window with the game initial view.
 
-Here is the view of the first leve:
-<div style="text-align: center;">
+Here is the view of the first level:
+
   ![parking-jam](src/main/resources/images/parkingJam.png)
-</div>
+
 
 ### Play
 At the beginning you will have to create a new game and when you open it you will be able to access the levels of the game, which will be unlocked each time you manage to finish one. 
@@ -82,9 +82,9 @@ When you save a game, a folder will be created in the directory indicated above.
 - and a last one with the status of the level unfinished if there is one, which will have the format of a level file
 
 ## Authors
+- Isabella Chaves Gómez
 - Sonia Gallego Trapero
 - Lucas Coronel Naranjo
-- Isabella Chaves Gómez
 - Raúl López Soto
 
 
